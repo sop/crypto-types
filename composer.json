@@ -1,0 +1,42 @@
+{
+	"name": "sop/crypto-types",
+	"description": "A PHP library of various ASN.1 types for cryptographic applications.",
+	"homepage": "https://github.com/sop/crypto-types",
+	"license": "MIT",
+	"type": "library",
+	"keywords": [
+		"cryptography",
+		"asn1",
+		"algorithm identifier",
+		"rsa",
+		"ec",
+		"public key",
+		"private key",
+		"signature"
+	],
+	"authors": [
+		{
+			"name": "Joni Eskelinen",
+			"email": "jonieske@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.6.3",
+		"ext-gmp": "*",
+		"sop/asn1": "^2.0.0",
+		"sop/crypto-encoding": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"Sop\\CryptoTypes\\" : "lib/CryptoTypes"
+		}
+	},
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "path",
+			"url": "/mnt/ws/crypto-encoding"
+		}
+	]
+}
