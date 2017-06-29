@@ -31,12 +31,5 @@
 		"psr-4": {
 			"Sop\\CryptoTypes\\" : "lib/CryptoTypes"
 		}
-	},
-	"minimum-stability": "dev",
-	"repositories": [
-		{
-			"type": "path",
-			"url": "/mnt/ws/crypto-encoding"
-		}
-	]
+	}
 }
