@@ -3,7 +3,7 @@
 namespace Sop\CryptoTypes\Signature;
 
 use ASN1\Type\Primitive\BitString;
-use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\ECSignatureAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\RSASignatureAlgorithmIdentifier;
 
@@ -23,10 +23,10 @@ abstract class Signature
      * Get signature object by signature data and used algorithm.
      *
      * @param string $data Signature value
-     * @param AlgorithmIdentifier $algo
+     * @param AlgorithmIdentifierType $algo Algorithm identifier
      * @return self
      */
-    public static function fromSignatureData($data, AlgorithmIdentifier $algo)
+    public static function fromSignatureData($data, AlgorithmIdentifierType $algo)
     {
         if ($algo instanceof RSASignatureAlgorithmIdentifier) {
             return RSASignature::fromSignatureString($data);

@@ -3,7 +3,7 @@
 namespace Sop\CryptoTypes\Signature;
 
 use ASN1\Type\Primitive\BitString;
-use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 
 /**
  * Generic signature value container.
@@ -20,17 +20,18 @@ class GenericSignature extends Signature
     /**
      * Signature algorithm.
      *
-     * @var AlgorithmIdentifier
+     * @var AlgorithmIdentifierType
      */
     private $_signatureAlgorithm;
     
     /**
      * Constructor.
      *
-     * @param BitString $signature
-     * @param AlgorithmIdentifier $algo
+     * @param BitString $signature Signature value
+     * @param AlgorithmIdentifierType $algo Algorithm identifier
      */
-    public function __construct(BitString $signature, AlgorithmIdentifier $algo)
+    public function __construct(BitString $signature,
+        AlgorithmIdentifierType $algo)
     {
         $this->_signature = $signature;
         $this->_signatureAlgorithm = $algo;
@@ -39,7 +40,7 @@ class GenericSignature extends Signature
     /**
      * Get the signature algorithm.
      *
-     * @return AlgorithmIdentifier
+     * @return AlgorithmIdentifierType
      */
     public function signatureAlgorithm()
     {
