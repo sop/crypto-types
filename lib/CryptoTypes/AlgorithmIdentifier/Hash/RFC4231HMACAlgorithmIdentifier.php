@@ -13,7 +13,8 @@ use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
  * @link https://tools.ietf.org/html/rfc4231#section-3.1
  */
 abstract class RFC4231HMACAlgorithmIdentifier extends SpecificAlgorithmIdentifier implements 
-    HashAlgorithmIdentifier, PRFAlgorithmIdentifier
+    HashAlgorithmIdentifier, 
+    PRFAlgorithmIdentifier
 {
     /**
      * Parameters stored for re-encoding.
