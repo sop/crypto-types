@@ -12,7 +12,7 @@ class GenericAlgorithmIdentifierTest extends PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        $ai = new GenericAlgorithmIdentifier("1.3.6.1.3", 
+        $ai = new GenericAlgorithmIdentifier("1.3.6.1.3",
             new UnspecifiedType(new Integer(42)));
         $this->assertInstanceOf(GenericAlgorithmIdentifier::class, $ai);
         return $ai;

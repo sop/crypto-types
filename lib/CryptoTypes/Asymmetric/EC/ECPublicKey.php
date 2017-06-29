@@ -85,7 +85,7 @@ class ECPublicKey extends PublicKey
      */
     private static function _curveSize($oid)
     {
-        if (!array_key_exists($oid, 
+        if (!array_key_exists($oid,
             ECPublicKeyAlgorithmIdentifier::MAP_CURVE_TO_SIZE)) {
             return null;
         }

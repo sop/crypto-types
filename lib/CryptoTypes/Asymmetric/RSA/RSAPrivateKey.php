@@ -262,10 +262,10 @@ class RSAPrivateKey extends PrivateKey
      */
     public function toASN1()
     {
-        return new Sequence(new Integer(0), new Integer($this->_modulus), 
-            new Integer($this->_publicExponent), 
-            new Integer($this->_privateExponent), new Integer($this->_prime1), 
-            new Integer($this->_prime2), new Integer($this->_exponent1), 
+        return new Sequence(new Integer(0), new Integer($this->_modulus),
+            new Integer($this->_publicExponent),
+            new Integer($this->_privateExponent), new Integer($this->_prime1),
+            new Integer($this->_prime2), new Integer($this->_exponent1),
             new Integer($this->_exponent2), new Integer($this->_coefficient));
     }
     

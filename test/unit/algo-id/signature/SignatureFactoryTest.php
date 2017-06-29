@@ -36,7 +36,7 @@ class SignatureFactoryTest extends PHPUnit_Framework_TestCase
      * @param HashAlgorithmIdentifier $hash_algo
      * @param string $expected_class
      */
-    public function testAlgoForAsymmetricCrypto($crypto_algo, $hash_algo, 
+    public function testAlgoForAsymmetricCrypto($crypto_algo, $hash_algo,
         $expected_class)
     {
         $algo = SignatureAlgorithmIdentifierFactory::algoForAsymmetricCrypto(

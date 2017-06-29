@@ -110,7 +110,7 @@ class OneAsymmetricKey
      */
     public static function fromPrivateKey(PrivateKey $private_key)
     {
-        return new static($private_key->algorithmIdentifier(), 
+        return new static($private_key->algorithmIdentifier(),
             $private_key->toDER());
     }
     
@@ -208,7 +208,7 @@ class OneAsymmetricKey
      */
     public function toASN1()
     {
-        $elements = array(new Integer($this->_version), $this->_algo->toASN1(), 
+        $elements = array(new Integer($this->_version), $this->_algo->toASN1(),
             new OctetString($this->_privateKeyData));
         // @todo decode attributes and public key
         return new Sequence(...$elements);

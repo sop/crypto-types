@@ -58,7 +58,7 @@ abstract class SignatureAlgorithmIdentifierFactory
      * @return \Sop\CryptoTypes\AlgorithmIdentifier\Feature\SignatureAlgorithmIdentifier
      */
     public static function algoForAsymmetricCrypto(
-        AsymmetricCryptoAlgorithmIdentifier $crypto_algo, 
+        AsymmetricCryptoAlgorithmIdentifier $crypto_algo,
         HashAlgorithmIdentifier $hash_algo)
     {
         switch ($crypto_algo->oid()) {
@@ -70,7 +70,7 @@ abstract class SignatureAlgorithmIdentifierFactory
                 break;
             default:
                 throw new \UnexpectedValueException(
-                    sprintf("Crypto algorithm %s not supported.", 
+                    sprintf("Crypto algorithm %s not supported.",
                         $crypto_algo->name()));
         }
         $cls = (new AlgorithmIdentifierFactory())->getClass($oid);
@@ -88,8 +88,7 @@ abstract class SignatureAlgorithmIdentifierFactory
     {
         if (!array_key_exists($hash_algo->oid(), self::MAP_RSA_OID)) {
             throw new \UnexpectedValueException(
-                sprintf("No RSA signature algorithm for %s.", 
-                    $hash_algo->name()));
+                sprintf("No RSA signature algorithm for %s.", $hash_algo->name()));
         }
         return self::MAP_RSA_OID[$hash_algo->oid()];
     }

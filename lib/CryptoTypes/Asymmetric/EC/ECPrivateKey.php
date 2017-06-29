@@ -47,8 +47,7 @@ class ECPrivateKey extends PrivateKey
      * @param string|null $named_curve OID of the named curve
      * @param string|null $public_key ECPoint value
      */
-    public function __construct($private_key, $named_curve = null, 
-        $public_key = null)
+    public function __construct($private_key, $named_curve = null, $public_key = null)
     {
         $this->_privateKey = $private_key;
         $this->_namedCurve = $named_curve;
@@ -205,11 +204,11 @@ class ECPrivateKey extends PrivateKey
     {
         $elements = array(new Integer(1), new OctetString($this->_privateKey));
         if (isset($this->_namedCurve)) {
-            $elements[] = new ExplicitlyTaggedType(0, 
+            $elements[] = new ExplicitlyTaggedType(0,
                 new ObjectIdentifier($this->_namedCurve));
         }
         if (isset($this->_publicKey)) {
-            $elements[] = new ExplicitlyTaggedType(1, 
+            $elements[] = new ExplicitlyTaggedType(1,
                 new BitString($this->_publicKey));
         }
         return new Sequence(...$elements);

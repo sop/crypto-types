@@ -17,7 +17,7 @@ class RFC4231HMACAITest extends PHPUnit_Framework_TestCase
     public function testDecodeWithParams()
     {
         $seq = new Sequence(
-            new ObjectIdentifier(AlgorithmIdentifier::OID_HMAC_WITH_SHA256), 
+            new ObjectIdentifier(AlgorithmIdentifier::OID_HMAC_WITH_SHA256),
             new NullType());
         $ai = AlgorithmIdentifier::fromASN1($seq);
         $this->assertInstanceOf(HMACWithSHA256AlgorithmIdentifier::class, $ai);
@@ -29,7 +29,7 @@ class RFC4231HMACAITest extends PHPUnit_Framework_TestCase
     public function testDecodeWithInvalidParamsFail()
     {
         $seq = new Sequence(
-            new ObjectIdentifier(AlgorithmIdentifier::OID_HMAC_WITH_SHA256), 
+            new ObjectIdentifier(AlgorithmIdentifier::OID_HMAC_WITH_SHA256),
             new Boolean(true));
         AlgorithmIdentifier::fromASN1($seq);
     }

@@ -64,7 +64,7 @@ class PublicKeyInfo
      */
     public static function fromPublicKey(PublicKey $public_key)
     {
-        return new self($public_key->algorithmIdentifier(), 
+        return new self($public_key->algorithmIdentifier(),
             $public_key->subjectPublicKeyData());
     }
     
@@ -136,7 +136,7 @@ class PublicKeyInfo
                     throw new \UnexpectedValueException("Not an EC algorithm.");
                 }
                 // ECPoint is directly mapped into public key data
-                return new EC\ECPublicKey($this->_publicKeyData, 
+                return new EC\ECPublicKey($this->_publicKeyData,
                     $algo->namedCurve());
         }
         throw new \RuntimeException(
@@ -175,7 +175,7 @@ class PublicKeyInfo
      */
     public function toASN1()
     {
-        return new Sequence($this->_algo->toASN1(), 
+        return new Sequence($this->_algo->toASN1(),
             new BitString($this->_publicKeyData));
     }
     

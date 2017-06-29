@@ -117,7 +117,7 @@ class ECPublicKeyTest extends PHPUnit_Framework_TestCase
      */
     public function testNamedCurve(ECPublicKey $pk)
     {
-        $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1, 
+        $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1,
             $pk->namedCurve());
     }
     
@@ -145,7 +145,7 @@ class ECPublicKeyTest extends PHPUnit_Framework_TestCase
     public function testFromCoordinates(array $points)
     {
         list($x, $y) = $points;
-        $pk = ECPublicKey::fromCoordinates($x, $y, 
+        $pk = ECPublicKey::fromCoordinates($x, $y,
             ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1);
         $this->assertInstanceOf(ECPublicKey::class, $pk);
         return $pk;

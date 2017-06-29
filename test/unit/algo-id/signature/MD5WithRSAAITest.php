@@ -29,7 +29,7 @@ class MD5WithRSAAITest extends PHPUnit_Framework_TestCase
     public function testDecode(Sequence $seq)
     {
         $ai = AlgorithmIdentifier::fromASN1($seq);
-        $this->assertInstanceOf(MD5WithRSAEncryptionAlgorithmIdentifier::class, 
+        $this->assertInstanceOf(MD5WithRSAEncryptionAlgorithmIdentifier::class,
             $ai);
         return $ai;
     }

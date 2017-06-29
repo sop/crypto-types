@@ -50,7 +50,7 @@ class PrivateKeyInfoTest extends PHPUnit_Framework_TestCase
      */
     public function testAlgoOID(AlgorithmIdentifier $algo)
     {
-        $this->assertEquals(AlgorithmIdentifier::OID_RSA_ENCRYPTION, 
+        $this->assertEquals(AlgorithmIdentifier::OID_RSA_ENCRYPTION,
             $algo->oid());
     }
     
@@ -106,7 +106,7 @@ class PrivateKeyInfoTest extends PHPUnit_Framework_TestCase
      */
     public function testECPrivateKeyHasNamedCurve(ECPrivateKey $pk)
     {
-        $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1, 
+        $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1,
             $pk->namedCurve());
     }
     

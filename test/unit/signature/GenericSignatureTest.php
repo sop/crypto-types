@@ -15,7 +15,7 @@ class GenericSignatureTest extends PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $sig = new GenericSignature(new BitString("test"), 
+        $sig = new GenericSignature(new BitString("test"),
             new SHA1WithRSAEncryptionAlgorithmIdentifier());
         $this->assertInstanceOf(GenericSignature::class, $sig);
         return $sig;
@@ -38,7 +38,7 @@ class GenericSignatureTest extends PHPUnit_Framework_TestCase
      */
     public function testSignatureAlgorithm(GenericSignature $sig)
     {
-        $this->assertInstanceOf(AlgorithmIdentifier::class, 
+        $this->assertInstanceOf(AlgorithmIdentifier::class,
             $sig->signatureAlgorithm());
     }
 }

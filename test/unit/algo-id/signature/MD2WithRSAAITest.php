@@ -29,7 +29,7 @@ class MD2WithRSAAITest extends PHPUnit_Framework_TestCase
     public function testDecode(Sequence $seq)
     {
         $ai = AlgorithmIdentifier::fromASN1($seq);
-        $this->assertInstanceOf(MD2WithRSAEncryptionAlgorithmIdentifier::class, 
+        $this->assertInstanceOf(MD2WithRSAEncryptionAlgorithmIdentifier::class,
             $ai);
         return $ai;
     }

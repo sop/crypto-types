@@ -42,7 +42,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
     public function testDecodeRFC2268OnlyIV()
     {
         $seq = new Sequence(
-            new ObjectIdentifier(AlgorithmIdentifier::OID_RC2_CBC), 
+            new ObjectIdentifier(AlgorithmIdentifier::OID_RC2_CBC),
             new OctetString(self::IV));
         $ai = AlgorithmIdentifier::fromASN1($seq);
         $this->assertInstanceOf(RC2CBCAlgorithmIdentifier::class, $ai);

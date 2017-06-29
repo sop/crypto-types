@@ -90,7 +90,7 @@ class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
      */
     public function testHasNamedCurveFromPKI(ECPrivateKey $pk)
     {
-        $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1, 
+        $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1,
             $pk->namedCurve());
     }
     

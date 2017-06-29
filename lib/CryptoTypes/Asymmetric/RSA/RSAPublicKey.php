@@ -131,7 +131,7 @@ class RSAPublicKey extends PublicKey
      */
     public function toASN1()
     {
-        return new Sequence(new Integer($this->_modulus), 
+        return new Sequence(new Integer($this->_modulus),
             new Integer($this->_publicExponent));
     }
     

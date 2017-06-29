@@ -29,7 +29,7 @@ class SHA1WithRSAAITest extends PHPUnit_Framework_TestCase
     public function testDecode(Sequence $seq)
     {
         $ai = AlgorithmIdentifier::fromASN1($seq);
-        $this->assertInstanceOf(SHA1WithRSAEncryptionAlgorithmIdentifier::class, 
+        $this->assertInstanceOf(SHA1WithRSAEncryptionAlgorithmIdentifier::class,
             $ai);
         return $ai;
     }

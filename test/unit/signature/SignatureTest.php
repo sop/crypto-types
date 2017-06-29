@@ -18,7 +18,7 @@ class SignatureTest extends PHPUnit_Framework_TestCase
      */
     public function testFromRSAAlgo()
     {
-        $sig = Signature::fromSignatureData("test", 
+        $sig = Signature::fromSignatureData("test",
             new SHA1WithRSAEncryptionAlgorithmIdentifier());
         $this->assertInstanceOf(RSASignature::class, $sig);
     }
@@ -28,7 +28,7 @@ class SignatureTest extends PHPUnit_Framework_TestCase
     public function testFromECAlgo()
     {
         $seq = new Sequence(new Integer(1), new Integer(2));
-        $sig = Signature::fromSignatureData($seq->toDER(), 
+        $sig = Signature::fromSignatureData($seq->toDER(),
             new ECDSAWithSHA1AlgorithmIdentifier());
         $this->assertInstanceOf(ECSignature::class, $sig);
     }
@@ -37,7 +37,7 @@ class SignatureTest extends PHPUnit_Framework_TestCase
      */
     public function testFromUnknownAlgo()
     {
-        $sig = Signature::fromSignatureData("", 
+        $sig = Signature::fromSignatureData("",
             new GenericAlgorithmIdentifier("1.3.6.1.3"));
         $this->assertInstanceOf(GenericSignature::class, $sig);
     }
