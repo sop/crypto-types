@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/sop/crypto-types.svg?branch=master)](https://travis-ci.org/sop/crypto-types)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sop/crypto-types/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sop/crypto-types/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/sop/crypto-types/badge.svg?branch=master)](https://coveralls.io/github/sop/crypto-types?branch=master)
+[![License](https://poser.pugx.org/sop/crypto-types/license)](https://github.com/sop/crypto-types/blob/master/LICENSE)
+
 # CryptoTypes
 
 A PHP library of various ASN.1 types for cryptographic applications.
