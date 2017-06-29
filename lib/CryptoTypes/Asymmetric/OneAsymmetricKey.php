@@ -74,7 +74,7 @@ class OneAsymmetricKey
      */
     public static function fromASN1(Sequence $seq)
     {
-        $version = $seq->at(0)
+        $version = (int) $seq->at(0)
             ->asInteger()
             ->number();
         if (!in_array($version, [self::VERSION_1, self::VERSION_2])) {
