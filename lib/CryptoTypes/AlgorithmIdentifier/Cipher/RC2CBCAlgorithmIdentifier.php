@@ -3,10 +3,10 @@
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
 use ASN1\Element;
+use ASN1\Type\UnspecifiedType;
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\Integer;
 use ASN1\Type\Primitive\OctetString;
-use ASN1\Type\UnspecifiedType;
 
 /* @formatter:off *//*
 

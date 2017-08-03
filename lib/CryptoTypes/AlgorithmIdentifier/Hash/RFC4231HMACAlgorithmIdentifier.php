@@ -3,9 +3,9 @@
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 use ASN1\Type\UnspecifiedType;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\PRFAlgorithmIdentifier;
-use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /**
  * Base class for HMAC algorithm identifiers specified in RFC 4231.

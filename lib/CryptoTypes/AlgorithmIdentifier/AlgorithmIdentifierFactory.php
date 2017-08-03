@@ -3,10 +3,6 @@
 namespace Sop\CryptoTypes\AlgorithmIdentifier;
 
 use ASN1\Type\Constructed\Sequence;
-use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric;
-use Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
-use Sop\CryptoTypes\AlgorithmIdentifier\Hash;
-use Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 /**
  * Factory class to parse AlgorithmIdentifier ASN.1 types to specific

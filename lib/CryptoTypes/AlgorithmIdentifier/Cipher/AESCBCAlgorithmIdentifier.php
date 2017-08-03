@@ -2,8 +2,8 @@
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
-use ASN1\Type\Primitive\OctetString;
 use ASN1\Type\UnspecifiedType;
+use ASN1\Type\Primitive\OctetString;
 
 /* @formatter:off *//*
 

@@ -2,10 +2,10 @@
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric;
 
-use ASN1\Type\Primitive\ObjectIdentifier;
 use ASN1\Type\UnspecifiedType;
-use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AsymmetricCryptoAlgorithmIdentifier;
+use ASN1\Type\Primitive\ObjectIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AsymmetricCryptoAlgorithmIdentifier;
 
 /* @formatter:off *//*
 

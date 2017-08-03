@@ -2,8 +2,8 @@
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
-use ASN1\Type\Primitive\NullType;
 use ASN1\Type\UnspecifiedType;
+use ASN1\Type\Primitive\NullType;
 
 /* @formatter:off *//*
 

@@ -4,8 +4,8 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 use ASN1\Type\UnspecifiedType;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
-use Sop\CryptoTypes\AlgorithmIdentifier\Feature\SignatureAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\SignatureAlgorithmIdentifier;
 
 /* @formatter:off *//*
 

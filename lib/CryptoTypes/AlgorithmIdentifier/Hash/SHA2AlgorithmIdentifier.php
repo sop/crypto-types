@@ -3,8 +3,8 @@
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 use ASN1\Type\UnspecifiedType;
-use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
 
 /* @formatter:off *//*
 

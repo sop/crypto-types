@@ -2,10 +2,10 @@
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
-use ASN1\Type\Primitive\NullType;
 use ASN1\Type\UnspecifiedType;
-use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
+use ASN1\Type\Primitive\NullType;
 use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
 
 /* @formatter:off *//*
 
