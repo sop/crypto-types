@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
 use ASN1\Type\UnspecifiedType;
@@ -68,7 +70,7 @@ abstract class AESCBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function blockSize()
+    public function blockSize(): int
     {
         return 16;
     }
@@ -78,7 +80,7 @@ abstract class AESCBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function ivSize()
+    public function ivSize(): int
     {
         return 16;
     }

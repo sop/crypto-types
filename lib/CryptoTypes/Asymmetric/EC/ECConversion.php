@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
 use ASN1\Type\Primitive\BitString;
@@ -22,7 +24,7 @@ class ECConversion
      * @throws \RuntimeException
      * @return OctetString
      */
-    public static function bitStringToOctetString(BitString $bs)
+    public static function bitStringToOctetString(BitString $bs): OctetString
     {
         $str = $bs->string();
         if ($bs->unusedBits()) {
@@ -40,7 +42,7 @@ class ECConversion
      * @param OctetString $os
      * @return BitString
      */
-    public static function octetStringToBitString(OctetString $os)
+    public static function octetStringToBitString(OctetString $os): BitString
     {
         return new BitString($os->string());
     }
@@ -50,12 +52,13 @@ class ECConversion
      *
      * Defined in SEC 1 section 2.3.7.
      *
-     * @param Integer $num
+     * @param \ASN1\Type\Primitive\Integer $num
      * @param int $mlen Optional desired output length
      * @throws \UnexpectedValueException
      * @return OctetString
      */
-    public static function integerToOctetString(Integer $num, $mlen = null)
+    public static function integerToOctetString(
+        \ASN1\Type\Primitive\Integer $num, int $mlen = null): OctetString
     {
         $gmp = gmp_init($num->number(), 10);
         $str = gmp_export($gmp, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
@@ -78,9 +81,9 @@ class ECConversion
      * Defined in SEC 1 section 2.3.8.
      *
      * @param OctetString $os
-     * @return Integer
+     * @return \ASN1\Type\Primitive\Integer
      */
-    public static function octetStringToInteger(OctetString $os)
+    public static function octetStringToInteger(OctetString $os): \ASN1\Type\Primitive\Integer
     {
         $num = gmp_import($os->string(), 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
         return new Integer(gmp_strval($num, 10));
@@ -96,7 +99,7 @@ class ECConversion
      * @param int $mlen Optional desired output length
      * @return string
      */
-    public static function numberToOctets($num, $mlen = null)
+    public static function numberToOctets($num, $mlen = null): string
     {
         return self::integerToOctetString(new Integer($num), $mlen)->string();
     }

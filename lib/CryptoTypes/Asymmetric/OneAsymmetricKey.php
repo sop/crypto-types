@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric;
 
 use ASN1\Type\Constructed\Sequence;
@@ -58,7 +60,7 @@ class OneAsymmetricKey
      * @param AlgorithmIdentifier $algo Algorithm
      * @param string $key Private key data
      */
-    public function __construct(AlgorithmIdentifier $algo, $key)
+    public function __construct(AlgorithmIdentifier $algo, string $key)
     {
         $this->_version = self::VERSION_1;
         $this->_algo = $algo;
@@ -97,7 +99,7 @@ class OneAsymmetricKey
      * @param string $data
      * @return self
      */
-    public static function fromDER($data)
+    public static function fromDER(string $data)
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -141,7 +143,7 @@ class OneAsymmetricKey
      *
      * @return AlgorithmIdentifier
      */
-    public function algorithmIdentifier()
+    public function algorithmIdentifier(): AlgorithmIdentifier
     {
         return $this->_algo;
     }
@@ -151,7 +153,7 @@ class OneAsymmetricKey
      *
      * @return string
      */
-    public function privateKeyData()
+    public function privateKeyData(): string
     {
         return $this->_privateKeyData;
     }
@@ -162,7 +164,7 @@ class OneAsymmetricKey
      * @throws \RuntimeException
      * @return PrivateKey
      */
-    public function privateKey()
+    public function privateKey(): PrivateKey
     {
         $algo = $this->algorithmIdentifier();
         switch ($algo->oid()) {
@@ -194,7 +196,7 @@ class OneAsymmetricKey
      *
      * @return PublicKeyInfo
      */
-    public function publicKeyInfo()
+    public function publicKeyInfo(): PublicKeyInfo
     {
         return $this->privateKey()
             ->publicKey()
@@ -206,7 +208,7 @@ class OneAsymmetricKey
      *
      * @return Sequence
      */
-    public function toASN1()
+    public function toASN1(): Sequence
     {
         $elements = array(new Integer($this->_version), $this->_algo->toASN1(),
             new OctetString($this->_privateKeyData));
@@ -219,7 +221,7 @@ class OneAsymmetricKey
      *
      * @return string
      */
-    public function toDER()
+    public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
@@ -229,7 +231,7 @@ class OneAsymmetricKey
      *
      * @return PEM
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         return new PEM(PEM::TYPE_PRIVATE_KEY, $this->toDER());
     }

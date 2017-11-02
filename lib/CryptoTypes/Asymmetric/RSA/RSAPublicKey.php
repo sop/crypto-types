@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric\RSA;
 
 use ASN1\Type\Constructed\Sequence;
@@ -66,7 +68,7 @@ class RSAPublicKey extends PublicKey
      * @param string $data
      * @return self
      */
-    public static function fromDER($data)
+    public static function fromDER(string $data)
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -119,7 +121,7 @@ class RSAPublicKey extends PublicKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier()
+    public function algorithmIdentifier(): AlgorithmIdentifier
     {
         return new RSAEncryptionAlgorithmIdentifier();
     }
@@ -129,7 +131,7 @@ class RSAPublicKey extends PublicKey
      *
      * @return Sequence
      */
-    public function toASN1()
+    public function toASN1(): Sequence
     {
         return new Sequence(new Integer($this->_modulus),
             new Integer($this->_publicExponent));
@@ -140,7 +142,7 @@ class RSAPublicKey extends PublicKey
      * {@inheritdoc}
      *
      */
-    public function toDER()
+    public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
@@ -150,7 +152,7 @@ class RSAPublicKey extends PublicKey
      *
      * @return PEM
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         return new PEM(PEM::TYPE_RSA_PUBLIC_KEY, $this->toDER());
     }

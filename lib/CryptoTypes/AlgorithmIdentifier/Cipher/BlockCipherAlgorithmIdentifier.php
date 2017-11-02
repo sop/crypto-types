@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
 /**
@@ -12,5 +14,5 @@ abstract class BlockCipherAlgorithmIdentifier extends CipherAlgorithmIdentifier
      *
      * @return int
      */
-    abstract public function blockSize();
+    abstract public function blockSize(): int;
 }

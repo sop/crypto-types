@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Feature;
 
 /**
@@ -19,7 +21,7 @@ interface AlgorithmIdentifierType
      *
      * @return string
      */
-    public function name();
+    public function name(): string;
     
     /**
      * Generate ASN.1 structure.

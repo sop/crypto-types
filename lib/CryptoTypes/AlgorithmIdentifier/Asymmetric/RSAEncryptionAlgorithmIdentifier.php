@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric;
 
 use ASN1\Type\UnspecifiedType;
@@ -38,7 +40,7 @@ class RSAEncryptionAlgorithmIdentifier extends SpecificAlgorithmIdentifier imple
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "rsaEncryption";
     }

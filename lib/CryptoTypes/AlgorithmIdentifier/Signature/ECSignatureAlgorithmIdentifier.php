@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 use ASN1\Type\UnspecifiedType;
@@ -57,7 +59,7 @@ abstract class ECSignatureAlgorithmIdentifier extends SpecificAlgorithmIdentifie
      * {@inheritdoc}
      *
      */
-    public function supportsKeyAlgorithm(AlgorithmIdentifier $algo)
+    public function supportsKeyAlgorithm(AlgorithmIdentifier $algo): bool
     {
         return $algo->oid() == self::OID_EC_PUBLIC_KEY;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Signature;
 
 use ASN1\Type\Primitive\BitString;
@@ -42,7 +44,7 @@ class GenericSignature extends Signature
      *
      * @return AlgorithmIdentifierType
      */
-    public function signatureAlgorithm()
+    public function signatureAlgorithm(): AlgorithmIdentifierType
     {
         return $this->_signatureAlgorithm;
     }
@@ -52,7 +54,7 @@ class GenericSignature extends Signature
      * {@inheritdoc}
      *
      */
-    public function bitString()
+    public function bitString(): BitString
     {
         return $this->_signature;
     }

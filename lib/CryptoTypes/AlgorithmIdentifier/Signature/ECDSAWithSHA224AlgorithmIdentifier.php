@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 /**
@@ -22,7 +24,7 @@ class ECDSAWithSHA224AlgorithmIdentifier extends ECSignatureAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "ecdsa-with-SHA224";
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
 /**
@@ -27,7 +29,7 @@ class AES192CBCAlgorithmIdentifier extends AESCBCAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "aes192-CBC";
     }
@@ -37,7 +39,7 @@ class AES192CBCAlgorithmIdentifier extends AESCBCAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function keySize()
+    public function keySize(): int
     {
         return 24;
     }

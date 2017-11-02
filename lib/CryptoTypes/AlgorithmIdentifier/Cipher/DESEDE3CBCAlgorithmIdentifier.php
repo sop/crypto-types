@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
 use ASN1\Type\UnspecifiedType;
@@ -40,7 +42,7 @@ class DESEDE3CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "des-EDE3-CBC";
     }
@@ -79,7 +81,7 @@ class DESEDE3CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function blockSize()
+    public function blockSize(): int
     {
         return 8;
     }
@@ -89,7 +91,7 @@ class DESEDE3CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function keySize()
+    public function keySize(): int
     {
         return 24;
     }
@@ -99,7 +101,7 @@ class DESEDE3CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function ivSize()
+    public function ivSize(): int
     {
         return 8;
     }

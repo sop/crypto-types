@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
 use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
@@ -21,14 +23,14 @@ abstract class CipherAlgorithmIdentifier extends SpecificAlgorithmIdentifier
      *
      * @return int
      */
-    abstract public function keySize();
+    abstract public function keySize(): int;
     
     /**
      * Get the initialization vector size in bytes.
      *
      * @return int
      */
-    abstract public function ivSize();
+    abstract public function ivSize(): int;
     
     /**
      * Get initialization vector.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier;
 
 use ASN1\Type\Constructed\Sequence;
@@ -104,7 +106,7 @@ abstract class AlgorithmIdentifier implements AlgorithmIdentifierType
      * {@inheritdoc}
      *
      */
-    public function toASN1()
+    public function toASN1(): Sequence
     {
         $elements = array(new ObjectIdentifier($this->_oid));
         $params = $this->_paramsASN1();

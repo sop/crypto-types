@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric;
 
 use Sop\CryptoEncoding\PEM;
@@ -14,35 +16,35 @@ abstract class PrivateKey
      *
      * @return \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier
      */
-    abstract public function algorithmIdentifier();
+    abstract public function algorithmIdentifier(): \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
     
     /**
      * Get public key component of the asymmetric key pair.
      *
      * @return PublicKey
      */
-    abstract public function publicKey();
+    abstract public function publicKey(): PublicKey;
     
     /**
      * Get DER encoding of the private key.
      *
      * @return string
      */
-    abstract public function toDER();
+    abstract public function toDER(): string;
     
     /**
      * Get the private key as a PEM.
      *
      * @return PEM
      */
-    abstract public function toPEM();
+    abstract public function toPEM(): PEM;
     
     /**
      * Get the private key as a PrivateKeyInfo type.
      *
      * @return PrivateKeyInfo
      */
-    public function privateKeyInfo()
+    public function privateKeyInfo(): PrivateKeyInfo
     {
         return PrivateKeyInfo::fromPrivateKey($this);
     }

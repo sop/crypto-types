@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric;
 
 use ASN1\Type\UnspecifiedType;
@@ -234,7 +236,7 @@ class ECPublicKeyAlgorithmIdentifier extends SpecificAlgorithmIdentifier impleme
     /**
      * Constructor.
      *
-     * @param string OID Curve identifier
+     * @param string $named_curve Curve identifier
      */
     public function __construct($named_curve)
     {
@@ -247,7 +249,7 @@ class ECPublicKeyAlgorithmIdentifier extends SpecificAlgorithmIdentifier impleme
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "ecPublicKey";
     }

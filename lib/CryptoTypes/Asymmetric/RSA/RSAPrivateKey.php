@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric\RSA;
 
 use ASN1\Type\Constructed\Sequence;
@@ -7,6 +9,7 @@ use ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
+use Sop\CryptoTypes\Asymmetric\PublicKey;
 
 /**
  * Implements PKCS #1 RSAPrivateKey ASN.1 type.
@@ -133,7 +136,7 @@ class RSAPrivateKey extends PrivateKey
      * @param string $data
      * @return self
      */
-    public static function fromDER($data)
+    public static function fromDER(string $data)
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -239,7 +242,7 @@ class RSAPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier()
+    public function algorithmIdentifier(): \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier
     {
         return new RSAEncryptionAlgorithmIdentifier();
     }
@@ -250,7 +253,7 @@ class RSAPrivateKey extends PrivateKey
      *
      * @return RSAPublicKey
      */
-    public function publicKey()
+    public function publicKey(): PublicKey
     {
         return new RSAPublicKey($this->_modulus, $this->_publicExponent);
     }
@@ -260,7 +263,7 @@ class RSAPrivateKey extends PrivateKey
      *
      * @return Sequence
      */
-    public function toASN1()
+    public function toASN1(): Sequence
     {
         return new Sequence(new Integer(0), new Integer($this->_modulus),
             new Integer($this->_publicExponent),
@@ -274,7 +277,7 @@ class RSAPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function toDER()
+    public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
@@ -284,7 +287,7 @@ class RSAPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         return new PEM(PEM::TYPE_RSA_PRIVATE_KEY, $this->toDER());
     }

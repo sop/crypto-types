@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 use ASN1\Type\UnspecifiedType;
@@ -40,7 +42,7 @@ class HMACWithSHA1AlgorithmIdentifier extends SpecificAlgorithmIdentifier implem
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "hmacWithSHA1";
     }

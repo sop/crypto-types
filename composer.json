@@ -25,7 +25,8 @@
 		"php": ">=5.6.3",
 		"ext-gmp": "*",
 		"sop/asn1": "^2.0.0",
-		"sop/crypto-encoding": "^0.1.0"
+		"sop/crypto-encoding": "^0.1.0",
+		"phpunit/phpunit": "^6.4"
 	},
 	"autoload": {
 		"psr-4": {

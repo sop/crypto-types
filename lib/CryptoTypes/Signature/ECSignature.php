@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Signature;
 
 use ASN1\Type\Constructed\Sequence;
@@ -64,7 +66,7 @@ class ECSignature extends Signature
      * @param string $data
      * @return self
      */
-    public static function fromDER($data)
+    public static function fromDER(string $data)
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -94,7 +96,7 @@ class ECSignature extends Signature
      *
      * @return Sequence
      */
-    public function toASN1()
+    public function toASN1(): Sequence
     {
         return new Sequence(new Integer($this->_r), new Integer($this->_s));
     }
@@ -104,7 +106,7 @@ class ECSignature extends Signature
      *
      * @return string
      */
-    public function toDER()
+    public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
@@ -114,7 +116,7 @@ class ECSignature extends Signature
      * {@inheritdoc}
      *
      */
-    public function bitString()
+    public function bitString(): BitString
     {
         return new BitString($this->toDER());
     }

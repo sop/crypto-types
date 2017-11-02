@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\BitString;
 use Sop\CryptoTypes\Signature\ECSignature;

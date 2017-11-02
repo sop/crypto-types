@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Signature;
 
 use ASN1\Type\Primitive\BitString;
@@ -26,7 +28,7 @@ abstract class Signature
      * @param AlgorithmIdentifierType $algo Algorithm identifier
      * @return self
      */
-    public static function fromSignatureData($data, AlgorithmIdentifierType $algo)
+    public static function fromSignatureData(string $data, AlgorithmIdentifierType $algo)
     {
         if ($algo instanceof RSASignatureAlgorithmIdentifier) {
             return RSASignature::fromSignatureString($data);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 /**
@@ -22,7 +24,7 @@ class HMACWithSHA512AlgorithmIdentifier extends RFC4231HMACAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "hmacWithSHA512";
     }

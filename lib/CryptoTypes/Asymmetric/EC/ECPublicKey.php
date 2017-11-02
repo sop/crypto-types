@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
 use ASN1\Type\Primitive\Integer;
@@ -41,7 +43,7 @@ class ECPublicKey extends PublicKey
      * @param string|null $named_curve Named curve OID
      * @throws \InvalidArgumentException If ECPoint is invalid
      */
-    public function __construct($ec_point, $named_curve = null)
+    public function __construct(string $ec_point, $named_curve = null)
     {
         // first octet must be 0x04 for uncompressed form, and 0x02 or 0x03
         // for compressed form.
@@ -69,7 +71,7 @@ class ECPublicKey extends PublicKey
         }
         $mlen = null;
         if (isset($bits)) {
-            $mlen = ceil($bits / 8);
+            $mlen = (int) ceil($bits / 8);
         }
         $x_os = ECConversion::integerToOctetString(new Integer($x), $mlen)->string();
         $y_os = ECConversion::integerToOctetString(new Integer($y), $mlen)->string();
@@ -118,7 +120,7 @@ class ECPublicKey extends PublicKey
      *
      * @return string
      */
-    public function ECPoint()
+    public function ECPoint(): string
     {
         return $this->_ecPoint;
     }
@@ -128,7 +130,7 @@ class ECPublicKey extends PublicKey
      *
      * @return string[] Tuple of X and Y coordinates as base-10 numbers
      */
-    public function curvePoint()
+    public function curvePoint(): array
     {
         return array_map(
             function ($str) {
@@ -141,13 +143,13 @@ class ECPublicKey extends PublicKey
      *
      * @return string[] Tuple of X and Y field elements as a string.
      */
-    public function curvePointOctets()
+    public function curvePointOctets(): array
     {
         if ($this->isCompressed()) {
             throw new \RuntimeException("EC point compression not supported.");
         }
         $str = substr($this->_ecPoint, 1);
-        list($x, $y) = str_split($str, floor(strlen($str) / 2));
+        list($x, $y) = str_split($str, (int) floor(strlen($str) / 2));
         return [$x, $y];
     }
     
@@ -156,7 +158,7 @@ class ECPublicKey extends PublicKey
      *
      * @return bool
      */
-    public function isCompressed()
+    public function isCompressed(): bool
     {
         $c = ord($this->_ecPoint[0]);
         return $c != 4;
@@ -167,7 +169,7 @@ class ECPublicKey extends PublicKey
      *
      * @return bool
      */
-    public function hasNamedCurve()
+    public function hasNamedCurve(): bool
     {
         return isset($this->_namedCurve);
     }
@@ -178,7 +180,7 @@ class ECPublicKey extends PublicKey
      * @throws \LogicException
      * @return string
      */
-    public function namedCurve()
+    public function namedCurve(): string
     {
         if (!$this->hasNamedCurve()) {
             throw new \LogicException("namedCurve not set.");
@@ -191,7 +193,7 @@ class ECPublicKey extends PublicKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier()
+    public function algorithmIdentifier(): AlgorithmIdentifier
     {
         return new ECPublicKeyAlgorithmIdentifier($this->namedCurve());
     }
@@ -201,7 +203,7 @@ class ECPublicKey extends PublicKey
      *
      * @return OctetString
      */
-    public function toASN1()
+    public function toASN1(): OctetString
     {
         return new OctetString($this->_ecPoint);
     }
@@ -211,7 +213,7 @@ class ECPublicKey extends PublicKey
      * {@inheritdoc}
      *
      */
-    public function toDER()
+    public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
@@ -222,7 +224,7 @@ class ECPublicKey extends PublicKey
      *
      * @link https://tools.ietf.org/html/rfc5480#section-2.2
      */
-    public function subjectPublicKeyData()
+    public function subjectPublicKeyData(): string
     {
         // ECPoint is directly mapped to subjectPublicKey
         return $this->_ecPoint;

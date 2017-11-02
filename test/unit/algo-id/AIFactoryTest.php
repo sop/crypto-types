@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\ObjectIdentifier;
 use ASN1\Type\UnspecifiedType;
@@ -35,11 +37,11 @@ class AIFactoryTest extends PHPUnit_Framework_TestCase
 
 class AIFactoryTest_Provider implements AlgorithmIdentifierProvider
 {
-    public function supportsOID($oid)
+    public function supportsOID(string $oid): bool
     {
         return "1.3.6.1.3" == $oid;
     }
-    public function getClassByOID($oid)
+    public function getClassByOID(string $oid): string
     {
         return AIFactoryTest_CustomAlgo::class;
     }
@@ -51,7 +53,7 @@ class AIFactoryTest_CustomAlgo extends SpecificAlgorithmIdentifier
     {
         return new self();
     }
-    public function name()
+    public function name(): string
     {
         return "";
     }

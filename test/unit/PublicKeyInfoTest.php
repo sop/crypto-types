@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use ASN1\Type\Primitive\ObjectIdentifier;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
@@ -189,7 +191,7 @@ class PubliceKeyInfoTest_InvalidECAlgo extends SpecificAlgorithmIdentifier
     {
         $this->_oid = self::OID_EC_PUBLIC_KEY;
     }
-    public function name()
+    public function name(): string
     {
         return "";
     }

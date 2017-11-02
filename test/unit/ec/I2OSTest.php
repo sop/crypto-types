@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use ASN1\Type\Primitive\Integer;
 use ASN1\Type\Primitive\OctetString;
 use Sop\CryptoTypes\Asymmetric\EC\ECConversion;

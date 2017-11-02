@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
 use ASN1\Type\Constructed\Sequence;
@@ -11,6 +13,7 @@ use ASN1\Type\Tagged\ExplicitlyTaggedType;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
+use Sop\CryptoTypes\Asymmetric\PublicKey;
 
 /**
  * Implements elliptic curve private key type as specified by RFC 5915.
@@ -166,7 +169,7 @@ class ECPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier()
+    public function algorithmIdentifier(): \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier
     {
         return new ECPublicKeyAlgorithmIdentifier($this->namedCurve());
     }
@@ -187,7 +190,7 @@ class ECPrivateKey extends PrivateKey
      *
      * @return ECPublicKey
      */
-    public function publicKey()
+    public function publicKey(): PublicKey
     {
         if (!$this->hasPublicKey()) {
             throw new \LogicException("publicKey not set.");
@@ -219,7 +222,7 @@ class ECPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function toDER()
+    public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
@@ -229,7 +232,7 @@ class ECPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         return new PEM(PEM::TYPE_EC_PRIVATE_KEY, $this->toDER());
     }

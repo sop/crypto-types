@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier;
 
 /**
@@ -17,7 +19,7 @@ interface AlgorithmIdentifierProvider
      * @param string $oid Object identifier in dotted format
      * @return bool
      */
-    public function supportsOID($oid);
+    public function supportsOID(string $oid): bool;
     
     /**
      * Get the name of a class that implements algorithm identifier for given
@@ -28,5 +30,5 @@ interface AlgorithmIdentifierProvider
      * @return string Fully qualified name of a class that extends
      *         SpecificAlgorithmIdentifier
      */
-    public function getClassByOID($oid);
+    public function getClassByOID(string $oid): string;
 }

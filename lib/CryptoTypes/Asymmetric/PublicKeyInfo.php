@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric;
 
 use ASN1\Type\Constructed\Sequence;
@@ -35,7 +37,7 @@ class PublicKeyInfo
      * @param AlgorithmIdentifier $algo Algorithm
      * @param string $key Public key data
      */
-    public function __construct(AlgorithmIdentifier $algo, $key)
+    public function __construct(AlgorithmIdentifier $algo, string $key)
     {
         $this->_algo = $algo;
         $this->_publicKeyData = $key;
@@ -92,7 +94,7 @@ class PublicKeyInfo
      * @param string $data
      * @return self
      */
-    public static function fromDER($data)
+    public static function fromDER(string $data)
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -102,7 +104,7 @@ class PublicKeyInfo
      *
      * @return AlgorithmIdentifier
      */
-    public function algorithmIdentifier()
+    public function algorithmIdentifier(): AlgorithmIdentifier
     {
         return $this->_algo;
     }
@@ -112,7 +114,7 @@ class PublicKeyInfo
      *
      * @return string
      */
-    public function publicKeyData()
+    public function publicKeyData(): string
     {
         return $this->_publicKeyData;
     }
@@ -123,7 +125,7 @@ class PublicKeyInfo
      * @throws \RuntimeException
      * @return PublicKey
      */
-    public function publicKey()
+    public function publicKey(): PublicKey
     {
         $algo = $this->algorithmIdentifier();
         switch ($algo->oid()) {
@@ -149,7 +151,7 @@ class PublicKeyInfo
      * @link https://tools.ietf.org/html/rfc5280#section-4.2.1.2
      * @return string 20 bytes (160 bits) long identifier
      */
-    public function keyIdentifier()
+    public function keyIdentifier(): string
     {
         return sha1($this->_publicKeyData, true);
     }
@@ -160,7 +162,7 @@ class PublicKeyInfo
      * @link https://tools.ietf.org/html/rfc5280#section-4.2.1.2
      * @return string 8 bytes (64 bits) long identifier
      */
-    public function keyIdentifier64()
+    public function keyIdentifier64(): string
     {
         $id = substr($this->keyIdentifier(), -8);
         $c = (ord($id[0]) & 0x0f) | 0x40;
@@ -173,7 +175,7 @@ class PublicKeyInfo
      *
      * @return Sequence
      */
-    public function toASN1()
+    public function toASN1(): Sequence
     {
         return new Sequence($this->_algo->toASN1(),
             new BitString($this->_publicKeyData));
@@ -184,7 +186,7 @@ class PublicKeyInfo
      *
      * @return string
      */
-    public function toDER()
+    public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
@@ -194,7 +196,7 @@ class PublicKeyInfo
      *
      * @return PEM
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         return new PEM(PEM::TYPE_PUBLIC_KEY, $this->toDER());
     }

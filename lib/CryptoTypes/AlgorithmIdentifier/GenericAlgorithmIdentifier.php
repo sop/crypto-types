@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier;
 
 use ASN1\Type\UnspecifiedType;
@@ -22,7 +24,7 @@ class GenericAlgorithmIdentifier extends AlgorithmIdentifier
      * @param string $oid Algorithm OID
      * @param UnspecifiedType|null $params Parameters
      */
-    public function __construct($oid, UnspecifiedType $params = null)
+    public function __construct(string $oid, UnspecifiedType $params = null)
     {
         $this->_oid = $oid;
         $this->_params = $params;
@@ -33,7 +35,7 @@ class GenericAlgorithmIdentifier extends AlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return $this->_oid;
     }

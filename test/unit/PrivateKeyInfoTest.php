@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\Integer;
 use ASN1\Type\Primitive\ObjectIdentifier;
@@ -240,7 +242,7 @@ class PrivateKeyInfoTest_InvalidECAlgo extends SpecificAlgorithmIdentifier
     {
         $this->_oid = self::OID_EC_PUBLIC_KEY;
     }
-    public function name()
+    public function name(): string
     {
         return "";
     }

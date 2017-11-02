@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Asymmetric;
 
 use Sop\CryptoEncoding\PEM;
@@ -21,14 +23,14 @@ abstract class PublicKey
      *
      * @return string
      */
-    abstract public function toDER();
+    abstract public function toDER(): string;
     
     /**
      * Get the public key data for subjectPublicKey in PublicKeyInfo.
      *
      * @return string
      */
-    public function subjectPublicKeyData()
+    public function subjectPublicKeyData(): string
     {
         return $this->toDER();
     }
@@ -38,7 +40,7 @@ abstract class PublicKey
      *
      * @return PublicKeyInfo
      */
-    public function publicKeyInfo()
+    public function publicKeyInfo(): PublicKeyInfo
     {
         return PublicKeyInfo::fromPublicKey($this);
     }

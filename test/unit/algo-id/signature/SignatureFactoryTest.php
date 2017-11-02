@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AsymmetricCryptoAlgorithmIdentifier;
@@ -114,7 +116,7 @@ class SignatureFactoryTest extends PHPUnit_Framework_TestCase
 class SignatureFactoryTest_InvalidCryptoAlgo extends SpecificAlgorithmIdentifier implements 
     AsymmetricCryptoAlgorithmIdentifier
 {
-    public function name()
+    public function name(): string
     {
         return "test";
     }
@@ -127,7 +129,7 @@ class SignatureFactoryTest_InvalidCryptoAlgo extends SpecificAlgorithmIdentifier
 class SignatureFactoryTest_InvalidHashAlgo extends SpecificAlgorithmIdentifier implements 
     HashAlgorithmIdentifier
 {
-    public function name()
+    public function name(): string
     {
         return "test";
     }

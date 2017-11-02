@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 /**
@@ -23,7 +25,7 @@ class SHA512WithRSAEncryptionAlgorithmIdentifier extends RFC4055RSASignatureAlgo
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "sha512WithRSAEncryption";
     }

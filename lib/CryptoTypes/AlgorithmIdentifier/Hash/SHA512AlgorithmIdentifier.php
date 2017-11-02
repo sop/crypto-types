@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 /**
@@ -25,7 +27,7 @@ class SHA512AlgorithmIdentifier extends SHA2AlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "sha512";
     }

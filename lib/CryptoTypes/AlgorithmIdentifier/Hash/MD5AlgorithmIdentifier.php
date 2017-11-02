@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 use ASN1\Type\UnspecifiedType;
@@ -54,7 +56,7 @@ class MD5AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "md5";
     }

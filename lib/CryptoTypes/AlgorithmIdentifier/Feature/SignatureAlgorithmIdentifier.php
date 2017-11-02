@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Feature;
 
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
@@ -15,5 +17,5 @@ interface SignatureAlgorithmIdentifier extends AlgorithmIdentifierType
      * @param AlgorithmIdentifier $algo
      * @return bool
      */
-    public function supportsKeyAlgorithm(AlgorithmIdentifier $algo);
+    public function supportsKeyAlgorithm(AlgorithmIdentifier $algo): bool;
 }

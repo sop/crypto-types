@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\Signature;
 
 use ASN1\Type\Primitive\BitString;
@@ -36,7 +38,7 @@ class RSASignature extends Signature
      * @param string $signature Signature bits
      * @return self
      */
-    public static function fromSignatureString($signature)
+    public static function fromSignatureString(string $signature)
     {
         $obj = new self();
         $obj->_signature = strval($signature);
@@ -48,7 +50,7 @@ class RSASignature extends Signature
      * {@inheritdoc}
      *
      */
-    public function bitString()
+    public function bitString(): BitString
     {
         return new BitString($this->_signature);
     }

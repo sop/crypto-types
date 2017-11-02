@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
@@ -17,7 +19,7 @@ abstract class RSASignatureAlgorithmIdentifier extends SpecificAlgorithmIdentifi
      * {@inheritdoc}
      *
      */
-    public function supportsKeyAlgorithm(AlgorithmIdentifier $algo)
+    public function supportsKeyAlgorithm(AlgorithmIdentifier $algo): bool
     {
         return $algo->oid() == self::OID_RSA_ENCRYPTION;
     }

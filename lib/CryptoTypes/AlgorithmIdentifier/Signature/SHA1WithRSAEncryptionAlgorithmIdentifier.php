@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 /**
@@ -22,7 +24,7 @@ class SHA1WithRSAEncryptionAlgorithmIdentifier extends RFC3279RSASignatureAlgori
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "sha1-with-rsa-signature";
     }

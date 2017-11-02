@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier;
 
 use ASN1\Type\Constructed\Sequence;
@@ -81,7 +83,7 @@ class AlgorithmIdentifierFactory
      * @param string $oid Object identifier in dotted format
      * @return string|null Fully qualified class name or null if not supported
      */
-    public function getClass($oid)
+    public function getClass(string $oid)
     {
         // if OID is provided by this factory
         if (array_key_exists($oid, self::MAP_OID_TO_CLASS)) {
@@ -102,7 +104,7 @@ class AlgorithmIdentifierFactory
      * @param Sequence $seq
      * @return AlgorithmIdentifier
      */
-    public function parse(Sequence $seq)
+    public function parse(Sequence $seq): AlgorithmIdentifier
     {
         $oid = $seq->at(0)
             ->asObjectIdentifier()

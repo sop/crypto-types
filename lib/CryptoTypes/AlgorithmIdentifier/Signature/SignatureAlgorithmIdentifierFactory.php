@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifierFactory;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AsymmetricCryptoAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\SignatureAlgorithmIdentifier;
 
 /**
  * Factory class for constructing signature algorithm identifiers.
@@ -55,11 +58,11 @@ abstract class SignatureAlgorithmIdentifierFactory
      *        algorithm identifier, eg. RSA or EC
      * @param HashAlgorithmIdentifier $hash_algo Hash algorithm identifier
      * @throws \UnexpectedValueException
-     * @return \Sop\CryptoTypes\AlgorithmIdentifier\Feature\SignatureAlgorithmIdentifier
+     * @return SignatureAlgorithmIdentifier
      */
     public static function algoForAsymmetricCrypto(
         AsymmetricCryptoAlgorithmIdentifier $crypto_algo,
-        HashAlgorithmIdentifier $hash_algo)
+        HashAlgorithmIdentifier $hash_algo): SignatureAlgorithmIdentifier
     {
         switch ($crypto_algo->oid()) {
             case AlgorithmIdentifier::OID_RSA_ENCRYPTION:
@@ -84,7 +87,7 @@ abstract class SignatureAlgorithmIdentifierFactory
      * @throws \UnexpectedValueException
      * @return string
      */
-    private static function _oidForRSA(HashAlgorithmIdentifier $hash_algo)
+    private static function _oidForRSA(HashAlgorithmIdentifier $hash_algo): string
     {
         if (!array_key_exists($hash_algo->oid(), self::MAP_RSA_OID)) {
             throw new \UnexpectedValueException(
@@ -100,7 +103,7 @@ abstract class SignatureAlgorithmIdentifierFactory
      * @throws \UnexpectedValueException
      * @return string
      */
-    private static function _oidForEC(HashAlgorithmIdentifier $hash_algo)
+    private static function _oidForEC(HashAlgorithmIdentifier $hash_algo): string
     {
         if (!array_key_exists($hash_algo->oid(), self::MAP_EC_OID)) {
             throw new \UnexpectedValueException(

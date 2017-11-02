@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
 use ASN1\Element;
@@ -102,7 +104,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function name()
+    public function name(): string
     {
         return "rc2-cbc";
     }
@@ -145,7 +147,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      *
      * @return int
      */
-    public function effectiveKeyBits()
+    public function effectiveKeyBits(): int
     {
         return $this->_effectiveKeyBits;
     }
@@ -175,7 +177,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function blockSize()
+    public function blockSize(): int
     {
         return 8;
     }
@@ -185,7 +187,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function keySize()
+    public function keySize(): int
     {
         return (int) round($this->_effectiveKeyBits / 8);
     }
@@ -195,7 +197,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * {@inheritdoc}
      *
      */
-    public function ivSize()
+    public function ivSize(): int
     {
         return 8;
     }
