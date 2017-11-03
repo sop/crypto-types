@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\RSA;
 
@@ -51,7 +51,7 @@ class RSAPublicKey extends PublicKey
      * @param Sequence $seq
      * @return self
      */
-    public static function fromASN1(Sequence $seq)
+    public static function fromASN1(Sequence $seq): self
     {
         $n = $seq->at(0)
             ->asInteger()
@@ -68,7 +68,7 @@ class RSAPublicKey extends PublicKey
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data)
+    public static function fromDER(string $data): self
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -80,7 +80,7 @@ class RSAPublicKey extends PublicKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         switch ($pem->type()) {
             case PEM::TYPE_RSA_PUBLIC_KEY:

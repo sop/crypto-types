@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric;
 
 use Sop\CryptoEncoding\PEM;
+use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 
 /**
  * Base class for public keys.
@@ -16,7 +17,7 @@ abstract class PublicKey
      *
      * @return \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier
      */
-    abstract public function algorithmIdentifier();
+    abstract public function algorithmIdentifier(): AlgorithmIdentifier;
     
     /**
      * Get DER encoding of the public key.

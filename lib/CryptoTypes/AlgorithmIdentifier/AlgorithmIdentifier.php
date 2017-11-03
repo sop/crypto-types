@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier;
 
@@ -96,7 +96,7 @@ abstract class AlgorithmIdentifier implements AlgorithmIdentifierType
      * {@inheritdoc}
      *
      */
-    public function oid()
+    public function oid(): string
     {
         return $this->_oid;
     }

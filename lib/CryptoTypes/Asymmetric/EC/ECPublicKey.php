@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
@@ -63,7 +63,7 @@ class ECPublicKey extends PublicKey
      * @param int|null $bits Size of <i>p</i> in bits
      * @return self
      */
-    public static function fromCoordinates($x, $y, $named_curve = null, $bits = null)
+    public static function fromCoordinates($x, $y, $named_curve = null, $bits = null): self
     {
         // if bitsize is not explicitly set, check from supported curves
         if (!isset($bits) && isset($named_curve)) {
@@ -85,7 +85,7 @@ class ECPublicKey extends PublicKey
      * @param string $oid Curve OID
      * @return int|null
      */
-    private static function _curveSize($oid)
+    private static function _curveSize(string $oid)
     {
         if (!array_key_exists($oid,
             ECPublicKeyAlgorithmIdentifier::MAP_CURVE_TO_SIZE)) {
@@ -101,7 +101,7 @@ class ECPublicKey extends PublicKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         if (PEM::TYPE_PUBLIC_KEY != $pem->type()) {
             throw new \UnexpectedValueException("Not a public key.");

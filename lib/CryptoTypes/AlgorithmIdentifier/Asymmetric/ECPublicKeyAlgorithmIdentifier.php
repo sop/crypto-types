@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric;
 
@@ -238,7 +238,7 @@ class ECPublicKeyAlgorithmIdentifier extends SpecificAlgorithmIdentifier impleme
      *
      * @param string $named_curve Curve identifier
      */
-    public function __construct($named_curve)
+    public function __construct(string $named_curve)
     {
         $this->_oid = self::OID_EC_PUBLIC_KEY;
         $this->_namedCurve = $named_curve;
@@ -274,7 +274,7 @@ class ECPublicKeyAlgorithmIdentifier extends SpecificAlgorithmIdentifier impleme
      *
      * @return string
      */
-    public function namedCurve()
+    public function namedCurve(): string
     {
         return $this->_namedCurve;
     }

@@ -1,12 +1,13 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\RSA;
 
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
+use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
@@ -105,7 +106,7 @@ class RSAPrivateKey extends PrivateKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromASN1(Sequence $seq)
+    public static function fromASN1(Sequence $seq): self
     {
         $version = $seq->at(0)
             ->asInteger()
@@ -136,7 +137,7 @@ class RSAPrivateKey extends PrivateKey
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data)
+    public static function fromDER(string $data): self
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -242,7 +243,7 @@ class RSAPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier(): \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifier
     {
         return new RSAEncryptionAlgorithmIdentifier();
     }

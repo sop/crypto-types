@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric;
 
@@ -74,7 +74,7 @@ class OneAsymmetricKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromASN1(Sequence $seq)
+    public static function fromASN1(Sequence $seq): self
     {
         $version = (int) $seq->at(0)
             ->asInteger()
@@ -99,7 +99,7 @@ class OneAsymmetricKey
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data)
+    public static function fromDER(string $data): self
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -110,7 +110,7 @@ class OneAsymmetricKey
      * @param PrivateKey $private_key
      * @return self
      */
-    public static function fromPrivateKey(PrivateKey $private_key)
+    public static function fromPrivateKey(PrivateKey $private_key): self
     {
         return new static($private_key->algorithmIdentifier(),
             $private_key->toDER());
@@ -123,7 +123,7 @@ class OneAsymmetricKey
      * @throws \UnexpectedValueException If PEM type is not supported
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         switch ($pem->type()) {
             case PEM::TYPE_PRIVATE_KEY:

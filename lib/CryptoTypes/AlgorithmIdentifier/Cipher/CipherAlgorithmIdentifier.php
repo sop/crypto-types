@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
@@ -50,7 +50,7 @@ abstract class CipherAlgorithmIdentifier extends SpecificAlgorithmIdentifier
      *         invalid
      * @return self
      */
-    public function withInitializationVector($iv)
+    public function withInitializationVector($iv): self
     {
         $this->_checkIVSize($iv);
         $obj = clone $this;

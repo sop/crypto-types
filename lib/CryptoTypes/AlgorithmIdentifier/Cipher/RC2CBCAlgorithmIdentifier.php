@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
@@ -91,7 +91,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * @param int $key_bits Number of effective key bits
      * @param string|null $iv Initialization vector
      */
-    public function __construct($key_bits = 64, $iv = null)
+    public function __construct(int $key_bits = 64, $iv = null)
     {
         $this->_checkIVSize($iv);
         $this->_oid = self::OID_RC2_CBC;
@@ -129,7 +129,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
             $idx = 0;
             // version is optional in rfc2898
             if ($seq->has($idx, Element::TYPE_INTEGER)) {
-                $version = $seq->at($idx++)
+                $version = (int) $seq->at($idx++)
                     ->asInteger()
                     ->number();
                 $key_bits = self::_versionToEKB($version);
@@ -208,7 +208,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
      * @param int $version
      * @return int
      */
-    private static function _versionToEKB($version)
+    private static function _versionToEKB(int $version): int
     {
         static $lut;
         if ($version > 255) {

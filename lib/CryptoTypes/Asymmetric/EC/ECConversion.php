@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
@@ -52,13 +52,12 @@ class ECConversion
      *
      * Defined in SEC 1 section 2.3.7.
      *
-     * @param \ASN1\Type\Primitive\Integer $num
+     * @param Integer $num
      * @param int $mlen Optional desired output length
      * @throws \UnexpectedValueException
      * @return OctetString
      */
-    public static function integerToOctetString(
-        \ASN1\Type\Primitive\Integer $num, int $mlen = null): OctetString
+    public static function integerToOctetString(Integer $num, int $mlen = null): OctetString
     {
         $gmp = gmp_init($num->number(), 10);
         $str = gmp_export($gmp, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
@@ -81,9 +80,9 @@ class ECConversion
      * Defined in SEC 1 section 2.3.8.
      *
      * @param OctetString $os
-     * @return \ASN1\Type\Primitive\Integer
+     * @return Integer
      */
-    public static function octetStringToInteger(OctetString $os): \ASN1\Type\Primitive\Integer
+    public static function octetStringToInteger(OctetString $os): Integer
     {
         $num = gmp_import($os->string(), 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
         return new Integer(gmp_strval($num, 10));
@@ -111,9 +110,9 @@ class ECConversion
      * without the need for external ASN.1 dependencies.
      *
      * @param string $str
-     * @return int|string Number in base-10
+     * @return string Number in base-10
      */
-    public static function octetsToNumber($str)
+    public static function octetsToNumber(string $str): string
     {
         return self::octetStringToInteger(new OctetString($str))->number();
     }

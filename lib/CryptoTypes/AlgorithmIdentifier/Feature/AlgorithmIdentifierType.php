@@ -1,8 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Feature;
+
+use ASN1\Type\Constructed\Sequence;
 
 /**
  * Base interface for algorithm identifiers.
@@ -14,7 +16,7 @@ interface AlgorithmIdentifierType
      *
      * @return string Object identifier in dotted format
      */
-    public function oid();
+    public function oid(): string;
     
     /**
      * Get a human readable name of the algorithm.
@@ -28,5 +30,5 @@ interface AlgorithmIdentifierType
      *
      * @return \ASN1\Type\Constructed\Sequence
      */
-    public function toASN1();
+    public function toASN1(): Sequence;
 }

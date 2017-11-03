@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Signature;
 
@@ -49,7 +49,7 @@ class ECSignature extends Signature
      * @param Sequence $seq
      * @return self
      */
-    public static function fromASN1(Sequence $seq)
+    public static function fromASN1(Sequence $seq): self
     {
         $r = $seq->at(0)
             ->asInteger()
@@ -66,7 +66,7 @@ class ECSignature extends Signature
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data)
+    public static function fromDER(string $data): self
     {
         return self::fromASN1(Sequence::fromDER($data));
     }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Signature;
 
@@ -38,7 +38,7 @@ class RSASignature extends Signature
      * @param string $signature Signature bits
      * @return self
      */
-    public static function fromSignatureString(string $signature)
+    public static function fromSignatureString(string $signature): Signature
     {
         $obj = new self();
         $obj->_signature = strval($signature);

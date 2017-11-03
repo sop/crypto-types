@@ -1,6 +1,7 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AsymmetricCryptoAlgorithmIdentifier;
@@ -23,7 +24,6 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Signature\SHA256WithRSAEncryptionAlgorit
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\SHA384WithRSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\SHA512WithRSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\SignatureAlgorithmIdentifierFactory;
-use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /**
  * @group asn1
@@ -116,6 +116,10 @@ class SignatureFactoryTest extends PHPUnit_Framework_TestCase
 class SignatureFactoryTest_InvalidCryptoAlgo extends SpecificAlgorithmIdentifier implements 
     AsymmetricCryptoAlgorithmIdentifier
 {
+    public function __construct()
+    {
+        $this->_oid = "1.3.6.1.3";
+    }
     public function name(): string
     {
         return "test";
@@ -129,6 +133,10 @@ class SignatureFactoryTest_InvalidCryptoAlgo extends SpecificAlgorithmIdentifier
 class SignatureFactoryTest_InvalidHashAlgo extends SpecificAlgorithmIdentifier implements 
     HashAlgorithmIdentifier
 {
+    public function __construct()
+    {
+        $this->_oid = "1.3.6.1.3";
+    }
     public function name(): string
     {
         return "test";

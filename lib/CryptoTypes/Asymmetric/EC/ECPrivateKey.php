@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
@@ -11,6 +11,7 @@ use ASN1\Type\Primitive\ObjectIdentifier;
 use ASN1\Type\Primitive\OctetString;
 use ASN1\Type\Tagged\ExplicitlyTaggedType;
 use Sop\CryptoEncoding\PEM;
+use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
@@ -50,7 +51,8 @@ class ECPrivateKey extends PrivateKey
      * @param string|null $named_curve OID of the named curve
      * @param string|null $public_key ECPoint value
      */
-    public function __construct($private_key, $named_curve = null, $public_key = null)
+    public function __construct(string $private_key, $named_curve = null,
+        $public_key = null)
     {
         $this->_privateKey = $private_key;
         $this->_namedCurve = $named_curve;
@@ -64,7 +66,7 @@ class ECPrivateKey extends PrivateKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromASN1(Sequence $seq)
+    public static function fromASN1(Sequence $seq): self
     {
         $version = $seq->at(0)
             ->asInteger()
@@ -96,7 +98,7 @@ class ECPrivateKey extends PrivateKey
      * @param string $data
      * @return self
      */
-    public static function fromDER($data)
+    public static function fromDER(string $data): self
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
@@ -108,7 +110,7 @@ class ECPrivateKey extends PrivateKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         $pk = parent::fromPEM($pem);
         if (!($pk instanceof self)) {
@@ -122,7 +124,7 @@ class ECPrivateKey extends PrivateKey
      *
      * @return string Octets of the private key
      */
-    public function privateKeyOctets()
+    public function privateKeyOctets(): string
     {
         return $this->_privateKey;
     }
@@ -132,7 +134,7 @@ class ECPrivateKey extends PrivateKey
      *
      * @return bool
      */
-    public function hasNamedCurve()
+    public function hasNamedCurve(): bool
     {
         return isset($this->_namedCurve);
     }
@@ -143,7 +145,7 @@ class ECPrivateKey extends PrivateKey
      * @throws \LogicException
      * @return string
      */
-    public function namedCurve()
+    public function namedCurve(): string
     {
         if (!$this->hasNamedCurve()) {
             throw new \LogicException("namedCurve not set.");
@@ -157,7 +159,7 @@ class ECPrivateKey extends PrivateKey
      * @param string|null $named_curve Named curve OID
      * @return self
      */
-    public function withNamedCurve($named_curve)
+    public function withNamedCurve($named_curve): self
     {
         $obj = clone $this;
         $obj->_namedCurve = $named_curve;
@@ -169,7 +171,7 @@ class ECPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier(): \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifier
     {
         return new ECPublicKeyAlgorithmIdentifier($this->namedCurve());
     }
@@ -179,7 +181,7 @@ class ECPrivateKey extends PrivateKey
      *
      * @return bool
      */
-    public function hasPublicKey()
+    public function hasPublicKey(): bool
     {
         return isset($this->_publicKey);
     }
@@ -203,7 +205,7 @@ class ECPrivateKey extends PrivateKey
      *
      * @return Sequence
      */
-    public function toASN1()
+    public function toASN1(): Sequence
     {
         $elements = array(new Integer(1), new OctetString($this->_privateKey));
         if (isset($this->_namedCurve)) {

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric;
 
@@ -49,7 +49,7 @@ class PublicKeyInfo
      * @param Sequence $seq
      * @return self
      */
-    public static function fromASN1(Sequence $seq)
+    public static function fromASN1(Sequence $seq): self
     {
         $algo = AlgorithmIdentifier::fromASN1($seq->at(0)->asSequence());
         $key = $seq->at(1)
@@ -64,7 +64,7 @@ class PublicKeyInfo
      * @param PublicKey $public_key
      * @return self
      */
-    public static function fromPublicKey(PublicKey $public_key)
+    public static function fromPublicKey(PublicKey $public_key): self
     {
         return new self($public_key->algorithmIdentifier(),
             $public_key->subjectPublicKeyData());
@@ -77,7 +77,7 @@ class PublicKeyInfo
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         switch ($pem->type()) {
             case PEM::TYPE_PUBLIC_KEY:
@@ -94,7 +94,7 @@ class PublicKeyInfo
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data)
+    public static function fromDER(string $data): self
     {
         return self::fromASN1(Sequence::fromDER($data));
     }
