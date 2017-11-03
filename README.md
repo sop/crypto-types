@@ -7,6 +7,13 @@
 
 A PHP library of various ASN.1 types for cryptographic applications.
 
+## Requirements
+
+-   PHP >=7.0
+-   gmp
+-   [sop/asn1](https://github.com/sop/asn1)
+-   [sop/crypto-encoding](https://github.com/sop/crypto-encoding)
+
 ## Features
 
 -   Asymmetric keys
