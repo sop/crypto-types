@@ -51,7 +51,7 @@ abstract class PublicKey
      *
      * @param PEM $pem
      * @throws \UnexpectedValueException
-     * @return self
+     * @return PublicKey
      */
     public static function fromPEM(PEM $pem)
     {
