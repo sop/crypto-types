@@ -17,7 +17,7 @@ abstract class Signature
     /**
      * Get the signature as a BitString.
      *
-     * @return \ASN1\Type\Primitive\BitString
+     * @return BitString
      */
     abstract public function bitString(): BitString;
     

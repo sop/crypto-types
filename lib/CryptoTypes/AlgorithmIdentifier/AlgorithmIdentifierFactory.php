@@ -22,8 +22,7 @@ class AlgorithmIdentifierFactory
      *
      * @var array
      */
-    const MAP_OID_TO_CLASS = array(
-        /* @formatter:off */
+    const MAP_OID_TO_CLASS = [ /* @formatter:off */
         AlgorithmIdentifier::OID_RSA_ENCRYPTION => Asymmetric\RSAEncryptionAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_EC_PUBLIC_KEY => Asymmetric\ECPublicKeyAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_DES_CBC => Cipher\DESCBCAlgorithmIdentifier::class,
@@ -57,7 +56,7 @@ class AlgorithmIdentifierFactory
         AlgorithmIdentifier::OID_ECDSA_WITH_SHA384 => Signature\ECDSAWithSHA384AlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_ECDSA_WITH_SHA512 => Signature\ECDSAWithSHA512AlgorithmIdentifier::class
         /* @formatter:on */
-    );
+    ];
     
     /**
      * Additional algorithm identifier providers.

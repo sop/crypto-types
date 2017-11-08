@@ -18,16 +18,16 @@ use ASN1\Type\Primitive\Integer;
 class ECSignature extends Signature
 {
     /**
-     * r-value.
+     * r-value as a base 10 integer.
      *
-     * @var int|string $_r
+     * @var string $_r
      */
     protected $_r;
     
     /**
-     * s-value.
+     * s-value as a base 10 integer.
      *
-     * @var int|string $_s
+     * @var string $_s
      */
     protected $_s;
     
@@ -39,8 +39,8 @@ class ECSignature extends Signature
      */
     public function __construct($r, $s)
     {
-        $this->_r = $r;
-        $this->_s = $s;
+        $this->_r = strval($r);
+        $this->_s = strval($s);
     }
     
     /**
@@ -74,9 +74,9 @@ class ECSignature extends Signature
     /**
      * Get the r-value.
      *
-     * @return int|string
+     * @return string Base 10 integer string
      */
-    public function r()
+    public function r(): string
     {
         return $this->_r;
     }
@@ -84,9 +84,9 @@ class ECSignature extends Signature
     /**
      * Get the s-value.
      *
-     * @return int|string
+     * @return string Base 10 integer string
      */
-    public function s()
+    public function s(): string
     {
         return $this->_s;
     }
@@ -114,7 +114,6 @@ class ECSignature extends Signature
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function bitString(): BitString
     {

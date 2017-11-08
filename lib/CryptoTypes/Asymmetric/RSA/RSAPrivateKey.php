@@ -20,58 +20,58 @@ use Sop\CryptoTypes\Asymmetric\PublicKey;
 class RSAPrivateKey extends PrivateKey
 {
     /**
-     * Modulus.
+     * Modulus as a base 10 integer.
      *
-     * @var int|string $_modulus
+     * @var string $_modulus
      */
     protected $_modulus;
     
     /**
-     * Public exponent.
+     * Public exponent as a base 10 integer.
      *
-     * @var int|string $_publicExponent
+     * @var string $_publicExponent
      */
     protected $_publicExponent;
     
     /**
-     * Private exponent.
+     * Private exponent as a base 10 integer.
      *
-     * @var int|string $_privateExponent
+     * @var string $_privateExponent
      */
     protected $_privateExponent;
     
     /**
-     * First prime factor.
+     * First prime factor as a base 10 integer.
      *
-     * @var int|string $_prime1
+     * @var string $_prime1
      */
     protected $_prime1;
     
     /**
-     * Second prime factor.
+     * Second prime factor as a base 10 integer.
      *
-     * @var int|string $_prime2
+     * @var string $_prime2
      */
     protected $_prime2;
     
     /**
-     * First factor exponent.
+     * First factor exponent as a base 10 integer.
      *
-     * @var int|string $_exponent1
+     * @var string $_exponent1
      */
     protected $_exponent1;
     
     /**
-     * Second factor exponent.
+     * Second factor exponent as a base 10 integer.
      *
-     * @var int|string $_exponent2
+     * @var string $_exponent2
      */
     protected $_exponent2;
     
     /**
-     * CRT coefficient of the second factor.
+     * CRT coefficient of the second factor as a base 10 integer.
      *
-     * @var int|string $_coefficient
+     * @var string $_coefficient
      */
     protected $_coefficient;
     
@@ -89,14 +89,14 @@ class RSAPrivateKey extends PrivateKey
      */
     public function __construct($n, $e, $d, $p, $q, $dp, $dq, $qi)
     {
-        $this->_modulus = $n;
-        $this->_publicExponent = $e;
-        $this->_privateExponent = $d;
-        $this->_prime1 = $p;
-        $this->_prime2 = $q;
-        $this->_exponent1 = $dp;
-        $this->_exponent2 = $dq;
-        $this->_coefficient = $qi;
+        $this->_modulus = strval($n);
+        $this->_publicExponent = strval($e);
+        $this->_privateExponent = strval($d);
+        $this->_prime1 = strval($p);
+        $this->_prime2 = strval($q);
+        $this->_exponent1 = strval($dp);
+        $this->_exponent2 = strval($dq);
+        $this->_coefficient = strval($qi);
     }
     
     /**
@@ -161,9 +161,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get modulus.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function modulus()
+    public function modulus(): string
     {
         return $this->_modulus;
     }
@@ -171,9 +171,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get public exponent.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function publicExponent()
+    public function publicExponent(): string
     {
         return $this->_publicExponent;
     }
@@ -181,9 +181,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get private exponent.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function privateExponent()
+    public function privateExponent(): string
     {
         return $this->_privateExponent;
     }
@@ -191,9 +191,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get first prime factor.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function prime1()
+    public function prime1(): string
     {
         return $this->_prime1;
     }
@@ -201,9 +201,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get second prime factor.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function prime2()
+    public function prime2(): string
     {
         return $this->_prime2;
     }
@@ -211,9 +211,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get first factor exponent.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function exponent1()
+    public function exponent1(): string
     {
         return $this->_exponent1;
     }
@@ -221,9 +221,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get second factor exponent.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function exponent2()
+    public function exponent2(): string
     {
         return $this->_exponent2;
     }
@@ -231,9 +231,9 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Get CRT coefficient of the second factor.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function coefficient()
+    public function coefficient(): string
     {
         return $this->_coefficient;
     }
@@ -241,7 +241,6 @@ class RSAPrivateKey extends PrivateKey
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function algorithmIdentifier(): AlgorithmIdentifierType
     {
@@ -251,7 +250,6 @@ class RSAPrivateKey extends PrivateKey
     /**
      *
      * {@inheritdoc}
-     *
      * @return RSAPublicKey
      */
     public function publicKey(): PublicKey
@@ -276,7 +274,6 @@ class RSAPrivateKey extends PrivateKey
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function toDER(): string
     {
@@ -286,7 +283,6 @@ class RSAPrivateKey extends PrivateKey
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function toPEM(): PEM
     {

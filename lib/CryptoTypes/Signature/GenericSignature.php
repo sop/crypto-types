@@ -52,7 +52,6 @@ class GenericSignature extends Signature
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function bitString(): BitString
     {

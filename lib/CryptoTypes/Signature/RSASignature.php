@@ -48,7 +48,6 @@ class RSASignature extends Signature
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function bitString(): BitString
     {

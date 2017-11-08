@@ -21,16 +21,16 @@ use Sop\CryptoTypes\Asymmetric\PublicKeyInfo;
 class RSAPublicKey extends PublicKey
 {
     /**
-     * Modulus.
+     * Modulus as a base 10 integer.
      *
-     * @var int|string $_modulus
+     * @var string $_modulus
      */
     protected $_modulus;
     
     /**
-     * Public exponent.
+     * Public exponent as a base 10 integer.
      *
-     * @var int|string $_publicExponent
+     * @var string $_publicExponent
      */
     protected $_publicExponent;
     
@@ -42,8 +42,8 @@ class RSAPublicKey extends PublicKey
      */
     public function __construct($n, $e)
     {
-        $this->_modulus = $n;
-        $this->_publicExponent = $e;
+        $this->_modulus = strval($n);
+        $this->_publicExponent = strval($e);
     }
     
     /**
@@ -100,9 +100,9 @@ class RSAPublicKey extends PublicKey
     /**
      * Get modulus.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function modulus()
+    public function modulus(): string
     {
         return $this->_modulus;
     }
@@ -110,9 +110,9 @@ class RSAPublicKey extends PublicKey
     /**
      * Get public exponent.
      *
-     * @return int|string
+     * @return string Base 10 integer
      */
-    public function publicExponent()
+    public function publicExponent(): string
     {
         return $this->_publicExponent;
     }
@@ -120,7 +120,6 @@ class RSAPublicKey extends PublicKey
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function algorithmIdentifier(): AlgorithmIdentifierType
     {
@@ -141,7 +140,6 @@ class RSAPublicKey extends PublicKey
     /**
      *
      * {@inheritdoc}
-     *
      */
     public function toDER(): string
     {

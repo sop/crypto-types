@@ -53,11 +53,11 @@ class ECConversion
      * Defined in SEC 1 section 2.3.7.
      *
      * @param Integer $num
-     * @param int $mlen Optional desired output length
+     * @param int|null $mlen Optional desired output length
      * @throws \UnexpectedValueException
      * @return OctetString
      */
-    public static function integerToOctetString(Integer $num, int $mlen = null): OctetString
+    public static function integerToOctetString(Integer $num, $mlen = null): OctetString
     {
         $gmp = gmp_init($num->number(), 10);
         $str = gmp_export($gmp, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
@@ -95,7 +95,7 @@ class ECConversion
      * without the need for external ASN.1 dependencies.
      *
      * @param int|string $num Number in base-10
-     * @param int $mlen Optional desired output length
+     * @param int|null $mlen Optional desired output length
      * @return string
      */
     public static function numberToOctets($num, $mlen = null): string
