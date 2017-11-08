@@ -7,8 +7,8 @@ namespace Sop\CryptoTypes\Asymmetric\RSA;
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
-use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
 
@@ -110,7 +110,7 @@ class RSAPrivateKey extends PrivateKey
     {
         $version = $seq->at(0)
             ->asInteger()
-            ->number();
+            ->intNumber();
         if ($version != 0) {
             throw new \UnexpectedValueException("Version must be 0.");
         }
@@ -243,7 +243,7 @@ class RSAPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier(): AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifierType
     {
         return new RSAEncryptionAlgorithmIdentifier();
     }

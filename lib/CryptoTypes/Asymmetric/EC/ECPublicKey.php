@@ -9,6 +9,7 @@ use ASN1\Type\Primitive\OctetString;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
 use Sop\CryptoTypes\Asymmetric\PublicKeyInfo;
 
@@ -193,7 +194,7 @@ class ECPublicKey extends PublicKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier(): AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifierType
     {
         return new ECPublicKeyAlgorithmIdentifier($this->namedCurve());
     }

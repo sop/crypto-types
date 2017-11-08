@@ -9,6 +9,7 @@ use ASN1\Type\Primitive\BitString;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 
 /**
  * Implements X.509 SubjectPublicKeyInfo ASN.1 type.
@@ -20,7 +21,7 @@ class PublicKeyInfo
     /**
      * Algorithm identifier.
      *
-     * @var AlgorithmIdentifier $_algo
+     * @var AlgorithmIdentifierType $_algo
      */
     protected $_algo;
     
@@ -34,10 +35,10 @@ class PublicKeyInfo
     /**
      * Constructor.
      *
-     * @param AlgorithmIdentifier $algo Algorithm
+     * @param AlgorithmIdentifierType $algo Algorithm
      * @param string $key Public key data
      */
-    public function __construct(AlgorithmIdentifier $algo, string $key)
+    public function __construct(AlgorithmIdentifierType $algo, string $key)
     {
         $this->_algo = $algo;
         $this->_publicKeyData = $key;
@@ -102,9 +103,9 @@ class PublicKeyInfo
     /**
      * Get algorithm identifier.
      *
-     * @return AlgorithmIdentifier
+     * @return AlgorithmIdentifierType
      */
-    public function algorithmIdentifier(): AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifierType
     {
         return $this->_algo;
     }

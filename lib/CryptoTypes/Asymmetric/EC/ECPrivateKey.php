@@ -11,8 +11,8 @@ use ASN1\Type\Primitive\ObjectIdentifier;
 use ASN1\Type\Primitive\OctetString;
 use ASN1\Type\Tagged\ExplicitlyTaggedType;
 use Sop\CryptoEncoding\PEM;
-use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
 
@@ -70,7 +70,7 @@ class ECPrivateKey extends PrivateKey
     {
         $version = $seq->at(0)
             ->asInteger()
-            ->number();
+            ->intNumber();
         if (1 != $version) {
             throw new \UnexpectedValueException("Version must be 1.");
         }
@@ -171,7 +171,7 @@ class ECPrivateKey extends PrivateKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier(): AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifierType
     {
         return new ECPublicKeyAlgorithmIdentifier($this->namedCurve());
     }

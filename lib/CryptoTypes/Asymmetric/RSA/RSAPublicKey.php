@@ -9,6 +9,7 @@ use ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
 use Sop\CryptoTypes\Asymmetric\PublicKeyInfo;
 
@@ -121,7 +122,7 @@ class RSAPublicKey extends PublicKey
      * {@inheritdoc}
      *
      */
-    public function algorithmIdentifier(): AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifierType
     {
         return new RSAEncryptionAlgorithmIdentifier();
     }

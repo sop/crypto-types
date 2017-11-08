@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Sop\CryptoTypes\Asymmetric;
 
 use Sop\CryptoEncoding\PEM;
-use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 
 /**
  * Base class for public keys.
@@ -15,9 +15,9 @@ abstract class PublicKey
     /**
      * Get the public key algorithm identifier.
      *
-     * @return \Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier
+     * @return AlgorithmIdentifierType
      */
-    abstract public function algorithmIdentifier(): AlgorithmIdentifier;
+    abstract public function algorithmIdentifier(): AlgorithmIdentifierType;
     
     /**
      * Get DER encoding of the public key.

@@ -10,6 +10,7 @@ use ASN1\Type\Primitive\OctetString;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 
 /**
  * Implements PKCS #8 PrivateKeyInfo / OneAsymmetricKey ASN.1 type.
@@ -43,7 +44,7 @@ class OneAsymmetricKey
     /**
      * Algorithm identifier.
      *
-     * @var AlgorithmIdentifier $_algo
+     * @var AlgorithmIdentifierType $_algo
      */
     protected $_algo;
     
@@ -57,10 +58,10 @@ class OneAsymmetricKey
     /**
      * Constructor.
      *
-     * @param AlgorithmIdentifier $algo Algorithm
+     * @param AlgorithmIdentifierType $algo Algorithm
      * @param string $key Private key data
      */
-    public function __construct(AlgorithmIdentifier $algo, string $key)
+    public function __construct(AlgorithmIdentifierType $algo, string $key)
     {
         $this->_version = self::VERSION_1;
         $this->_algo = $algo;
@@ -76,9 +77,9 @@ class OneAsymmetricKey
      */
     public static function fromASN1(Sequence $seq): self
     {
-        $version = (int) $seq->at(0)
+        $version = $seq->at(0)
             ->asInteger()
-            ->number();
+            ->intNumber();
         if (!in_array($version, [self::VERSION_1, self::VERSION_2])) {
             throw new \UnexpectedValueException(
                 "Version $version not supported.");
@@ -141,9 +142,9 @@ class OneAsymmetricKey
     /**
      * Get algorithm identifier.
      *
-     * @return AlgorithmIdentifier
+     * @return AlgorithmIdentifierType
      */
-    public function algorithmIdentifier(): AlgorithmIdentifier
+    public function algorithmIdentifier(): AlgorithmIdentifierType
     {
         return $this->_algo;
     }
