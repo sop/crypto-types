@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
+use ASN1\Type\UnspecifiedType;
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\BitString;
 use ASN1\Type\Primitive\Integer;
@@ -66,7 +67,7 @@ class ECPrivateKey extends PrivateKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromASN1(Sequence $seq): self
+    public static function fromASN1(Sequence $seq): ECPrivateKey
     {
         $version = $seq->at(0)
             ->asInteger()
@@ -98,9 +99,9 @@ class ECPrivateKey extends PrivateKey
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data): self
+    public static function fromDER(string $data): ECPrivateKey
     {
-        return self::fromASN1(Sequence::fromDER($data));
+        return self::fromASN1(UnspecifiedType::fromDER($data)->asSequence());
     }
     
     /**
@@ -110,7 +111,7 @@ class ECPrivateKey extends PrivateKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem): self
+    public static function fromPEM(PEM $pem): ECPrivateKey
     {
         $pk = parent::fromPEM($pem);
         if (!($pk instanceof self)) {
@@ -159,7 +160,7 @@ class ECPrivateKey extends PrivateKey
      * @param string|null $named_curve Named curve OID
      * @return self
      */
-    public function withNamedCurve($named_curve): self
+    public function withNamedCurve($named_curve): ECPrivateKey
     {
         $obj = clone $this;
         $obj->_namedCurve = $named_curve;

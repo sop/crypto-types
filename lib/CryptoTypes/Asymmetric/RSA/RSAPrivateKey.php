@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\RSA;
 
+use ASN1\Type\UnspecifiedType;
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
@@ -106,7 +107,7 @@ class RSAPrivateKey extends PrivateKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromASN1(Sequence $seq): self
+    public static function fromASN1(Sequence $seq): RSAPrivateKey
     {
         $version = $seq->at(0)
             ->asInteger()
@@ -137,9 +138,9 @@ class RSAPrivateKey extends PrivateKey
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data): self
+    public static function fromDER(string $data): RSAPrivateKey
     {
-        return self::fromASN1(Sequence::fromDER($data));
+        return self::fromASN1(UnspecifiedType::fromDER($data)->asSequence());
     }
     
     /**
@@ -149,7 +150,7 @@ class RSAPrivateKey extends PrivateKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem): self
+    public static function fromPEM(PEM $pem): RSAPrivateKey
     {
         $pk = parent::fromPEM($pem);
         if (!($pk instanceof self)) {

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\RSA;
 
+use ASN1\Type\UnspecifiedType;
 use ASN1\Type\Constructed\Sequence;
 use ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
@@ -71,7 +72,7 @@ class RSAPublicKey extends PublicKey
      */
     public static function fromDER(string $data): self
     {
-        return self::fromASN1(Sequence::fromDER($data));
+        return self::fromASN1(UnspecifiedType::fromDER($data)->asSequence());
     }
     
     /**
