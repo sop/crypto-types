@@ -24,7 +24,7 @@
 	"require": {
 		"php": ">=7.0",
 		"ext-gmp": "*",
-		"sop/asn1": "^3.0.1",
+		"sop/asn1": "^3.1.0",
 		"sop/crypto-encoding": "^0.2.0"
 	},
 	"require-dev": {
