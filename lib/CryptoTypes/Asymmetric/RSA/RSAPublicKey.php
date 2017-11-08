@@ -53,7 +53,7 @@ class RSAPublicKey extends PublicKey
      * @param Sequence $seq
      * @return self
      */
-    public static function fromASN1(Sequence $seq): self
+    public static function fromASN1(Sequence $seq): RSAPublicKey
     {
         $n = $seq->at(0)
             ->asInteger()
@@ -70,7 +70,7 @@ class RSAPublicKey extends PublicKey
      * @param string $data
      * @return self
      */
-    public static function fromDER(string $data): self
+    public static function fromDER(string $data): RSAPublicKey
     {
         return self::fromASN1(UnspecifiedType::fromDER($data)->asSequence());
     }
@@ -82,7 +82,7 @@ class RSAPublicKey extends PublicKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem): self
+    public static function fromPEM(PEM $pem): RSAPublicKey
     {
         switch ($pem->type()) {
             case PEM::TYPE_RSA_PUBLIC_KEY:

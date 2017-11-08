@@ -64,7 +64,7 @@ class ECPublicKey extends PublicKey
      * @param int|null $bits Size of <i>p</i> in bits
      * @return self
      */
-    public static function fromCoordinates($x, $y, $named_curve = null, $bits = null): self
+    public static function fromCoordinates($x, $y, $named_curve = null, $bits = null): ECPublicKey
     {
         // if bitsize is not explicitly set, check from supported curves
         if (!isset($bits) && isset($named_curve)) {
@@ -102,7 +102,7 @@ class ECPublicKey extends PublicKey
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPEM(PEM $pem): self
+    public static function fromPEM(PEM $pem): ECPublicKey
     {
         if (PEM::TYPE_PUBLIC_KEY != $pem->type()) {
             throw new \UnexpectedValueException("Not a public key.");
