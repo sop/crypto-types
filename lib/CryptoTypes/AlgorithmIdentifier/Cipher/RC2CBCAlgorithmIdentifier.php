@@ -9,6 +9,7 @@ use Sop\ASN1\Type\Constructed\Sequence;
 use Sop\ASN1\Type\Primitive\Integer;
 use Sop\ASN1\Type\Primitive\OctetString;
 use Sop\ASN1\Type\UnspecifiedType;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
 Parameters may be seen in various forms. This implementation attemts
@@ -107,8 +108,11 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
 
     /**
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         if (!isset($params)) {
             throw new \UnexpectedValueException('No parameters.');

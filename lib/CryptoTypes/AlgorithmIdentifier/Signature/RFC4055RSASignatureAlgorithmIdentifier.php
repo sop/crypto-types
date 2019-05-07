@@ -7,6 +7,7 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 use Sop\ASN1\Element;
 use Sop\ASN1\Type\Primitive\NullType;
 use Sop\ASN1\Type\UnspecifiedType;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
 From RFC 4055 - 5.  PKCS #1 Version 1.5 Signature Algorithm
@@ -40,8 +41,11 @@ abstract class RFC4055RSASignatureAlgorithmIdentifier extends RSASignatureAlgori
 
     /**
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         $obj = new static();
         // store parameters so re-encoding doesn't change

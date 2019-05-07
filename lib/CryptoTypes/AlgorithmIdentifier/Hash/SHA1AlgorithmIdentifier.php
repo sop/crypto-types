@@ -54,8 +54,11 @@ class SHA1AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements Has
 
     /**
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         $obj = new static();
         // if parameters field is present, it must be null type

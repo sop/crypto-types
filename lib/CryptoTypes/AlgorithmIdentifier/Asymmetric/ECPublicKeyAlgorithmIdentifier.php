@@ -270,8 +270,11 @@ class ECPublicKeyAlgorithmIdentifier extends SpecificAlgorithmIdentifier impleme
 
     /**
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         if (!isset($params)) {
             throw new \UnexpectedValueException('No parameters.');

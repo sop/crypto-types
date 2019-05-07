@@ -26,8 +26,11 @@ abstract class RFC4231HMACAlgorithmIdentifier extends SpecificAlgorithmIdentifie
 
     /**
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         /*
          * RFC 4231 states that the "parameter" component SHOULD be present

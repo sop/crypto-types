@@ -7,6 +7,7 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 use Sop\ASN1\Element;
 use Sop\ASN1\Type\Primitive\OctetString;
 use Sop\ASN1\Type\UnspecifiedType;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
 From RFC 3565 - 4.1. AES Algorithm Identifiers and Parameters:
@@ -36,13 +37,12 @@ abstract class AESCBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
     }
 
     /**
-     * @param UnspecifiedType $params
-     *
-     * @throws \UnexpectedValueException If parameters are invalid
+     * {@inheritdoc}
      *
      * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         if (!isset($params)) {
             throw new \UnexpectedValueException('No parameters.');

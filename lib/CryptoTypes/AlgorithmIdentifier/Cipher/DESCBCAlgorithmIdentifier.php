@@ -7,6 +7,7 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 use Sop\ASN1\Element;
 use Sop\ASN1\Type\Primitive\OctetString;
 use Sop\ASN1\Type\UnspecifiedType;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
 /*
 RFC 2898 defines parameters as follows:
@@ -45,8 +46,11 @@ class DESCBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
 
     /**
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         if (!isset($params)) {
             throw new \UnexpectedValueException('No parameters.');

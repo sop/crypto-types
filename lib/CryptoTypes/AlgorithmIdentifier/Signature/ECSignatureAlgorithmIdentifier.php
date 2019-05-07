@@ -29,8 +29,11 @@ abstract class ECSignatureAlgorithmIdentifier extends SpecificAlgorithmIdentifie
 {
     /**
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromASN1Params(?UnspecifiedType $params = null)
+    public static function fromASN1Params(
+        ?UnspecifiedType $params = null): SpecificAlgorithmIdentifier
     {
         if (isset($params)) {
             throw new \UnexpectedValueException('Parameters must be omitted.');
