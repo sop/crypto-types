@@ -27,7 +27,7 @@ abstract class RFC4055RSASignatureAlgorithmIdentifier extends RSASignatureAlgori
     /**
      * Parameters.
      *
-     * @var null|\Sop\ASN1\Element
+     * @var null|Element
      */
     protected $_params;
 
