@@ -7,7 +7,7 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 /**
  * RSA with MD2 signature algorithm identifier.
  *
- * @link https://tools.ietf.org/html/rfc3279#section-2.2.1
+ * @see https://tools.ietf.org/html/rfc3279#section-2.2.1
  */
 class MD2WithRSAEncryptionAlgorithmIdentifier extends RFC3279RSASignatureAlgorithmIdentifier
 {
@@ -18,14 +18,12 @@ class MD2WithRSAEncryptionAlgorithmIdentifier extends RFC3279RSASignatureAlgorit
     {
         $this->_oid = self::OID_MD2_WITH_RSA_ENCRYPTION;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function name(): string
     {
-        return "md2WithRSAEncryption";
+        return 'md2WithRSAEncryption';
     }
 }

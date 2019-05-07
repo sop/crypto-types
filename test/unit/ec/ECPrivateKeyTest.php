@@ -1,8 +1,10 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\Integer;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey;
@@ -12,33 +14,33 @@ use Sop\CryptoTypes\Asymmetric\PrivateKeyInfo;
 /**
  * @group asn1
  * @group ec
+ *
+ * @internal
  */
-class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
+class ECPrivateKeyTest extends TestCase
 {
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey
+     * @return ECPrivateKey
      */
     public function testDecode()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/ec_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/ec_private_key.pem');
         $pk = ECPrivateKey::fromDER($pem->data());
         $this->assertInstanceOf(ECPrivateKey::class, $pk);
         return $pk;
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey
+     * @return ECPrivateKey
      */
     public function testFromPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/ec_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/ec_private_key.pem');
         $pk = ECPrivateKey::fromPEM($pem);
         $this->assertInstanceOf(ECPrivateKey::class, $pk);
         return $pk;
     }
-    
+
     /**
      * @depends testFromPEM
      *
@@ -50,7 +52,7 @@ class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PEM::class, $pem);
         return $pem;
     }
-    
+
     /**
      * @depends testToPEM
      *
@@ -58,22 +60,21 @@ class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
      */
     public function testRecodedPEM(PEM $pem)
     {
-        $ref = PEM::fromFile(TEST_ASSETS_DIR . "/ec/ec_private_key.pem");
+        $ref = PEM::fromFile(TEST_ASSETS_DIR . '/ec/ec_private_key.pem');
         $this->assertEquals($ref, $pem);
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey
+     * @return ECPrivateKey
      */
     public function testFromPKIPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/private_key.pem');
         $pk = ECPrivateKey::fromPEM($pem);
         $this->assertInstanceOf(ECPrivateKey::class, $pk);
         return $pk;
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -82,9 +83,9 @@ class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
     public function testPrivateKeyOctets(ECPrivateKey $pk)
     {
         $octets = $pk->privateKeyOctets();
-        $this->assertInternalType("string", $octets);
+        $this->assertIsString($octets);
     }
-    
+
     /**
      * @depends testFromPKIPEM
      *
@@ -95,7 +96,7 @@ class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1,
             $pk->namedCurve());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -105,10 +106,10 @@ class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $pub = $pk->publicKey();
         $ref = ECPublicKey::fromPEM(
-            PEM::fromFile(TEST_ASSETS_DIR . "/ec/public_key.pem"));
+            PEM::fromFile(TEST_ASSETS_DIR . '/ec/public_key.pem'));
         $this->assertEquals($ref, $pub);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -119,54 +120,46 @@ class ECPrivateKeyTest extends PHPUnit_Framework_TestCase
         $pki = $pk->privateKeyInfo();
         $this->assertInstanceOf(PrivateKeyInfo::class, $pki);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidVersion()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/ec_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/ec_private_key.pem');
         $seq = Sequence::fromDER($pem->data());
         $seq = $seq->withReplaced(0, new Integer(0));
+        $this->expectException(\UnexpectedValueException::class);
         ECPrivateKey::fromASN1($seq);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidPEMType()
     {
-        $pem = new PEM("nope", "");
+        $pem = new PEM('nope', '');
+        $this->expectException(\UnexpectedValueException::class);
         ECPrivateKey::fromPEM($pem);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testRSAKeyFail()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/private_key.pem');
+        $this->expectException(\UnexpectedValueException::class);
         ECPrivateKey::fromPEM($pem);
     }
-    
+
     /**
      * @depends testDecode
-     * @expectedException LogicException
      *
      * @param ECPrivateKey $pk
      */
     public function testNamedCurveNotSet(ECPrivateKey $pk)
     {
         $pk = $pk->withNamedCurve(null);
+        $this->expectException(\LogicException::class);
         $pk->namedCurve();
     }
-    
-    /**
-     * @expectedException LogicException
-     */
+
     public function testPublicKeyNotSet()
     {
         $pk = new ECPrivateKey("\0");
+        $this->expectException(\LogicException::class);
         $pk->publicKey();
     }
 }

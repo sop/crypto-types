@@ -7,7 +7,7 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 /**
  * HMAC with SHA-384 algorithm identifier.
  *
- * @link https://tools.ietf.org/html/rfc4231#section-3.1
+ * @see https://tools.ietf.org/html/rfc4231#section-3.1
  */
 class HMACWithSHA384AlgorithmIdentifier extends RFC4231HMACAlgorithmIdentifier
 {
@@ -18,14 +18,12 @@ class HMACWithSHA384AlgorithmIdentifier extends RFC4231HMACAlgorithmIdentifier
     {
         $this->_oid = self::OID_HMAC_WITH_SHA384;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function name(): string
     {
-        return "hmacWithSHA384";
+        return 'hmacWithSHA384';
     }
 }

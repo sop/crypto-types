@@ -7,7 +7,7 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 /**
  * RSA with MD5 signature algorithm identifier.
  *
- * @link https://tools.ietf.org/html/rfc3279#section-2.2.1
+ * @see https://tools.ietf.org/html/rfc3279#section-2.2.1
  */
 class MD5WithRSAEncryptionAlgorithmIdentifier extends RFC3279RSASignatureAlgorithmIdentifier
 {
@@ -18,14 +18,12 @@ class MD5WithRSAEncryptionAlgorithmIdentifier extends RFC3279RSASignatureAlgorit
     {
         $this->_oid = self::OID_MD5_WITH_RSA_ENCRYPTION;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function name(): string
     {
-        return "md5WithRSAEncryption";
+        return 'md5WithRSAEncryption';
     }
 }

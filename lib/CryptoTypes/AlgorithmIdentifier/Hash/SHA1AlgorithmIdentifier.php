@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
-use ASN1\Type\UnspecifiedType;
-use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
+use Sop\ASN1\Element;
+use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
-/* @formatter:off *//*
-
+/*
 From RFC 3370 - 2.1 SHA-1
 
     The AlgorithmIdentifier parameters field is OPTIONAL.  If present,
@@ -18,25 +18,23 @@ From RFC 3370 - 2.1 SHA-1
     Implementations MUST accept SHA-1 AlgorithmIdentifiers with NULL
     parameters.  Implementations SHOULD generate SHA-1
     AlgorithmIdentifiers with absent parameters.
-
-*//* @formatter:on */
+*/
 
 /**
  * SHA-1 algorithm identifier.
  *
- * @link http://oid-info.com/get/1.3.14.3.2.26
- * @link https://tools.ietf.org/html/rfc3370#section-2.1
+ * @see http://oid-info.com/get/1.3.14.3.2.26
+ * @see https://tools.ietf.org/html/rfc3370#section-2.1
  */
-class SHA1AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements 
-    HashAlgorithmIdentifier
+class SHA1AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements HashAlgorithmIdentifier
 {
     /**
      * Parameters.
      *
-     * @var \ASN1\Type\Primitive\NullType|null $_params
+     * @var null|\Sop\ASN1\Type\Primitive\NullType
      */
     protected $_params;
-    
+
     /**
      * Constructor.
      */
@@ -45,23 +43,19 @@ class SHA1AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements
         $this->_oid = self::OID_SHA1;
         $this->_params = null;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function name(): string
     {
-        return "sha1";
+        return 'sha1';
     }
-    
+
     /**
-     *
-     * @param UnspecifiedType $params
-     * @return self
+     * {@inheritdoc}
      */
-    public static function fromASN1Params(UnspecifiedType $params = null)
+    public static function fromASN1Params(?UnspecifiedType $params = null)
     {
         $obj = new static();
         // if parameters field is present, it must be null type
@@ -70,14 +64,13 @@ class SHA1AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements
         }
         return $obj;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      *
-     * @return \ASN1\Type\Primitive\NullType|null
+     * @return null|\Sop\ASN1\Type\Primitive\NullType
      */
-    protected function _paramsASN1()
+    protected function _paramsASN1(): ?Element
     {
         return $this->_params;
     }

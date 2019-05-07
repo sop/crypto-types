@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\RSA;
 
-use ASN1\Type\UnspecifiedType;
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\Integer;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\Integer;
+use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
@@ -16,74 +16,74 @@ use Sop\CryptoTypes\Asymmetric\PublicKey;
 /**
  * Implements PKCS #1 RSAPrivateKey ASN.1 type.
  *
- * @link https://tools.ietf.org/html/rfc2437#section-11.1.2
+ * @see https://tools.ietf.org/html/rfc2437#section-11.1.2
  */
 class RSAPrivateKey extends PrivateKey
 {
     /**
      * Modulus as a base 10 integer.
      *
-     * @var string $_modulus
+     * @var string
      */
     protected $_modulus;
-    
+
     /**
      * Public exponent as a base 10 integer.
      *
-     * @var string $_publicExponent
+     * @var string
      */
     protected $_publicExponent;
-    
+
     /**
      * Private exponent as a base 10 integer.
      *
-     * @var string $_privateExponent
+     * @var string
      */
     protected $_privateExponent;
-    
+
     /**
      * First prime factor as a base 10 integer.
      *
-     * @var string $_prime1
+     * @var string
      */
     protected $_prime1;
-    
+
     /**
      * Second prime factor as a base 10 integer.
      *
-     * @var string $_prime2
+     * @var string
      */
     protected $_prime2;
-    
+
     /**
      * First factor exponent as a base 10 integer.
      *
-     * @var string $_exponent1
+     * @var string
      */
     protected $_exponent1;
-    
+
     /**
      * Second factor exponent as a base 10 integer.
      *
-     * @var string $_exponent2
+     * @var string
      */
     protected $_exponent2;
-    
+
     /**
      * CRT coefficient of the second factor as a base 10 integer.
      *
-     * @var string $_coefficient
+     * @var string
      */
     protected $_coefficient;
-    
+
     /**
      * Constructor.
      *
-     * @param int|string $n Modulus
-     * @param int|string $e Public exponent
-     * @param int|string $d Private exponent
-     * @param int|string $p First prime factor
-     * @param int|string $q Second prime factor
+     * @param int|string $n  Modulus
+     * @param int|string $e  Public exponent
+     * @param int|string $d  Private exponent
+     * @param int|string $p  First prime factor
+     * @param int|string $q  Second prime factor
      * @param int|string $dp First factor exponent
      * @param int|string $dq Second factor exponent
      * @param int|string $qi CRT coefficient of the second factor
@@ -99,12 +99,14 @@ class RSAPrivateKey extends PrivateKey
         $this->_exponent2 = strval($dq);
         $this->_coefficient = strval($qi);
     }
-    
+
     /**
      * Initialize from ASN.1.
      *
      * @param Sequence $seq
+     *
      * @throws \UnexpectedValueException
+     *
      * @return self
      */
     public static function fromASN1(Sequence $seq): RSAPrivateKey
@@ -112,8 +114,8 @@ class RSAPrivateKey extends PrivateKey
         $version = $seq->at(0)
             ->asInteger()
             ->intNumber();
-        if ($version != 0) {
-            throw new \UnexpectedValueException("Version must be 0.");
+        if (0 != $version) {
+            throw new \UnexpectedValueException('Version must be 0.');
         }
         // helper function get integer from given index
         $get_int = function ($idx) use ($seq) {
@@ -131,34 +133,37 @@ class RSAPrivateKey extends PrivateKey
         $qi = $get_int(8);
         return new self($n, $e, $d, $p, $q, $dp, $dq, $qi);
     }
-    
+
     /**
      * Initialize from DER data.
      *
      * @param string $data
+     *
      * @return self
      */
     public static function fromDER(string $data): RSAPrivateKey
     {
         return self::fromASN1(UnspecifiedType::fromDER($data)->asSequence());
     }
-    
+
     /**
-     *
      * @see PrivateKey::fromPEM()
+     *
      * @param PEM $pem
+     *
      * @throws \UnexpectedValueException
+     *
      * @return self
      */
     public static function fromPEM(PEM $pem): RSAPrivateKey
     {
         $pk = parent::fromPEM($pem);
         if (!($pk instanceof self)) {
-            throw new \UnexpectedValueException("Not an RSA private key.");
+            throw new \UnexpectedValueException('Not an RSA private key.');
         }
         return $pk;
     }
-    
+
     /**
      * Get modulus.
      *
@@ -168,7 +173,7 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_modulus;
     }
-    
+
     /**
      * Get public exponent.
      *
@@ -178,7 +183,7 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_publicExponent;
     }
-    
+
     /**
      * Get private exponent.
      *
@@ -188,7 +193,7 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_privateExponent;
     }
-    
+
     /**
      * Get first prime factor.
      *
@@ -198,7 +203,7 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_prime1;
     }
-    
+
     /**
      * Get second prime factor.
      *
@@ -208,7 +213,7 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_prime2;
     }
-    
+
     /**
      * Get first factor exponent.
      *
@@ -218,7 +223,7 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_exponent1;
     }
-    
+
     /**
      * Get second factor exponent.
      *
@@ -228,7 +233,7 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_exponent2;
     }
-    
+
     /**
      * Get CRT coefficient of the second factor.
      *
@@ -238,26 +243,25 @@ class RSAPrivateKey extends PrivateKey
     {
         return $this->_coefficient;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
     public function algorithmIdentifier(): AlgorithmIdentifierType
     {
         return new RSAEncryptionAlgorithmIdentifier();
     }
-    
+
     /**
-     *
      * {@inheritdoc}
+     *
      * @return RSAPublicKey
      */
     public function publicKey(): PublicKey
     {
         return new RSAPublicKey($this->_modulus, $this->_publicExponent);
     }
-    
+
     /**
      * Generate ASN.1 structure.
      *
@@ -271,18 +275,16 @@ class RSAPrivateKey extends PrivateKey
             new Integer($this->_prime2), new Integer($this->_exponent1),
             new Integer($this->_exponent2), new Integer($this->_coefficient));
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
     public function toDER(): string
     {
         return $this->toASN1()->toDER();
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
     public function toPEM(): PEM

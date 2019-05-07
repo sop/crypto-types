@@ -1,20 +1,23 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\NullType;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\NullType;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Hash\SHA224AlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class SHA224AITest extends PHPUnit_Framework_TestCase
+class SHA224AITest extends TestCase
 {
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -23,7 +26,7 @@ class SHA224AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -35,7 +38,7 @@ class SHA224AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(SHA224AlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -47,7 +50,7 @@ class SHA224AITest extends PHPUnit_Framework_TestCase
         $ai = AlgorithmIdentifier::fromASN1($seq);
         $this->assertInstanceOf(SHA224AlgorithmIdentifier::class, $ai);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -55,6 +58,6 @@ class SHA224AITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

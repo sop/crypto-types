@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Signature;
 
-use ASN1\Type\Primitive\BitString;
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\ECSignatureAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\RSASignatureAlgorithmIdentifier;
@@ -20,12 +20,13 @@ abstract class Signature
      * @return BitString
      */
     abstract public function bitString(): BitString;
-    
+
     /**
      * Get signature object by signature data and used algorithm.
      *
-     * @param string $data Signature value
+     * @param string                  $data Signature value
      * @param AlgorithmIdentifierType $algo Algorithm identifier
+     *
      * @return self
      */
     public static function fromSignatureData(string $data,

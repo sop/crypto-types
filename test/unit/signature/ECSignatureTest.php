@@ -1,26 +1,29 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\BitString;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\CryptoTypes\Signature\ECSignature;
 
 /**
  * @group signature
+ *
+ * @internal
  */
-class ECSignatureTest extends PHPUnit_Framework_TestCase
+class ECSignatureTest extends TestCase
 {
     /**
-     *
-     * @return \Sop\CryptoTypes\Signature\ECSignature
+     * @return ECSignature
      */
     public function testCreate()
     {
-        $sig = new ECSignature("123456789", "987654321");
+        $sig = new ECSignature('123456789', '987654321');
         $this->assertInstanceOf(ECSignature::class, $sig);
         return $sig;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -31,7 +34,7 @@ class ECSignatureTest extends PHPUnit_Framework_TestCase
         $el = $sig->toASN1();
         $this->assertInstanceOf(Sequence::class, $el);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -40,10 +43,10 @@ class ECSignatureTest extends PHPUnit_Framework_TestCase
     public function testToDER(ECSignature $sig)
     {
         $der = $sig->toDER();
-        $this->assertInternalType("string", $der);
+        $this->assertIsString($der);
         return $der;
     }
-    
+
     /**
      * @depends testToDER
      *
@@ -55,7 +58,7 @@ class ECSignatureTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ECSignature::class, $sig);
         return $sig;
     }
-    
+
     /**
      * @depends testCreate
      * @depends testDecode
@@ -67,7 +70,7 @@ class ECSignatureTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals($ref, $sig);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -75,9 +78,9 @@ class ECSignatureTest extends PHPUnit_Framework_TestCase
      */
     public function testRValue(ECSignature $sig)
     {
-        $this->assertEquals("123456789", $sig->r());
+        $this->assertEquals('123456789', $sig->r());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -85,9 +88,9 @@ class ECSignatureTest extends PHPUnit_Framework_TestCase
      */
     public function testSValue(ECSignature $sig)
     {
-        $this->assertEquals("987654321", $sig->s());
+        $this->assertEquals('987654321', $sig->s());
     }
-    
+
     /**
      * @depends testCreate
      *

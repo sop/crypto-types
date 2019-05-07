@@ -22,17 +22,15 @@ abstract class SignatureAlgorithmIdentifierFactory
      *
      * @var array
      */
-    const MAP_RSA_OID = array(
-        /* @formatter:off */
+    const MAP_RSA_OID = [
         AlgorithmIdentifier::OID_MD5 => AlgorithmIdentifier::OID_MD5_WITH_RSA_ENCRYPTION,
         AlgorithmIdentifier::OID_SHA1 => AlgorithmIdentifier::OID_SHA1_WITH_RSA_ENCRYPTION,
         AlgorithmIdentifier::OID_SHA224 => AlgorithmIdentifier::OID_SHA224_WITH_RSA_ENCRYPTION,
         AlgorithmIdentifier::OID_SHA256 => AlgorithmIdentifier::OID_SHA256_WITH_RSA_ENCRYPTION,
         AlgorithmIdentifier::OID_SHA384 => AlgorithmIdentifier::OID_SHA384_WITH_RSA_ENCRYPTION,
-        AlgorithmIdentifier::OID_SHA512 => AlgorithmIdentifier::OID_SHA512_WITH_RSA_ENCRYPTION
-        /* @formatter:on */
-    );
-    
+        AlgorithmIdentifier::OID_SHA512 => AlgorithmIdentifier::OID_SHA512_WITH_RSA_ENCRYPTION,
+    ];
+
     /**
      * Mapping of hash algorithm OID's to EC signature algorithm OID's.
      *
@@ -40,24 +38,23 @@ abstract class SignatureAlgorithmIdentifierFactory
      *
      * @var array
      */
-    const MAP_EC_OID = array(
-        /* @formatter:off */
+    const MAP_EC_OID = [
         AlgorithmIdentifier::OID_SHA1 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA1,
         AlgorithmIdentifier::OID_SHA224 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA224,
         AlgorithmIdentifier::OID_SHA256 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA256,
         AlgorithmIdentifier::OID_SHA384 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA384,
-        AlgorithmIdentifier::OID_SHA512 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA512
-        /* @formatter:on */
-    );
-    
+        AlgorithmIdentifier::OID_SHA512 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA512,
+    ];
+
     /**
      * Get signature algorithm identifier of given asymmetric cryptographic type
      * utilizing given hash algorithm.
      *
-     * @param AsymmetricCryptoAlgorithmIdentifier $crypto_algo Cryptographic
-     *        algorithm identifier, eg. RSA or EC
-     * @param HashAlgorithmIdentifier $hash_algo Hash algorithm identifier
+     * @param AsymmetricCryptoAlgorithmIdentifier $crypto_algo Cryptographic algorithm identifier, eg. RSA or EC
+     * @param HashAlgorithmIdentifier             $hash_algo   Hash algorithm identifier
+     *
      * @throws \UnexpectedValueException
+     *
      * @return SignatureAlgorithmIdentifier
      */
     public static function algoForAsymmetricCrypto(
@@ -73,41 +70,45 @@ abstract class SignatureAlgorithmIdentifierFactory
                 break;
             default:
                 throw new \UnexpectedValueException(
-                    sprintf("Crypto algorithm %s not supported.",
+                    sprintf('Crypto algorithm %s not supported.',
                         $crypto_algo->name()));
         }
         $cls = (new AlgorithmIdentifierFactory())->getClass($oid);
         return new $cls();
     }
-    
+
     /**
      * Get RSA signature algorithm OID for the given hash algorithm identifier.
      *
      * @param HashAlgorithmIdentifier $hash_algo
+     *
      * @throws \UnexpectedValueException
+     *
      * @return string
      */
     private static function _oidForRSA(HashAlgorithmIdentifier $hash_algo): string
     {
         if (!array_key_exists($hash_algo->oid(), self::MAP_RSA_OID)) {
             throw new \UnexpectedValueException(
-                sprintf("No RSA signature algorithm for %s.", $hash_algo->name()));
+                sprintf('No RSA signature algorithm for %s.', $hash_algo->name()));
         }
         return self::MAP_RSA_OID[$hash_algo->oid()];
     }
-    
+
     /**
      * Get EC signature algorithm OID for the given hash algorithm identifier.
      *
      * @param HashAlgorithmIdentifier $hash_algo
+     *
      * @throws \UnexpectedValueException
+     *
      * @return string
      */
     private static function _oidForEC(HashAlgorithmIdentifier $hash_algo): string
     {
         if (!array_key_exists($hash_algo->oid(), self::MAP_EC_OID)) {
             throw new \UnexpectedValueException(
-                sprintf("No EC signature algorithm for %s.", $hash_algo->name()));
+                sprintf('No EC signature algorithm for %s.', $hash_algo->name()));
         }
         return self::MAP_EC_OID[$hash_algo->oid()];
     }

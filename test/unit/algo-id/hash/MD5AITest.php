@@ -1,19 +1,22 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Hash\MD5AlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class MD5AITest extends PHPUnit_Framework_TestCase
+class MD5AITest extends TestCase
 {
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -22,7 +25,7 @@ class MD5AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -34,7 +37,7 @@ class MD5AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(MD5AlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -46,7 +49,7 @@ class MD5AITest extends PHPUnit_Framework_TestCase
         $ai = AlgorithmIdentifier::fromASN1($seq);
         $this->assertInstanceOf(MD5AlgorithmIdentifier::class, $ai);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -54,6 +57,6 @@ class MD5AITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

@@ -1,39 +1,37 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Primitive\BitString;
-use ASN1\Type\Primitive\OctetString;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Primitive\BitString;
+use Sop\ASN1\Type\Primitive\OctetString;
 use Sop\CryptoTypes\Asymmetric\EC\ECConversion;
 
 /**
  * @group conversion
+ *
+ * @internal
  */
-class BitStringToOctetStringConversionTest extends PHPUnit_Framework_TestCase
+class BitStringToOctetStringConversionTest extends TestCase
 {
-    /**
-     */
     public function testOSType()
     {
-        $os = ECConversion::bitStringToOctetString(new BitString("test"));
+        $os = ECConversion::bitStringToOctetString(new BitString('test'));
         $this->assertInstanceOf(OctetString::class, $os);
     }
-    
-    /**
-     */
+
     public function testBSType()
     {
-        $bs = ECConversion::octetStringToBitString(new OctetString("test"));
+        $bs = ECConversion::octetStringToBitString(new OctetString('test'));
         $this->assertInstanceOf(BitString::class, $bs);
     }
-    
-    /**
-     * @expectedException RuntimeException
-     */
+
     public function testUnusedBits()
     {
+        $this->expectException(\RuntimeException::class);
         ECConversion::bitStringToOctetString(new BitString("\0", 4));
     }
-    
+
     /**
      * @dataProvider provideConvert
      */
@@ -44,20 +42,17 @@ class BitStringToOctetStringConversionTest extends PHPUnit_Framework_TestCase
         $result = ECConversion::bitStringToOctetString($tmp);
         $this->assertEquals($os, $result);
     }
-    
+
     /**
-     *
      * @return array
      */
     public function provideConvert()
     {
-        return array(
-            /* @formatter:off */
-            [new OctetString(""), new BitString("")],
+        return [
+            [new OctetString(''), new BitString('')],
             [new OctetString("\0"), new BitString("\0")],
             [new OctetString(str_repeat("\1\2\3\4", 256)),
-            	new BitString(str_repeat("\1\2\3\4", 256))],
-            /* @formatter:on */
-        );
+                new BitString(str_repeat("\1\2\3\4", 256)), ],
+        ];
     }
 }

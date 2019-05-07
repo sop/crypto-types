@@ -4,13 +4,14 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Signature;
 
-use ASN1\Type\Primitive\BitString;
+use Sop\ASN1\Type\Primitive\BitString;
 
 /**
  * Implements RSA signature value.
  *
  * @todo Implement signature parsing
- * @link https://tools.ietf.org/html/rfc2313#section-10
+ *
+ * @see https://tools.ietf.org/html/rfc2313#section-10
  */
 class RSASignature extends Signature
 {
@@ -20,22 +21,24 @@ class RSASignature extends Signature
      * @var string
      */
     private $_signature;
-    
+
     /**
      * Constructor.
      */
     protected function __construct()
     {
     }
-    
+
     /**
      * Initialize from RSA signature <i>S</i>.
      *
      * Signature value <i>S</i> is the result of last step in RSA signature
      * process defined in PKCS #1.
      *
-     * @link https://tools.ietf.org/html/rfc2313#section-10.1.4
+     * @see https://tools.ietf.org/html/rfc2313#section-10.1.4
+     *
      * @param string $signature Signature bits
+     *
      * @return self
      */
     public static function fromSignatureString(string $signature): Signature
@@ -44,9 +47,8 @@ class RSASignature extends Signature
         $obj->_signature = strval($signature);
         return $obj;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
     public function bitString(): BitString

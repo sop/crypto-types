@@ -4,14 +4,13 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Cipher;
 
-use ASN1\Element;
-use ASN1\Type\UnspecifiedType;
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\Integer;
-use ASN1\Type\Primitive\OctetString;
+use Sop\ASN1\Element;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\Integer;
+use Sop\ASN1\Type\Primitive\OctetString;
+use Sop\ASN1\Type\UnspecifiedType;
 
-/* @formatter:off *//*
-
+/*
 Parameters may be seen in various forms. This implementation attemts
 to take them all into consideration.
 
@@ -34,27 +33,19 @@ RC2-CBC-Parameter ::= SEQUENCE {
 RC2CBCParameter ::= SEQUENCE {
   rc2ParameterVersion INTEGER,
   iv OCTET STRING  }  -- exactly 8 octets
-
-*//* @formatter:on */
+*/
 
 /**
  * Algorithm identifier for RC2 cipher in CBC mode.
  *
- * @link http://www.alvestrand.no/objectid/1.2.840.113549.3.2.html
- * @link http://www.oid-info.com/get/1.2.840.113549.3.2
- * @link https://tools.ietf.org/html/rfc2268#section-6
- * @link https://tools.ietf.org/html/rfc3370#section-5.2
- * @link https://tools.ietf.org/html/rfc2898#appendix-C
+ * @see http://www.alvestrand.no/objectid/1.2.840.113549.3.2.html
+ * @see http://www.oid-info.com/get/1.2.840.113549.3.2
+ * @see https://tools.ietf.org/html/rfc2268#section-6
+ * @see https://tools.ietf.org/html/rfc3370#section-5.2
+ * @see https://tools.ietf.org/html/rfc2898#appendix-C
  */
 class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
 {
-    /**
-     * Effective key bits.
-     *
-     * @var int $_effectiveKeyBits
-     */
-    protected $_effectiveKeyBits;
-    
     /**
      * RFC 2268 translation table for effective key bits.
      *
@@ -83,42 +74,44 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
         0xc7, 0x87, 0x97, 0x25, 0x54, 0xb1, 0x28, 0xaa, 0x98, 0x9d, 0xa5, 0x64,
         0x6d, 0x7a, 0xd4, 0x10, 0x81, 0x44, 0xef, 0x49, 0xd6, 0xae, 0x2e, 0xdd,
         0x76, 0x5c, 0x2f, 0xa7, 0x1c, 0xc9, 0x09, 0x69, 0x9a, 0x83, 0xcf, 0x29,
-        0x39, 0xb9, 0xe9, 0x4c, 0xff, 0x43, 0xab];
-    
+        0x39, 0xb9, 0xe9, 0x4c, 0xff, 0x43, 0xab, ];
+
+    /**
+     * Effective key bits.
+     *
+     * @var int
+     */
+    protected $_effectiveKeyBits;
+
     /**
      * Constructor.
      *
-     * @param int $key_bits Number of effective key bits
-     * @param string|null $iv Initialization vector
+     * @param int         $key_bits Number of effective key bits
+     * @param null|string $iv       Initialization vector
      */
-    public function __construct(int $key_bits = 64, $iv = null)
+    public function __construct(int $key_bits = 64, ?string $iv = null)
     {
         $this->_checkIVSize($iv);
         $this->_oid = self::OID_RC2_CBC;
         $this->_effectiveKeyBits = $key_bits;
         $this->_initializationVector = $iv;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function name(): string
     {
-        return "rc2-cbc";
+        return 'rc2-cbc';
     }
-    
+
     /**
-     *
-     * @param UnspecifiedType $params
-     * @throws \UnexpectedValueException
-     * @return self
+     * {@inheritdoc}
      */
-    public static function fromASN1Params(UnspecifiedType $params = null)
+    public static function fromASN1Params(?UnspecifiedType $params = null)
     {
         if (!isset($params)) {
-            throw new \UnexpectedValueException("No parameters.");
+            throw new \UnexpectedValueException('No parameters.');
         }
         $key_bits = 32;
         // rfc2268 a choice containing only IV
@@ -141,7 +134,7 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
         }
         return new self($key_bits, $iv);
     }
-    
+
     /**
      * Get number of effective key bits.
      *
@@ -151,14 +144,37 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
     {
         return $this->_effectiveKeyBits;
     }
-    
+
     /**
-     *
+     * {@inheritdoc}
+     */
+    public function blockSize(): int
+    {
+        return 8;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function keySize(): int
+    {
+        return (int) round($this->_effectiveKeyBits / 8);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function ivSize(): int
+    {
+        return 8;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @return Sequence
      */
-    protected function _paramsASN1()
+    protected function _paramsASN1(): ?Element
     {
         if ($this->_effectiveKeyBits >= 256) {
             $version = $this->_effectiveKeyBits;
@@ -166,46 +182,17 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
             $version = self::EKB_TABLE[$this->_effectiveKeyBits];
         }
         if (!isset($this->_initializationVector)) {
-            throw new \LogicException("IV not set.");
+            throw new \LogicException('IV not set.');
         }
         return new Sequence(new Integer($version),
             new OctetString($this->_initializationVector));
     }
-    
-    /**
-     *
-     * {@inheritdoc}
-     *
-     */
-    public function blockSize(): int
-    {
-        return 8;
-    }
-    
-    /**
-     *
-     * {@inheritdoc}
-     *
-     */
-    public function keySize(): int
-    {
-        return (int) round($this->_effectiveKeyBits / 8);
-    }
-    
-    /**
-     *
-     * {@inheritdoc}
-     *
-     */
-    public function ivSize(): int
-    {
-        return 8;
-    }
-    
+
     /**
      * Translate version number to number of effective key bits.
      *
      * @param int $version
+     *
      * @return int
      */
     private static function _versionToEKB(int $version): int

@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
-use ASN1\Type\UnspecifiedType;
-use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
+use Sop\ASN1\Element;
+use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
-/* @formatter:off *//*
-
+/*
 From RFC 5754 - 2. Message Digest Algorithms
 
     The AlgorithmIdentifier parameters field is OPTIONAL.
@@ -17,25 +17,23 @@ From RFC 5754 - 2. Message Digest Algorithms
     parameters.  Implementations MUST accept SHA2 AlgorithmIdentifiers
     with NULL parameters.  Implementations MUST generate SHA2
     AlgorithmIdentifiers with absent parameters.
-
-*//* @formatter:on */
+*/
 
 /**
  * Base class for SHA2 algorithm identifiers.
  *
- * @link https://tools.ietf.org/html/rfc4055#section-2.1
- * @link https://tools.ietf.org/html/rfc5754#section-2
+ * @see https://tools.ietf.org/html/rfc4055#section-2.1
+ * @see https://tools.ietf.org/html/rfc5754#section-2
  */
-abstract class SHA2AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements 
-    HashAlgorithmIdentifier
+abstract class SHA2AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements HashAlgorithmIdentifier
 {
     /**
      * Parameters.
      *
-     * @var \ASN1\Type\Primitive\NullType|null $_params
+     * @var null|\Sop\ASN1\Type\Primitive\NullType
      */
     protected $_params;
-    
+
     /**
      * Constructor.
      */
@@ -43,13 +41,11 @@ abstract class SHA2AlgorithmIdentifier extends SpecificAlgorithmIdentifier imple
     {
         $this->_params = null;
     }
-    
+
     /**
-     *
-     * @param UnspecifiedType $params
-     * @return self
+     * {@inheritdoc}
      */
-    public static function fromASN1Params(UnspecifiedType $params = null)
+    public static function fromASN1Params(?UnspecifiedType $params = null)
     {
         $obj = new static();
         // if parameters field is present, it must be null type
@@ -58,14 +54,13 @@ abstract class SHA2AlgorithmIdentifier extends SpecificAlgorithmIdentifier imple
         }
         return $obj;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      *
-     * @return \ASN1\Type\Primitive\NullType|null
+     * @return null|\Sop\ASN1\Type\Primitive\NullType
      */
-    protected function _paramsASN1()
+    protected function _paramsASN1(): ?Element
     {
         return $this->_params;
     }

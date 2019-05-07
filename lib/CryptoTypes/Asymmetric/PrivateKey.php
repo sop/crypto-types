@@ -18,28 +18,28 @@ abstract class PrivateKey
      * @return AlgorithmIdentifierType
      */
     abstract public function algorithmIdentifier(): AlgorithmIdentifierType;
-    
+
     /**
      * Get public key component of the asymmetric key pair.
      *
      * @return PublicKey
      */
     abstract public function publicKey(): PublicKey;
-    
+
     /**
      * Get DER encoding of the private key.
      *
      * @return string
      */
     abstract public function toDER(): string;
-    
+
     /**
      * Get the private key as a PEM.
      *
      * @return PEM
      */
     abstract public function toPEM(): PEM;
-    
+
     /**
      * Get the private key as a PrivateKeyInfo type.
      *
@@ -49,12 +49,14 @@ abstract class PrivateKey
     {
         return PrivateKeyInfo::fromPrivateKey($this);
     }
-    
+
     /**
      * Initialize private key from PEM.
      *
      * @param PEM $pem
+     *
      * @throws \UnexpectedValueException
+     *
      * @return PrivateKey
      */
     public static function fromPEM(PEM $pem)
@@ -68,6 +70,6 @@ abstract class PrivateKey
                 return PrivateKeyInfo::fromDER($pem->data())->privateKey();
         }
         throw new \UnexpectedValueException(
-            "PEM type " . $pem->type() . " is not a valid private key.");
+            'PEM type ' . $pem->type() . ' is not a valid private key.');
     }
 }

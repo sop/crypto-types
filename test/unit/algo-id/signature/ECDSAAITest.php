@@ -1,6 +1,8 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\ECDSAWithSHA1AlgorithmIdentifier;
@@ -8,11 +10,11 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Signature\ECDSAWithSHA1AlgorithmIdentifi
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class ECDSAAITest extends PHPUnit_Framework_TestCase
+class ECDSAAITest extends TestCase
 {
-    /**
-     */
     public function testSupportsKeyAlgorithm()
     {
         $sig_algo = new ECDSAWithSHA1AlgorithmIdentifier();
@@ -20,9 +22,7 @@ class ECDSAAITest extends PHPUnit_Framework_TestCase
             ECPublicKeyAlgorithmIdentifier::CURVE_PRIME192V1);
         $this->assertTrue($sig_algo->supportsKeyAlgorithm($key_algo));
     }
-    
-    /**
-     */
+
     public function testDoesntSupportsKeyAlgorithm()
     {
         $sig_algo = new ECDSAWithSHA1AlgorithmIdentifier();
@@ -30,5 +30,3 @@ class ECDSAAITest extends PHPUnit_Framework_TestCase
         $this->assertFalse($sig_algo->supportsKeyAlgorithm($key_algo));
     }
 }
-
-

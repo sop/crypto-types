@@ -1,7 +1,10 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Primitive\ObjectIdentifier;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Element;
+use Sop\ASN1\Type\Primitive\ObjectIdentifier;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
@@ -13,21 +16,22 @@ use Sop\CryptoTypes\Asymmetric\RSA\RSAPublicKey;
 /**
  * @group asn1
  * @group publickey
+ *
+ * @internal
  */
-class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
+class PublicKeyInfoTest extends TestCase
 {
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\PublicKeyInfo
+     * @return PublicKeyInfo
      */
     public function testDecodeRSA()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/public_key.pem');
         $pki = PublicKeyInfo::fromDER($pem->data());
         $this->assertInstanceOf(PublicKeyInfo::class, $pki);
         return $pki;
     }
-    
+
     /**
      * @depends testDecodeRSA
      *
@@ -40,7 +44,7 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($ref, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testAlgoObj
      *
@@ -51,7 +55,7 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(AlgorithmIdentifier::OID_RSA_ENCRYPTION,
             $algo->oid());
     }
-    
+
     /**
      * @depends testDecodeRSA
      *
@@ -62,19 +66,18 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
         $pk = $pki->publicKey();
         $this->assertInstanceOf(RSAPublicKey::class, $pk);
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\PublicKeyInfo
+     * @return PublicKeyInfo
      */
     public function testDecodeEC()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/public_key.pem');
         $pki = PublicKeyInfo::fromDER($pem->data());
         $this->assertInstanceOf(PublicKeyInfo::class, $pki);
         return $pki;
     }
-    
+
     /**
      * @depends testDecodeEC
      *
@@ -85,19 +88,18 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
         $pk = $pki->publicKey();
         $this->assertInstanceOf(ECPublicKey::class, $pk);
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\PublicKeyInfo
+     * @return PublicKeyInfo
      */
     public function testFromRSAPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/public_key.pem');
         $pki = PublicKeyInfo::fromPEM($pem);
         $this->assertInstanceOf(PublicKeyInfo::class, $pki);
         return $pki;
     }
-    
+
     /**
      * @depends testFromRSAPEM
      *
@@ -109,7 +111,7 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PEM::class, $pem);
         return $pem;
     }
-    
+
     /**
      * @depends testToPEM
      *
@@ -117,19 +119,17 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
      */
     public function testRecodedPEM(PEM $pem)
     {
-        $ref = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
+        $ref = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/public_key.pem');
         $this->assertEquals($ref, $pem);
     }
-    
-    /**
-     */
+
     public function testDecodeFromRSAPublicKey()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_public_key.pem');
         $pki = PublicKeyInfo::fromPEM($pem);
         $this->assertInstanceOf(PublicKeyInfo::class, $pki);
     }
-    
+
     /**
      * @depends testDecodeRSA
      *
@@ -140,7 +140,7 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
         $id = $pki->keyIdentifier();
         $this->assertEquals(160, strlen($id) * 8);
     }
-    
+
     /**
      * @depends testDecodeRSA
      *
@@ -151,36 +151,33 @@ class PublicKeyInfoTest extends PHPUnit_Framework_TestCase
         $id = $pki->keyIdentifier64();
         $this->assertEquals(64, strlen($id) * 8);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidPEMType()
     {
-        $pem = new PEM("nope", "");
+        $pem = new PEM('nope', '');
+        $this->expectException(\UnexpectedValueException::class);
         PublicKeyInfo::fromPEM($pem);
     }
-    
+
     /**
      * @depends testDecodeRSA
-     * @expectedException RuntimeException
      *
      * @param PublicKeyInfo $pki
      */
     public function testInvalidAI(PublicKeyInfo $pki)
     {
         $seq = $pki->toASN1();
-        $ai = $seq->at(0)->withReplaced(0, new ObjectIdentifier("1.3.6.1.3"));
+        $ai = $seq->at(0)->asSequence()
+            ->withReplaced(0, new ObjectIdentifier('1.3.6.1.3'));
         $seq = $seq->withReplaced(0, $ai);
+        $this->expectException(\RuntimeException::class);
         PublicKeyInfo::fromASN1($seq)->publicKey();
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidECAlgoFail()
     {
-        $pki = new PublicKeyInfo(new PubliceKeyInfoTest_InvalidECAlgo(), "");
+        $pki = new PublicKeyInfo(new PubliceKeyInfoTest_InvalidECAlgo(), '');
+        $this->expectException(\UnexpectedValueException::class);
         $pki->publicKey();
     }
 }
@@ -191,11 +188,13 @@ class PubliceKeyInfoTest_InvalidECAlgo extends SpecificAlgorithmIdentifier
     {
         $this->_oid = self::OID_EC_PUBLIC_KEY;
     }
+
     public function name(): string
     {
-        return "";
+        return '';
     }
-    protected function _paramsASN1()
+
+    protected function _paramsASN1(): ?Element
     {
         return null;
     }

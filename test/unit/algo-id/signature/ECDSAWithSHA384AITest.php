@@ -1,19 +1,22 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\ECDSAWithSHA384AlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class ECDSAWithSHA384AITest extends PHPUnit_Framework_TestCase
+class ECDSAWithSHA384AITest extends TestCase
 {
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -22,7 +25,7 @@ class ECDSAWithSHA384AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -34,7 +37,7 @@ class ECDSAWithSHA384AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ECDSAWithSHA384AlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -42,6 +45,6 @@ class ECDSAWithSHA384AITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

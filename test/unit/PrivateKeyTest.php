@@ -1,6 +1,8 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey;
@@ -10,39 +12,36 @@ use Sop\CryptoTypes\Asymmetric\RSA\RSAPrivateKey;
 /**
  * @group asn1
  * @group privatekey
+ *
+ * @internal
  */
-class PrivateKeyTest extends PHPUnit_Framework_TestCase
+class PrivateKeyTest extends TestCase
 {
-    /**
-     */
     public function testFromRSAPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_private_key.pem');
         $pk = PrivateKey::fromPEM($pem);
         $this->assertInstanceOf(RSAPrivateKey::class, $pk);
     }
-    
-    /**
-     */
+
     public function testFromRSAPKIPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/private_key.pem');
         $pk = PrivateKey::fromPEM($pem);
         $this->assertInstanceOf(RSAPrivateKey::class, $pk);
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\PrivateKey
+     * @return PrivateKey
      */
     public function testFromECPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/ec_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/ec_private_key.pem');
         $pk = PrivateKey::fromPEM($pem);
         $this->assertInstanceOf(ECPrivateKey::class, $pk);
         return $pk;
     }
-    
+
     /**
      * @depends testFromECPEM
      *
@@ -53,19 +52,18 @@ class PrivateKeyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1,
             $pk->namedCurve());
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\PrivateKey
+     * @return PrivateKey
      */
     public function testFromECPKIPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/private_key.pem');
         $pk = PrivateKey::fromPEM($pem);
         $this->assertInstanceOf(ECPrivateKey::class, $pk);
         return $pk;
     }
-    
+
     /**
      * @depends testFromECPKIPEM
      *
@@ -76,13 +74,11 @@ class PrivateKeyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(ECPublicKeyAlgorithmIdentifier::CURVE_PRIME256V1,
             $pk->namedCurve());
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidPEMType()
     {
-        $pem = new PEM("nope", "");
+        $pem = new PEM('nope', '');
+        $this->expectException(\UnexpectedValueException::class);
         PrivateKey::fromPEM($pem);
     }
 }

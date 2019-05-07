@@ -1,21 +1,24 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Cipher\AES192CBCAlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class AES192CBCAITest extends PHPUnit_Framework_TestCase
+class AES192CBCAITest extends TestCase
 {
-    const IV = "0123456789abcdef";
-    
+    const IV = '0123456789abcdef';
+
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -24,7 +27,7 @@ class AES192CBCAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -36,7 +39,7 @@ class AES192CBCAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(AES192CBCAlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -46,28 +49,26 @@ class AES192CBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(self::IV, $ai->initializationVector());
     }
-    
+
     /**
      * @depends testEncode
-     * @expectedException UnexpectedValueException
      *
      * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
         $seq = $seq->withoutElement(1);
+        $this->expectException(\UnexpectedValueException::class);
         AlgorithmIdentifier::fromASN1($seq);
     }
-    
-    /**
-     * @expectedException LogicException
-     */
+
     public function testEncodeNoIVFail()
     {
         $ai = new AES192CBCAlgorithmIdentifier();
+        $this->expectException(\LogicException::class);
         $ai->toASN1();
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -77,7 +78,7 @@ class AES192CBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(16, $ai->blockSize());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -87,15 +88,13 @@ class AES192CBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(24, $ai->keySize());
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidIVSizeFail()
     {
-        new AES192CBCAlgorithmIdentifier("1234");
+        $this->expectException(\UnexpectedValueException::class);
+        new AES192CBCAlgorithmIdentifier('1234');
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -103,6 +102,6 @@ class AES192CBCAITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

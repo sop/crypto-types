@@ -1,38 +1,40 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\RSA\RSAPublicKey;
 
 /**
  * @group asn1
+ *
+ * @internal
  */
-class RSAPublicKeyTest extends PHPUnit_Framework_TestCase
+class RSAPublicKeyTest extends TestCase
 {
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\RSA\RSAPublicKey
+     * @return RSAPublicKey
      */
     public function testDecode()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_public_key.pem');
         $pk = RSAPublicKey::fromDER($pem->data());
         $this->assertInstanceOf(RSAPublicKey::class, $pk);
         return $pk;
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\RSA\RSAPublicKey
+     * @return RSAPublicKey
      */
     public function testFromPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_public_key.pem');
         $pk = RSAPublicKey::fromPEM($pem);
         $this->assertInstanceOf(RSAPublicKey::class, $pk);
         return $pk;
     }
-    
+
     /**
      * @depends testFromPEM
      *
@@ -44,7 +46,7 @@ class RSAPublicKeyTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PEM::class, $pem);
         return $pem;
     }
-    
+
     /**
      * @depends testToPEM
      *
@@ -52,37 +54,31 @@ class RSAPublicKeyTest extends PHPUnit_Framework_TestCase
      */
     public function testRecodedPEM(PEM $pem)
     {
-        $ref = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_public_key.pem");
+        $ref = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_public_key.pem');
         $this->assertEquals($ref, $pem);
     }
-    
-    /**
-     */
+
     public function testFromPKIPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/public_key.pem');
         $pk = RSAPublicKey::fromPEM($pem);
         $this->assertInstanceOf(RSAPublicKey::class, $pk);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidPEMType()
     {
-        $pem = new PEM("nope", "");
+        $pem = new PEM('nope', '');
+        $this->expectException(\UnexpectedValueException::class);
         RSAPublicKey::fromPEM($pem);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testECKeyFail()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/public_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/public_key.pem');
+        $this->expectException(\UnexpectedValueException::class);
         RSAPublicKey::fromPEM($pem);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -92,7 +88,7 @@ class RSAPublicKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->modulus());
     }
-    
+
     /**
      * @depends testDecode
      *

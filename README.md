@@ -9,7 +9,7 @@ A PHP library of various ASN.1 types for cryptographic applications.
 
 ## Requirements
 
--   PHP >=7.0
+-   PHP >=7.2
 -   gmp
 -   [sop/asn1](https://github.com/sop/asn1)
 -   [sop/crypto-encoding](https://github.com/sop/crypto-encoding)

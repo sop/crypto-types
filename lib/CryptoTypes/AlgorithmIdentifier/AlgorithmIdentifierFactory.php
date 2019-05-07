@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier;
 
-use ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Constructed\Sequence;
 
 /**
  * Factory class to parse AlgorithmIdentifier ASN.1 types to specific
@@ -22,7 +22,7 @@ class AlgorithmIdentifierFactory
      *
      * @var array
      */
-    const MAP_OID_TO_CLASS = [ /* @formatter:off */
+    const MAP_OID_TO_CLASS = [
         AlgorithmIdentifier::OID_RSA_ENCRYPTION => Asymmetric\RSAEncryptionAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_EC_PUBLIC_KEY => Asymmetric\ECPublicKeyAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_DES_CBC => Cipher\DESCBCAlgorithmIdentifier::class,
@@ -54,17 +54,16 @@ class AlgorithmIdentifierFactory
         AlgorithmIdentifier::OID_ECDSA_WITH_SHA224 => Signature\ECDSAWithSHA224AlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_ECDSA_WITH_SHA256 => Signature\ECDSAWithSHA256AlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_ECDSA_WITH_SHA384 => Signature\ECDSAWithSHA384AlgorithmIdentifier::class,
-        AlgorithmIdentifier::OID_ECDSA_WITH_SHA512 => Signature\ECDSAWithSHA512AlgorithmIdentifier::class
-        /* @formatter:on */
+        AlgorithmIdentifier::OID_ECDSA_WITH_SHA512 => Signature\ECDSAWithSHA512AlgorithmIdentifier::class,
     ];
-    
+
     /**
      * Additional algorithm identifier providers.
      *
      * @var AlgorithmIdentifierProvider[]
      */
     private $_additionalProviders;
-    
+
     /**
      * Constructor.
      *
@@ -74,15 +73,16 @@ class AlgorithmIdentifierFactory
     {
         $this->_additionalProviders = $providers;
     }
-    
+
     /**
      * Get the name of a class that implements algorithm identifier for given
      * OID.
      *
      * @param string $oid Object identifier in dotted format
-     * @return string|null Fully qualified class name or null if not supported
+     *
+     * @return null|string Fully qualified class name or null if not supported
      */
-    public function getClass(string $oid)
+    public function getClass(string $oid): ?string
     {
         // if OID is provided by this factory
         if (array_key_exists($oid, self::MAP_OID_TO_CLASS)) {
@@ -96,11 +96,12 @@ class AlgorithmIdentifierFactory
         }
         return null;
     }
-    
+
     /**
      * Parse AlgorithmIdentifier from an ASN.1 sequence.
      *
      * @param Sequence $seq
+     *
      * @return AlgorithmIdentifier
      */
     public function parse(Sequence $seq): AlgorithmIdentifier

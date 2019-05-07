@@ -1,8 +1,10 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\Integer;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\Integer;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\PrivateKeyInfo;
 use Sop\CryptoTypes\Asymmetric\RSA\RSAPrivateKey;
@@ -11,33 +13,33 @@ use Sop\CryptoTypes\Asymmetric\RSA\RSAPublicKey;
 /**
  * @group asn1
  * @group privatekey
+ *
+ * @internal
  */
-class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
+class RSAPrivateKeyTest extends TestCase
 {
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\RSA\RSAPrivateKey
+     * @return RSAPrivateKey
      */
     public function testDecode()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_private_key.pem');
         $pk = RSAPrivateKey::fromDER($pem->data());
         $this->assertInstanceOf(RSAPrivateKey::class, $pk);
         return $pk;
     }
-    
+
     /**
-     *
-     * @return \Sop\CryptoTypes\Asymmetric\RSA\RSAPrivateKey
+     * @return RSAPrivateKey
      */
     public function testFromPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_private_key.pem');
         $pk = RSAPrivateKey::fromPEM($pem);
         $this->assertInstanceOf(RSAPrivateKey::class, $pk);
         return $pk;
     }
-    
+
     /**
      * @depends testFromPEM
      *
@@ -49,7 +51,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PEM::class, $pem);
         return $pem;
     }
-    
+
     /**
      * @depends testToPEM
      *
@@ -57,19 +59,17 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
      */
     public function testRecodedPEM(PEM $pem)
     {
-        $ref = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_private_key.pem");
+        $ref = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_private_key.pem');
         $this->assertEquals($ref, $pem);
     }
-    
-    /**
-     */
+
     public function testFromPKIPEM()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/private_key.pem');
         $pk = RSAPrivateKey::fromPEM($pem);
         $this->assertInstanceOf(RSAPrivateKey::class, $pk);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -79,39 +79,33 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $pub = $pk->publicKey();
         $ref = RSAPublicKey::fromPEM(
-            PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_public_key.pem"));
+            PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_public_key.pem'));
         $this->assertEquals($ref, $pub);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidVersion()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/rsa_private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/rsa_private_key.pem');
         $seq = Sequence::fromDER($pem->data());
         $seq = $seq->withReplaced(0, new Integer(1));
+        $this->expectException(\UnexpectedValueException::class);
         RSAPrivateKey::fromASN1($seq);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidPEMType()
     {
-        $pem = new PEM("nope", "");
+        $pem = new PEM('nope', '');
+        $this->expectException(\UnexpectedValueException::class);
         RSAPrivateKey::fromPEM($pem);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testECKeyFail()
     {
-        $pem = PEM::fromFile(TEST_ASSETS_DIR . "/ec/private_key.pem");
+        $pem = PEM::fromFile(TEST_ASSETS_DIR . '/ec/private_key.pem');
+        $this->expectException(\UnexpectedValueException::class);
         RSAPrivateKey::fromPEM($pem);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -121,7 +115,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->modulus());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -131,7 +125,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->publicExponent());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -141,7 +135,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->privateExponent());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -151,7 +145,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->prime1());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -161,7 +155,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->prime2());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -171,7 +165,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->exponent1());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -181,7 +175,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->exponent2());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -191,7 +185,7 @@ class RSAPrivateKeyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNotEmpty($pk->coefficient());
     }
-    
+
     /**
      * @depends testDecode
      *

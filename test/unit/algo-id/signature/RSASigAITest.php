@@ -1,6 +1,8 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\RSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\SHA1WithRSAEncryptionAlgorithmIdentifier;
@@ -8,20 +10,18 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Signature\SHA1WithRSAEncryptionAlgorithm
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class RSASigAITest extends PHPUnit_Framework_TestCase
+class RSASigAITest extends TestCase
 {
-    /**
-     */
     public function testSupportsKeyAlgorithm()
     {
         $sig_algo = new SHA1WithRSAEncryptionAlgorithmIdentifier();
         $key_algo = new RSAEncryptionAlgorithmIdentifier();
         $this->assertTrue($sig_algo->supportsKeyAlgorithm($key_algo));
     }
-    
-    /**
-     */
+
     public function testDoesntSupportsKeyAlgorithm()
     {
         $sig_algo = new SHA1WithRSAEncryptionAlgorithmIdentifier();
@@ -30,5 +30,3 @@ class RSASigAITest extends PHPUnit_Framework_TestCase
         $this->assertFalse($sig_algo->supportsKeyAlgorithm($key_algo));
     }
 }
-
-

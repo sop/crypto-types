@@ -1,21 +1,24 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class ECPKAITest extends PHPUnit_Framework_TestCase
+class ECPKAITest extends TestCase
 {
-    const OID = "1.2.840.10045.3.1.7";
-    
+    const OID = '1.2.840.10045.3.1.7';
+
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -24,7 +27,7 @@ class ECPKAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -36,19 +39,19 @@ class ECPKAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ECPublicKeyAlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testEncode
-     * @expectedException UnexpectedValueException
      *
      * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
         $seq = $seq->withoutElement(1);
+        $this->expectException(\UnexpectedValueException::class);
         AlgorithmIdentifier::fromASN1($seq);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -58,7 +61,7 @@ class ECPKAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(self::OID, $ai->namedCurve());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -66,6 +69,6 @@ class ECPKAITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

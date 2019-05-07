@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
-use ASN1\Type\UnspecifiedType;
-use ASN1\Type\Primitive\NullType;
-use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
+use Sop\ASN1\Element;
+use Sop\ASN1\Type\Primitive\NullType;
+use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 
-/* @formatter:off *//*
-
+/*
 From RFC 1321 - 1. Executive Summary
 
     In the X.509 type AlgorithmIdentifier, the parameters for MD5
@@ -22,26 +22,24 @@ From RFC 3370 - 2.2 MD5
     parameters field MUST contain NULL.  Implementations MAY accept the
     MD5 AlgorithmIdentifiers with absent parameters as well as NULL
     parameters.
-
-*//* @formatter:on */
+*/
 
 /**
  * MD5 algorithm identifier.
  *
- * @link http://oid-info.com/get/1.2.840.113549.2.5
- * @link https://tools.ietf.org/html/rfc1321#section-1
- * @link https://tools.ietf.org/html/rfc3370#section-2.2
+ * @see http://oid-info.com/get/1.2.840.113549.2.5
+ * @see https://tools.ietf.org/html/rfc1321#section-1
+ * @see https://tools.ietf.org/html/rfc3370#section-2.2
  */
-class MD5AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements 
-    HashAlgorithmIdentifier
+class MD5AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements HashAlgorithmIdentifier
 {
     /**
      * Parameters.
      *
-     * @var NullType|null $_params
+     * @var null|NullType
      */
     protected $_params;
-    
+
     /**
      * Constructor.
      */
@@ -50,23 +48,19 @@ class MD5AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements
         $this->_oid = self::OID_MD5;
         $this->_params = new NullType();
     }
-    
+
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function name(): string
     {
-        return "md5";
+        return 'md5';
     }
-    
+
     /**
-     *
-     * @param UnspecifiedType $params
-     * @return self
+     * {@inheritdoc}
      */
-    public static function fromASN1Params(UnspecifiedType $params = null)
+    public static function fromASN1Params(?UnspecifiedType $params = null)
     {
         $obj = new static();
         // if parameters field is present, it must be null type
@@ -75,14 +69,13 @@ class MD5AlgorithmIdentifier extends SpecificAlgorithmIdentifier implements
         }
         return $obj;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      *
-     * @return NullType|null
+     * @return null|NullType
      */
-    protected function _paramsASN1()
+    protected function _paramsASN1(): ?Element
     {
         return $this->_params;
     }

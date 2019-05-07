@@ -1,25 +1,28 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Primitive\BitString;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\CryptoTypes\Signature\RSASignature;
 
 /**
  * @group signature
+ *
+ * @internal
  */
-class RSASignatureTest extends PHPUnit_Framework_TestCase
+class RSASignatureTest extends TestCase
 {
     /**
-     *
-     * @return \Sop\CryptoTypes\Signature\RSASignature
+     * @return RSASignature
      */
     public function testFromSignatureString()
     {
-        $sig = RSASignature::fromSignatureString("test");
+        $sig = RSASignature::fromSignatureString('test');
         $this->assertInstanceOf(RSASignature::class, $sig);
         return $sig;
     }
-    
+
     /**
      * @depends testFromSignatureString
      *

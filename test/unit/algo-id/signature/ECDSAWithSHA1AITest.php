@@ -1,20 +1,23 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\NullType;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\NullType;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\ECDSAWithSHA1AlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class ECDSAWithSHA1AITest extends PHPUnit_Framework_TestCase
+class ECDSAWithSHA1AITest extends TestCase
 {
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -23,7 +26,7 @@ class ECDSAWithSHA1AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -35,19 +38,19 @@ class ECDSAWithSHA1AITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(ECDSAWithSHA1AlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testEncode
-     * @expectedException UnexpectedValueException
      *
      * @param Sequence $seq
      */
     public function testDecodeWithParamsFail(Sequence $seq)
     {
         $seq = $seq->withInserted(1, new NullType());
+        $this->expectException(\UnexpectedValueException::class);
         AlgorithmIdentifier::fromASN1($seq);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -55,6 +58,6 @@ class ECDSAWithSHA1AITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

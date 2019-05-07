@@ -10,8 +10,8 @@ namespace Sop\CryptoTypes\Asymmetric;
  *
  * Thus <code>PrivateKeyInfo ::= OneAsymmetricKey</code>
  *
- * @link https://tools.ietf.org/html/rfc5208#section-5
- * @link https://tools.ietf.org/html/rfc5958#section-2
+ * @see https://tools.ietf.org/html/rfc5208#section-5
+ * @see https://tools.ietf.org/html/rfc5958#section-2
  */
 class PrivateKeyInfo extends OneAsymmetricKey
 {

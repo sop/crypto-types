@@ -1,23 +1,26 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\ObjectIdentifier;
-use ASN1\Type\Primitive\OctetString;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\ObjectIdentifier;
+use Sop\ASN1\Type\Primitive\OctetString;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Cipher\RC2CBCAlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class RC2CBCAITest extends PHPUnit_Framework_TestCase
+class RC2CBCAITest extends TestCase
 {
-    const IV = "12345678";
-    
+    const IV = '12345678';
+
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -26,7 +29,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -38,9 +41,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(RC2CBCAlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
-    /**
-     */
+
     public function testDecodeRFC2268OnlyIV()
     {
         $seq = new Sequence(
@@ -49,7 +50,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
         $ai = AlgorithmIdentifier::fromASN1($seq);
         $this->assertInstanceOf(RC2CBCAlgorithmIdentifier::class, $ai);
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -59,7 +60,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(64, $ai->effectiveKeyBits());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -69,28 +70,26 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(self::IV, $ai->initializationVector());
     }
-    
+
     /**
      * @depends testEncode
-     * @expectedException UnexpectedValueException
      *
      * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
         $seq = $seq->withoutElement(1);
+        $this->expectException(\UnexpectedValueException::class);
         AlgorithmIdentifier::fromASN1($seq);
     }
-    
-    /**
-     * @expectedException LogicException
-     */
+
     public function testEncodeNoIVFail()
     {
         $ai = new RC2CBCAlgorithmIdentifier();
+        $this->expectException(\LogicException::class);
         $ai->toASN1();
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -100,7 +99,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(8, $ai->blockSize());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -110,6 +109,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(8, $ai->keySize());
     }
+
     public function testEncodeLargeKey()
     {
         $ai = new RC2CBCAlgorithmIdentifier(512, self::IV);
@@ -117,7 +117,7 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncodeLargeKey
      *
@@ -128,15 +128,13 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
         $ai = AlgorithmIdentifier::fromASN1($seq);
         $this->assertInstanceOf(RC2CBCAlgorithmIdentifier::class, $ai);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidIVSizeFail()
     {
-        new RC2CBCAlgorithmIdentifier(64, "1234");
+        $this->expectException(\UnexpectedValueException::class);
+        new RC2CBCAlgorithmIdentifier(64, '1234');
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -144,6 +142,6 @@ class RC2CBCAITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

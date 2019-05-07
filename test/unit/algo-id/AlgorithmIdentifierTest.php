@@ -1,9 +1,11 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\NullType;
-use ASN1\Type\Primitive\ObjectIdentifier;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\NullType;
+use Sop\ASN1\Type\Primitive\ObjectIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\GenericAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
@@ -11,28 +13,25 @@ use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class AlgorithmIdentifierTest extends PHPUnit_Framework_TestCase
+class AlgorithmIdentifierTest extends TestCase
 {
     private static $_unknownASN1;
-    
-    /**
-     */
-    public static function setUpBeforeClass()
+
+    public static function setUpBeforeClass(): void
     {
         self::$_unknownASN1 = new Sequence(
-            new ObjectIdentifier("1.3.6.1.3", new NullType()));
+            new ObjectIdentifier('1.3.6.1.3', new NullType()));
     }
-    
-    /**
-     */
-    public static function tearDownAfterClass()
+
+    public static function tearDownAfterClass(): void
     {
         self::$_unknownASN1 = null;
     }
-    
+
     /**
-     *
      * @return AlgorithmIdentifier
      */
     public function testFromUnknownASN1()
@@ -41,7 +40,7 @@ class AlgorithmIdentifierTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(GenericAlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testFromUnknownASN1
      *
@@ -52,15 +51,13 @@ class AlgorithmIdentifierTest extends PHPUnit_Framework_TestCase
         $seq = $ai->toASN1();
         $this->assertEquals(self::$_unknownASN1, $seq);
     }
-    
-    /**
-     * @expectedException BadMethodCallException
-     */
+
     public function testSpecificAlgoBadCall()
     {
+        $this->expectException(\BadMethodCallException::class);
         SpecificAlgorithmIdentifier::fromASN1Params();
     }
-    
+
     /**
      * @depends testFromUnknownASN1
      *
@@ -68,6 +65,6 @@ class AlgorithmIdentifierTest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }

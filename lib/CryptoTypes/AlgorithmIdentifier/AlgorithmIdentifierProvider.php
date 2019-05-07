@@ -17,18 +17,21 @@ interface AlgorithmIdentifierProvider
      * Check whether this provider supports algorithm identifier of given OID.
      *
      * @param string $oid Object identifier in dotted format
+     *
      * @return bool
      */
     public function supportsOID(string $oid): bool;
-    
+
     /**
      * Get the name of a class that implements algorithm identifier for given
      * OID.
      *
      * @param string $oid Object identifier in dotted format
+     *
      * @throws \UnexpectedValueException If OID is not supported
+     *
      * @return string Fully qualified name of a class that extends
-     *         SpecificAlgorithmIdentifier
+     *                SpecificAlgorithmIdentifier
      */
     public function getClassByOID(string $oid): string;
 }

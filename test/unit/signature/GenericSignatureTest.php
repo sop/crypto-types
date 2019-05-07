@@ -1,28 +1,31 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Primitive\BitString;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\SHA1WithRSAEncryptionAlgorithmIdentifier;
 use Sop\CryptoTypes\Signature\GenericSignature;
 
 /**
  * @group signature
+ *
+ * @internal
  */
-class GenericSignatureTest extends PHPUnit_Framework_TestCase
+class GenericSignatureTest extends TestCase
 {
     /**
-     *
-     * @return \Sop\CryptoTypes\Signature\GenericSignature
+     * @return GenericSignature
      */
     public function testCreate()
     {
-        $sig = new GenericSignature(new BitString("test"),
+        $sig = new GenericSignature(new BitString('test'),
             new SHA1WithRSAEncryptionAlgorithmIdentifier());
         $this->assertInstanceOf(GenericSignature::class, $sig);
         return $sig;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -32,7 +35,7 @@ class GenericSignatureTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(BitString::class, $sig->bitString());
     }
-    
+
     /**
      * @depends testCreate
      *

@@ -15,6 +15,7 @@ interface SignatureAlgorithmIdentifier extends AlgorithmIdentifierType
      * Check whether signature algorithm supports given key algorithm.
      *
      * @param AlgorithmIdentifier $algo
+     *
      * @return bool
      */
     public function supportsKeyAlgorithm(AlgorithmIdentifier $algo): bool;

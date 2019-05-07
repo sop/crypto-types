@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric;
 
-use ASN1\Type\UnspecifiedType;
-use ASN1\Type\Constructed\Sequence;
-use ASN1\Type\Primitive\BitString;
+use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\BitString;
+use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
@@ -15,40 +15,41 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 /**
  * Implements X.509 SubjectPublicKeyInfo ASN.1 type.
  *
- * @link https://tools.ietf.org/html/rfc5280#section-4.1
+ * @see https://tools.ietf.org/html/rfc5280#section-4.1
  */
 class PublicKeyInfo
 {
     /**
      * Algorithm identifier.
      *
-     * @var AlgorithmIdentifierType $_algo
+     * @var AlgorithmIdentifierType
      */
     protected $_algo;
-    
+
     /**
      * Public key data.
      *
-     * @var string $_publicKeyData
+     * @var string
      */
     protected $_publicKeyData;
-    
+
     /**
      * Constructor.
      *
      * @param AlgorithmIdentifierType $algo Algorithm
-     * @param string $key Public key data
+     * @param string                  $key  Public key data
      */
     public function __construct(AlgorithmIdentifierType $algo, string $key)
     {
         $this->_algo = $algo;
         $this->_publicKeyData = $key;
     }
-    
+
     /**
      * Initialize from ASN.1.
      *
      * @param Sequence $seq
+     *
      * @return self
      */
     public static function fromASN1(Sequence $seq): self
@@ -59,11 +60,12 @@ class PublicKeyInfo
             ->string();
         return new self($algo, $key);
     }
-    
+
     /**
      * Inititalize from a PublicKey.
      *
      * @param PublicKey $public_key
+     *
      * @return self
      */
     public static function fromPublicKey(PublicKey $public_key): self
@@ -71,12 +73,14 @@ class PublicKeyInfo
         return new self($public_key->algorithmIdentifier(),
             $public_key->subjectPublicKeyData());
     }
-    
+
     /**
      * Initialize from PEM.
      *
      * @param PEM $pem
+     *
      * @throws \UnexpectedValueException
+     *
      * @return self
      */
     public static function fromPEM(PEM $pem): self
@@ -87,20 +91,21 @@ class PublicKeyInfo
             case PEM::TYPE_RSA_PUBLIC_KEY:
                 return RSA\RSAPublicKey::fromDER($pem->data())->publicKeyInfo();
         }
-        throw new \UnexpectedValueException("Invalid PEM type.");
+        throw new \UnexpectedValueException('Invalid PEM type.');
     }
-    
+
     /**
      * Initialize from DER data.
      *
      * @param string $data
+     *
      * @return self
      */
     public static function fromDER(string $data): self
     {
         return self::fromASN1(UnspecifiedType::fromDER($data)->asSequence());
     }
-    
+
     /**
      * Get algorithm identifier.
      *
@@ -110,7 +115,7 @@ class PublicKeyInfo
     {
         return $this->_algo;
     }
-    
+
     /**
      * Get public key data.
      *
@@ -120,11 +125,12 @@ class PublicKeyInfo
     {
         return $this->_publicKeyData;
     }
-    
+
     /**
      * Get public key.
      *
      * @throws \RuntimeException
+     *
      * @return PublicKey
      */
     public function publicKey(): PublicKey
@@ -137,31 +143,33 @@ class PublicKeyInfo
             // elliptic curve
             case AlgorithmIdentifier::OID_EC_PUBLIC_KEY:
                 if (!$algo instanceof ECPublicKeyAlgorithmIdentifier) {
-                    throw new \UnexpectedValueException("Not an EC algorithm.");
+                    throw new \UnexpectedValueException('Not an EC algorithm.');
                 }
                 // ECPoint is directly mapped into public key data
                 return new EC\ECPublicKey($this->_publicKeyData,
                     $algo->namedCurve());
         }
         throw new \RuntimeException(
-            "Public key " . $algo->name() . " not supported.");
+            'Public key ' . $algo->name() . ' not supported.');
     }
-    
+
     /**
      * Get key identifier using method 1 as described by RFC 5280.
      *
-     * @link https://tools.ietf.org/html/rfc5280#section-4.2.1.2
+     * @see https://tools.ietf.org/html/rfc5280#section-4.2.1.2
+     *
      * @return string 20 bytes (160 bits) long identifier
      */
     public function keyIdentifier(): string
     {
         return sha1($this->_publicKeyData, true);
     }
-    
+
     /**
      * Get key identifier using method 2 as described by RFC 5280.
      *
-     * @link https://tools.ietf.org/html/rfc5280#section-4.2.1.2
+     * @see https://tools.ietf.org/html/rfc5280#section-4.2.1.2
+     *
      * @return string 8 bytes (64 bits) long identifier
      */
     public function keyIdentifier64(): string
@@ -171,7 +179,7 @@ class PublicKeyInfo
         $id[0] = chr($c);
         return $id;
     }
-    
+
     /**
      * Generate ASN.1 structure.
      *
@@ -182,7 +190,7 @@ class PublicKeyInfo
         return new Sequence($this->_algo->toASN1(),
             new BitString($this->_publicKeyData));
     }
-    
+
     /**
      * Generate DER encoding.
      *
@@ -192,7 +200,7 @@ class PublicKeyInfo
     {
         return $this->toASN1()->toDER();
     }
-    
+
     /**
      * Generate PEM.
      *

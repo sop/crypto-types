@@ -7,7 +7,7 @@ namespace Sop\CryptoTypes\AlgorithmIdentifier\Signature;
 /**
  * ECDSA with SHA-256 signature algorithm identifier.
  *
- * @link https://tools.ietf.org/html/rfc5758#section-3.2
+ * @see https://tools.ietf.org/html/rfc5758#section-3.2
  */
 class ECDSAWithSHA256AlgorithmIdentifier extends ECSignatureAlgorithmIdentifier
 {
@@ -18,14 +18,12 @@ class ECDSAWithSHA256AlgorithmIdentifier extends ECSignatureAlgorithmIdentifier
     {
         $this->_oid = self::OID_ECDSA_WITH_SHA256;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
-     *
      */
     public function name(): string
     {
-        return "ecdsa-with-SHA256";
+        return 'ecdsa-with-SHA256';
     }
 }

@@ -1,21 +1,24 @@
 <?php
-declare(strict_types=1);
 
-use ASN1\Type\Constructed\Sequence;
+declare(strict_types = 1);
+
+use PHPUnit\Framework\TestCase;
+use Sop\ASN1\Type\Constructed\Sequence;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Cipher\DESCBCAlgorithmIdentifier;
 
 /**
  * @group asn1
  * @group algo-id
+ *
+ * @internal
  */
-class DESCBCAITest extends PHPUnit_Framework_TestCase
+class DESCBCAITest extends TestCase
 {
-    const IV = "12345678";
-    
+    const IV = '12345678';
+
     /**
-     *
-     * @return \ASN1\Type\Constructed\Sequence
+     * @return Sequence
      */
     public function testEncode()
     {
@@ -24,7 +27,7 @@ class DESCBCAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Sequence::class, $seq);
         return $seq;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -36,7 +39,7 @@ class DESCBCAITest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DESCBCAlgorithmIdentifier::class, $ai);
         return $ai;
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -46,7 +49,7 @@ class DESCBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(self::IV, $ai->initializationVector());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -54,31 +57,29 @@ class DESCBCAITest extends PHPUnit_Framework_TestCase
      */
     public function testWithIV(DESCBCAlgorithmIdentifier $ai)
     {
-        $ai2 = $ai->withInitializationVector("testtest");
+        $ai2 = $ai->withInitializationVector('testtest');
         $this->assertNotEquals($ai2, $ai);
     }
-    
+
     /**
      * @depends testEncode
-     * @expectedException UnexpectedValueException
      *
      * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
         $seq = $seq->withoutElement(1);
+        $this->expectException(\UnexpectedValueException::class);
         AlgorithmIdentifier::fromASN1($seq);
     }
-    
-    /**
-     * @expectedException LogicException
-     */
+
     public function testEncodeNoIVFail()
     {
         $ai = new DESCBCAlgorithmIdentifier();
+        $this->expectException(\LogicException::class);
         $ai->toASN1();
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -88,7 +89,7 @@ class DESCBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(8, $ai->blockSize());
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -98,15 +99,13 @@ class DESCBCAITest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(8, $ai->keySize());
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidIVSizeFail()
     {
-        new DESCBCAlgorithmIdentifier("1234");
+        $this->expectException(\UnexpectedValueException::class);
+        new DESCBCAlgorithmIdentifier('1234');
     }
-    
+
     /**
      * @depends testDecode
      *
@@ -114,6 +113,6 @@ class DESCBCAITest extends PHPUnit_Framework_TestCase
      */
     public function testName(AlgorithmIdentifier $algo)
     {
-        $this->assertInternalType("string", $algo->name());
+        $this->assertIsString($algo->name());
     }
 }
