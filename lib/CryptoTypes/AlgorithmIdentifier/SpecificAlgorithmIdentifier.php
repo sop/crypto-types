@@ -15,8 +15,6 @@ abstract class SpecificAlgorithmIdentifier extends AlgorithmIdentifier
     /**
      * Initialize object from algorithm identifier parameters.
      *
-     * @todo return typing
-     *
      * @param null|UnspecifiedType $params Parameters or null if none
      *
      * @throws \UnexpectedValueException If parameters are invalid for the algorithm
