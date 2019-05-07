@@ -91,6 +91,7 @@ class ECConversion
     public static function octetStringToInteger(OctetString $os): Integer
     {
         $num = gmp_import($os->string(), 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
+        assert($num instanceof \GMP, new \RuntimeException('gmp_import() failed.'));
         return new Integer(gmp_strval($num, 10));
     }
 

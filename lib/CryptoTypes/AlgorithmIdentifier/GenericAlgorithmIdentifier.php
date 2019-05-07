@@ -44,7 +44,7 @@ class GenericAlgorithmIdentifier extends AlgorithmIdentifier
      *
      * @return null|UnspecifiedType
      */
-    public function parameters()
+    public function parameters(): ?UnspecifiedType
     {
         return $this->_params;
     }

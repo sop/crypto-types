@@ -51,7 +51,7 @@ class AIFactoryTest_Provider implements AlgorithmIdentifierProvider
 
 class AIFactoryTest_CustomAlgo extends SpecificAlgorithmIdentifier
 {
-    public static function fromASN1Params(UnspecifiedType $params = null)
+    public static function fromASN1Params(?UnspecifiedType $params = null)
     {
         return new self();
     }

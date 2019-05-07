@@ -99,7 +99,8 @@ class ECPublicKey extends PublicKey
         }
         $pki = PublicKeyInfo::fromDER($pem->data());
         $algo = $pki->algorithmIdentifier();
-        if (AlgorithmIdentifier::OID_EC_PUBLIC_KEY != $algo->oid()) {
+        if (AlgorithmIdentifier::OID_EC_PUBLIC_KEY != $algo->oid() ||
+            !($algo instanceof ECPublicKeyAlgorithmIdentifier)) {
             throw new \UnexpectedValueException('Not an elliptic curve key.');
         }
         // ECPoint is directly mapped into public key data
