@@ -21,10 +21,12 @@
             "role": "Developer"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=7.2",
         "ext-gmp": "*",
-        "sop/asn1": "dev-php72 as 3.9.0",
+        "sop/asn1": "dev-php72 as 3.4.0",
         "sop/crypto-encoding": "dev-php72 as 0.2.0"
     },
     "require-dev": {
