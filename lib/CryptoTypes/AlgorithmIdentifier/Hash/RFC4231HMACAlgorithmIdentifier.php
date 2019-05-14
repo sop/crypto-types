@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 use Sop\ASN1\Element;
+use Sop\ASN1\Type\Primitive\NullType;
 use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\PRFAlgorithmIdentifier;
@@ -20,7 +21,7 @@ abstract class RFC4231HMACAlgorithmIdentifier extends SpecificAlgorithmIdentifie
     /**
      * Parameters stored for re-encoding.
      *
-     * @var null|\Sop\ASN1\Type\Primitive\NullType
+     * @var null|NullType
      */
     protected $_params;
 
@@ -46,7 +47,7 @@ abstract class RFC4231HMACAlgorithmIdentifier extends SpecificAlgorithmIdentifie
     /**
      * {@inheritdoc}
      *
-     * @return null|\Sop\ASN1\Type\Primitive\NullType
+     * @return null|NullType
      */
     protected function _paramsASN1(): ?Element
     {

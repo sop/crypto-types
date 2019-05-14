@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Sop\CryptoTypes\AlgorithmIdentifier\Hash;
 
 use Sop\ASN1\Element;
+use Sop\ASN1\Type\Primitive\NullType;
 use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\HashAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\SpecificAlgorithmIdentifier;
@@ -30,7 +31,7 @@ abstract class SHA2AlgorithmIdentifier extends SpecificAlgorithmIdentifier imple
     /**
      * Parameters.
      *
-     * @var null|\Sop\ASN1\Type\Primitive\NullType
+     * @var null|NullType
      */
     protected $_params;
 
@@ -61,7 +62,7 @@ abstract class SHA2AlgorithmIdentifier extends SpecificAlgorithmIdentifier imple
     /**
      * {@inheritdoc}
      *
-     * @return null|\Sop\ASN1\Type\Primitive\NullType
+     * @return null|NullType
      */
     protected function _paramsASN1(): ?Element
     {

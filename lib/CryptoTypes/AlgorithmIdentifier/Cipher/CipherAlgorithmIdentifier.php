@@ -47,8 +47,7 @@ abstract class CipherAlgorithmIdentifier extends SpecificAlgorithmIdentifier
      *
      * @param null|string $iv Initialization vector or null to remove
      *
-     * @throws \UnexpectedValueException If initialization vector size is
-     *                                   invalid
+     * @throws \UnexpectedValueException If initialization vector size is invalid
      *
      * @return self
      */
@@ -69,7 +68,7 @@ abstract class CipherAlgorithmIdentifier extends SpecificAlgorithmIdentifier
      */
     protected function _checkIVSize(?string $iv): void
     {
-        if (null !== $iv && strlen($iv) != $this->ivSize()) {
+        if (null !== $iv && strlen($iv) !== $this->ivSize()) {
             throw new \UnexpectedValueException('Invalid IV size.');
         }
     }

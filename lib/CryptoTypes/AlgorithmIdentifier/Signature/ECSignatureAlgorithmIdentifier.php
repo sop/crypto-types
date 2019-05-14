@@ -46,7 +46,7 @@ abstract class ECSignatureAlgorithmIdentifier extends SpecificAlgorithmIdentifie
      */
     public function supportsKeyAlgorithm(AlgorithmIdentifier $algo): bool
     {
-        return self::OID_EC_PUBLIC_KEY == $algo->oid();
+        return self::OID_EC_PUBLIC_KEY === $algo->oid();
     }
 
     /**

@@ -111,17 +111,13 @@ class RSAPrivateKey extends PrivateKey
      */
     public static function fromASN1(Sequence $seq): RSAPrivateKey
     {
-        $version = $seq->at(0)
-            ->asInteger()
-            ->intNumber();
-        if (0 != $version) {
+        $version = $seq->at(0)->asInteger()->intNumber();
+        if (0 !== $version) {
             throw new \UnexpectedValueException('Version must be 0.');
         }
         // helper function get integer from given index
         $get_int = function ($idx) use ($seq) {
-            return $seq->at($idx)
-                ->asInteger()
-                ->number();
+            return $seq->at($idx)->asInteger()->number();
         };
         $n = $get_int(1);
         $e = $get_int(2);
@@ -269,11 +265,15 @@ class RSAPrivateKey extends PrivateKey
      */
     public function toASN1(): Sequence
     {
-        return new Sequence(new Integer(0), new Integer($this->_modulus),
+        return new Sequence(new Integer(0),
+            new Integer($this->_modulus),
             new Integer($this->_publicExponent),
-            new Integer($this->_privateExponent), new Integer($this->_prime1),
-            new Integer($this->_prime2), new Integer($this->_exponent1),
-            new Integer($this->_exponent2), new Integer($this->_coefficient));
+            new Integer($this->_privateExponent),
+            new Integer($this->_prime1),
+            new Integer($this->_prime2),
+            new Integer($this->_exponent1),
+            new Integer($this->_exponent2),
+            new Integer($this->_coefficient));
     }
 
     /**

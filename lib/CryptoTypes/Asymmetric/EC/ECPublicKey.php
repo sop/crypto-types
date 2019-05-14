@@ -94,12 +94,12 @@ class ECPublicKey extends PublicKey
      */
     public static function fromPEM(PEM $pem): ECPublicKey
     {
-        if (PEM::TYPE_PUBLIC_KEY != $pem->type()) {
+        if (PEM::TYPE_PUBLIC_KEY !== $pem->type()) {
             throw new \UnexpectedValueException('Not a public key.');
         }
         $pki = PublicKeyInfo::fromDER($pem->data());
         $algo = $pki->algorithmIdentifier();
-        if (AlgorithmIdentifier::OID_EC_PUBLIC_KEY != $algo->oid() ||
+        if (AlgorithmIdentifier::OID_EC_PUBLIC_KEY !== $algo->oid() ||
             !($algo instanceof ECPublicKeyAlgorithmIdentifier)) {
             throw new \UnexpectedValueException('Not an elliptic curve key.');
         }
@@ -153,7 +153,7 @@ class ECPublicKey extends PublicKey
     public function isCompressed(): bool
     {
         $c = ord($this->_ecPoint[0]);
-        return 4 != $c;
+        return 4 !== $c;
     }
 
     /**
@@ -227,8 +227,7 @@ class ECPublicKey extends PublicKey
      */
     private static function _curveSize(string $oid): ?int
     {
-        if (!array_key_exists($oid,
-            ECPublicKeyAlgorithmIdentifier::MAP_CURVE_TO_SIZE)) {
+        if (!array_key_exists($oid, ECPublicKeyAlgorithmIdentifier::MAP_CURVE_TO_SIZE)) {
             return null;
         }
         return ECPublicKeyAlgorithmIdentifier::MAP_CURVE_TO_SIZE[$oid];

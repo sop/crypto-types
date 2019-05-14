@@ -126,15 +126,11 @@ class RC2CBCAlgorithmIdentifier extends BlockCipherAlgorithmIdentifier
             $idx = 0;
             // version is optional in rfc2898
             if ($seq->has($idx, Element::TYPE_INTEGER)) {
-                $version = $seq->at($idx++)
-                    ->asInteger()
-                    ->intNumber();
+                $version = $seq->at($idx++)->asInteger()->intNumber();
                 $key_bits = self::_versionToEKB($version);
             }
             // IV is present in all variants
-            $iv = $seq->at($idx)
-                ->asOctetString()
-                ->string();
+            $iv = $seq->at($idx)->asOctetString()->string();
         }
         return new self($key_bits, $iv);
     }

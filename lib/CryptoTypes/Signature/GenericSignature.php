@@ -32,8 +32,7 @@ class GenericSignature extends Signature
      * @param BitString               $signature Signature value
      * @param AlgorithmIdentifierType $algo      Algorithm identifier
      */
-    public function __construct(BitString $signature,
-        AlgorithmIdentifierType $algo)
+    public function __construct(BitString $signature, AlgorithmIdentifierType $algo)
     {
         $this->_signature = $signature;
         $this->_signatureAlgorithm = $algo;

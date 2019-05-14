@@ -80,17 +80,13 @@ class OneAsymmetricKey
      */
     public static function fromASN1(Sequence $seq): self
     {
-        $version = $seq->at(0)
-            ->asInteger()
-            ->intNumber();
+        $version = $seq->at(0)->asInteger()->intNumber();
         if (!in_array($version, [self::VERSION_1, self::VERSION_2])) {
             throw new \UnexpectedValueException(
                 "Version {$version} not supported.");
         }
         $algo = AlgorithmIdentifier::fromASN1($seq->at(1)->asSequence());
-        $key = $seq->at(2)
-            ->asOctetString()
-            ->string();
+        $key = $seq->at(2)->asOctetString()->string();
         // @todo parse attributes and public key
         $obj = new static($algo, $key);
         $obj->_version = $version;
@@ -118,8 +114,7 @@ class OneAsymmetricKey
      */
     public static function fromPrivateKey(PrivateKey $private_key): self
     {
-        return new static($private_key->algorithmIdentifier(),
-            $private_key->toDER());
+        return new static($private_key->algorithmIdentifier(), $private_key->toDER());
     }
 
     /**
@@ -189,8 +184,7 @@ class OneAsymmetricKey
                 // If private key doesn't encode named curve, assign from parameters.
                 if (!$pk->hasNamedCurve()) {
                     if (!$algo instanceof ECPublicKeyAlgorithmIdentifier) {
-                        throw new \UnexpectedValueException(
-                            'Not an EC algorithm.');
+                        throw new \UnexpectedValueException('Not an EC algorithm.');
                     }
                     $pk = $pk->withNamedCurve($algo->namedCurve());
                 }
@@ -207,9 +201,7 @@ class OneAsymmetricKey
      */
     public function publicKeyInfo(): PublicKeyInfo
     {
-        return $this->privateKey()
-            ->publicKey()
-            ->publicKeyInfo();
+        return $this->privateKey()->publicKey()->publicKeyInfo();
     }
 
     /**

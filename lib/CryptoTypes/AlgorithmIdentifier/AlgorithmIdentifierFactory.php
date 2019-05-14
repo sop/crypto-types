@@ -106,9 +106,7 @@ class AlgorithmIdentifierFactory
      */
     public function parse(Sequence $seq): AlgorithmIdentifier
     {
-        $oid = $seq->at(0)
-            ->asObjectIdentifier()
-            ->oid();
+        $oid = $seq->at(0)->asObjectIdentifier()->oid();
         $params = $seq->has(1) ? $seq->at(1) : null;
         /** @var SpecificAlgorithmIdentifier $cls */
         $cls = $this->getClass($oid);

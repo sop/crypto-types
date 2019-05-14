@@ -55,9 +55,7 @@ class PublicKeyInfo
     public static function fromASN1(Sequence $seq): self
     {
         $algo = AlgorithmIdentifier::fromASN1($seq->at(0)->asSequence());
-        $key = $seq->at(1)
-            ->asBitString()
-            ->string();
+        $key = $seq->at(1)->asBitString()->string();
         return new self($algo, $key);
     }
 

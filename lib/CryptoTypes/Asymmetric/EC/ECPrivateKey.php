@@ -71,15 +71,11 @@ class ECPrivateKey extends PrivateKey
      */
     public static function fromASN1(Sequence $seq): ECPrivateKey
     {
-        $version = $seq->at(0)
-            ->asInteger()
-            ->intNumber();
-        if (1 != $version) {
+        $version = $seq->at(0)->asInteger()->intNumber();
+        if (1 !== $version) {
             throw new \UnexpectedValueException('Version must be 1.');
         }
-        $private_key = $seq->at(1)
-            ->asOctetString()
-            ->string();
+        $private_key = $seq->at(1)->asOctetString()->string();
         $named_curve = null;
         if ($seq->hasTagged(0)) {
             $params = $seq->getTagged(0)->asExplicit();
@@ -87,10 +83,7 @@ class ECPrivateKey extends PrivateKey
         }
         $public_key = null;
         if ($seq->hasTagged(1)) {
-            $public_key = $seq->getTagged(1)
-                ->asExplicit()
-                ->asBitString()
-                ->string();
+            $public_key = $seq->getTagged(1)->asExplicit()->asBitString()->string();
         }
         return new self($private_key, $named_curve, $public_key);
     }

@@ -18,6 +18,6 @@ abstract class RSASignatureAlgorithmIdentifier extends SpecificAlgorithmIdentifi
      */
     public function supportsKeyAlgorithm(AlgorithmIdentifier $algo): bool
     {
-        return self::OID_RSA_ENCRYPTION == $algo->oid();
+        return self::OID_RSA_ENCRYPTION === $algo->oid();
     }
 }
