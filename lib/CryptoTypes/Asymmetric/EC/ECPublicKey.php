@@ -62,7 +62,7 @@ class ECPublicKey extends PublicKey
      * @param int|string  $x           X coordinate as a base10 number
      * @param int|string  $y           Y coordinate as a base10 number
      * @param null|string $named_curve Named curve OID
-     * @param null|int    $bits        Size of <i>p</i> in bits
+     * @param null|int    $bits        Size of *p* in bits
      *
      * @return self
      */
@@ -219,7 +219,7 @@ class ECPublicKey extends PublicKey
     }
 
     /**
-     * Get the curve size <i>p</i> in bits.
+     * Get the curve size *p* in bits.
      *
      * @param string $oid Curve OID
      *

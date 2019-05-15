@@ -12,7 +12,7 @@ use Sop\ASN1\Type\UnspecifiedType;
 /**
  * Implements ECDSA signature value.
  *
- * ECDSA signature is represented as a <code>ECDSA-Sig-Value</code> ASN.1 type.
+ * ECDSA signature is represented as a `ECDSA-Sig-Value` ASN.1 type.
  *
  * @see https://tools.ietf.org/html/rfc3278#section-8.2
  */
@@ -35,8 +35,8 @@ class ECSignature extends Signature
     /**
      * Constructor.
      *
-     * @param int|string $r Signature's <code>r</code> value
-     * @param int|string $s Signature's <code>s</code> value
+     * @param int|string $r Signature's `r` value
+     * @param int|string $s Signature's `s` value
      */
     public function __construct($r, $s)
     {

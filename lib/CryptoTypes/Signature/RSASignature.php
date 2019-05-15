@@ -16,7 +16,7 @@ use Sop\ASN1\Type\Primitive\BitString;
 class RSASignature extends Signature
 {
     /**
-     * Signature value <i>S</i>.
+     * Signature value *S*.
      *
      * @var string
      */
@@ -30,9 +30,9 @@ class RSASignature extends Signature
     }
 
     /**
-     * Initialize from RSA signature <i>S</i>.
+     * Initialize from RSA signature *S*.
      *
-     * Signature value <i>S</i> is the result of last step in RSA signature
+     * Signature value *S* is the result of last step in RSA signature
      * process defined in PKCS #1.
      *
      * @see https://tools.ietf.org/html/rfc2313#section-10.1.4
