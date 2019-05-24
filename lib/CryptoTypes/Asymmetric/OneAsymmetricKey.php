@@ -4,14 +4,18 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric;
 
+use Sop\ASN1\Element;
 use Sop\ASN1\Type\Constructed\Sequence;
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\ASN1\Type\Primitive\Integer;
 use Sop\ASN1\Type\Primitive\OctetString;
+use Sop\ASN1\Type\Tagged\ImplicitlyTaggedType;
 use Sop\ASN1\Type\UnspecifiedType;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
+use Sop\CryptoTypes\Asymmetric\Attribute\Attributes;
 
 /**
  * Implements PKCS #8 PrivateKeyInfo / OneAsymmetricKey ASN.1 type.
@@ -57,6 +61,20 @@ class OneAsymmetricKey
     protected $_privateKeyData;
 
     /**
+     * Optional attributes.
+     *
+     * @var null|Attributes
+     */
+    protected $_attributes;
+
+    /**
+     * Optional public key data.
+     *
+     * @var null|BitString
+     */
+    protected $_publicKeyData;
+
+    /**
      * Constructor.
      *
      * @param AlgorithmIdentifierType $algo Algorithm
@@ -87,9 +105,20 @@ class OneAsymmetricKey
         }
         $algo = AlgorithmIdentifier::fromASN1($seq->at(1)->asSequence());
         $key = $seq->at(2)->asOctetString()->string();
-        // @todo parse attributes and public key
+        $attribs = null;
+        if ($seq->hasTagged(0)) {
+            $attribs = Attributes::fromASN1($seq->getTagged(0)
+                ->asImplicit(Element::TYPE_SET)->asSet());
+        }
+        $pubkey = null;
+        if ($seq->hasTagged(1)) {
+            $pubkey = $seq->getTagged(1)
+                ->asImplicit(Element::TYPE_BIT_STRING)->asBitString();
+        }
         $obj = new static($algo, $key);
         $obj->_version = $version;
+        $obj->_attributes = $attribs;
+        $obj->_publicKeyData = $pubkey;
         return $obj;
     }
 
@@ -205,6 +234,55 @@ class OneAsymmetricKey
     }
 
     /**
+     * Whether attributes are present.
+     *
+     * @return bool
+     */
+    public function hasAttributes(): bool
+    {
+        return isset($this->_attributes);
+    }
+
+    /**
+     * Get attributes.
+     *
+     * @throws \LogicException If attributes are not present
+     *
+     * @return Attributes
+     */
+    public function attributes(): Attributes
+    {
+        if (!$this->hasAttributes()) {
+            throw new \LogicException('Attributes not set.');
+        }
+        return $this->_attributes;
+    }
+
+    /**
+     * Whether explicit public key data is present.
+     *
+     * @return bool
+     */
+    public function hasPublicKeyData(): bool
+    {
+        return isset($this->_publicKeyData);
+    }
+
+    /**
+     * Get the explicit public key data.
+     *
+     * @return \LogicException If public key is not present
+     * @return BitString
+     */
+    public function publicKeyData(): BitString
+    {
+        if (!$this->hasPublicKeyData()) {
+            throw new \LogicException('No explicit public key.');
+        }
+        return $this->_publicKeyData;
+    }
+
+    /**
      * Generate ASN.1 structure.
      *
      * @return Sequence
@@ -213,7 +291,13 @@ class OneAsymmetricKey
     {
         $elements = [new Integer($this->_version), $this->_algo->toASN1(),
             new OctetString($this->_privateKeyData), ];
-        // @todo decode attributes and public key
+        if ($this->_attributes) {
+            $elements[] = new ImplicitlyTaggedType(0,
+                $this->_attributes->toASN1());
+        }
+        if ($this->_publicKeyData) {
+            $elements[] = new ImplicitlyTaggedType(1, $this->_publicKeyData);
+        }
         return new Sequence(...$elements);
     }
 
