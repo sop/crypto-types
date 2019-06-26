@@ -25,6 +25,10 @@ class AlgorithmIdentifierFactory
     const MAP_OID_TO_CLASS = [
         AlgorithmIdentifier::OID_RSA_ENCRYPTION => Asymmetric\RSAEncryptionAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_EC_PUBLIC_KEY => Asymmetric\ECPublicKeyAlgorithmIdentifier::class,
+        AlgorithmIdentifier::OID_X25519 => Asymmetric\X25519AlgorithmIdentifier::class,
+        AlgorithmIdentifier::OID_X448 => Asymmetric\X448AlgorithmIdentifier::class,
+        AlgorithmIdentifier::OID_ED25519 => Asymmetric\Ed25519AlgorithmIdentifier::class,
+        AlgorithmIdentifier::OID_ED448 => Asymmetric\Ed448AlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_DES_CBC => Cipher\DESCBCAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_DES_EDE3_CBC => Cipher\DESEDE3CBCAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_RC2_CBC => Cipher\RC2CBCAlgorithmIdentifier::class,

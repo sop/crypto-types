@@ -40,6 +40,12 @@ abstract class AlgorithmIdentifier implements AlgorithmIdentifierType
     // Elliptic Curve public key
     const OID_EC_PUBLIC_KEY = '1.2.840.10045.2.1';
 
+    // Elliptic curve / algorithm pairs from RFC 8410
+    const OID_X25519 = '1.3.101.110';
+    const OID_X448 = '1.3.101.111';
+    const OID_ED25519 = '1.3.101.112';
+    const OID_ED448 = '1.3.101.113';
+
     // Cipher algorithms
     const OID_DES_CBC = '1.3.14.3.2.7';
     const OID_RC2_CBC = '1.2.840.113549.3.2';

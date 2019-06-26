@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace Sop\CryptoTypes\Signature;
 
 use Sop\ASN1\Type\Primitive\BitString;
+use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\Ed25519AlgorithmIdentifier;
+use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\Ed448AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\ECSignatureAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Signature\RSASignatureAlgorithmIdentifier;
@@ -37,6 +39,12 @@ abstract class Signature
         }
         if ($algo instanceof ECSignatureAlgorithmIdentifier) {
             return ECSignature::fromDER($data);
+        }
+        if ($algo instanceof Ed25519AlgorithmIdentifier) {
+            return new Ed25519Signature($data);
+        }
+        if ($algo instanceof Ed448AlgorithmIdentifier) {
+            return new Ed448Signature($data);
         }
         return new GenericSignature(new BitString($data), $algo);
     }

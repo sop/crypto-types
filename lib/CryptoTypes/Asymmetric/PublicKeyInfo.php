@@ -138,7 +138,7 @@ class PublicKeyInfo
             // RSA
             case AlgorithmIdentifier::OID_RSA_ENCRYPTION:
                 return RSA\RSAPublicKey::fromDER($this->_publicKeyData);
-            // elliptic curve
+            // Elliptic Curve
             case AlgorithmIdentifier::OID_EC_PUBLIC_KEY:
                 if (!$algo instanceof ECPublicKeyAlgorithmIdentifier) {
                     throw new \UnexpectedValueException('Not an EC algorithm.');
@@ -146,6 +146,22 @@ class PublicKeyInfo
                 // ECPoint is directly mapped into public key data
                 return new EC\ECPublicKey($this->_publicKeyData,
                     $algo->namedCurve());
+            // Ed25519
+            case AlgorithmIdentifier::OID_ED25519:
+                return new RFC8410\Curve25519\Ed25519PublicKey(
+                    $this->_publicKeyData);
+            // X25519
+            case AlgorithmIdentifier::OID_X25519:
+                return new RFC8410\Curve25519\X25519PublicKey(
+                    $this->_publicKeyData);
+            // Ed448
+            case AlgorithmIdentifier::OID_ED448:
+                return new RFC8410\Curve448\Ed448PublicKey(
+                    $this->_publicKeyData);
+            // X448
+            case AlgorithmIdentifier::OID_X448:
+                return new RFC8410\Curve448\X448PublicKey(
+                    $this->_publicKeyData);
         }
         throw new \RuntimeException(
             'Public key ' . $algo->name() . ' not supported.');

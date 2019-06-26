@@ -77,14 +77,19 @@ class OneAsymmetricKey
     /**
      * Constructor.
      *
-     * @param AlgorithmIdentifierType $algo Algorithm
-     * @param string                  $key  Private key data
+     * @param AlgorithmIdentifierType $algo       Algorithm
+     * @param string                  $key        Private key data
+     * @param null|Attributes         $attributes Optional attributes
+     * @param null|BitString          $public_key Optional public key
      */
-    public function __construct(AlgorithmIdentifierType $algo, string $key)
+    public function __construct(AlgorithmIdentifierType $algo, string $key,
+        ?Attributes $attributes = null, ?BitString $public_key = null)
     {
         $this->_version = self::VERSION_1;
         $this->_algo = $algo;
         $this->_privateKeyData = $key;
+        $this->_attributes = $attributes;
+        $this->_publicKeyData = $public_key;
     }
 
     /**
@@ -115,10 +120,8 @@ class OneAsymmetricKey
             $pubkey = $seq->getTagged(1)
                 ->asImplicit(Element::TYPE_BIT_STRING)->asBitString();
         }
-        $obj = new static($algo, $key);
+        $obj = new static($algo, $key, $attribs, $pubkey);
         $obj->_version = $version;
-        $obj->_attributes = $attribs;
-        $obj->_publicKeyData = $pubkey;
         return $obj;
     }
 
@@ -135,7 +138,12 @@ class OneAsymmetricKey
     }
 
     /**
-     * Initialize from a PrivateKey.
+     * Initialize from a `PrivateKey`.
+     *
+     * Note that `OneAsymmetricKey` <-> `PrivateKey` conversions may not be
+     * bidirectional with all key types, since `OneAsymmetricKey` may include
+     * attributes as well the public key that are not conveyed in specific
+     * `PrivateKey` object.
      *
      * @param PrivateKey $private_key
      *
@@ -143,7 +151,10 @@ class OneAsymmetricKey
      */
     public static function fromPrivateKey(PrivateKey $private_key): self
     {
-        return new static($private_key->algorithmIdentifier(), $private_key->toDER());
+        return new static(
+            $private_key->algorithmIdentifier(),
+            $private_key->privateKeyData()
+        );
     }
 
     /**
@@ -218,6 +229,33 @@ class OneAsymmetricKey
                     $pk = $pk->withNamedCurve($algo->namedCurve());
                 }
                 return $pk;
+            // Ed25519
+            case AlgorithmIdentifier::OID_ED25519:
+                $pubkey = $this->_publicKeyData ?
+                    $this->_publicKeyData->string() : null;
+                // RFC 8410 defines `CurvePrivateKey ::= OCTET STRING` that
+                // is encoded into private key data. So Ed25519 private key
+                // is doubly wrapped into octet string encodings.
+                return RFC8410\Curve25519\Ed25519PrivateKey::fromOctetString(
+                    OctetString::fromDER($this->_privateKeyData), $pubkey);
+            // X25519
+            case AlgorithmIdentifier::OID_X25519:
+                $pubkey = $this->_publicKeyData ?
+                    $this->_publicKeyData->string() : null;
+                return RFC8410\Curve25519\X25519PrivateKey::fromOctetString(
+                    OctetString::fromDER($this->_privateKeyData, $pubkey));
+            // Ed448
+            case AlgorithmIdentifier::OID_ED448:
+                $pubkey = $this->_publicKeyData ?
+                    $this->_publicKeyData->string() : null;
+                return RFC8410\Curve448\Ed448PrivateKey::fromOctetString(
+                    OctetString::fromDER($this->_privateKeyData), $pubkey);
+            // X448
+            case AlgorithmIdentifier::OID_X448:
+                $pubkey = $this->_publicKeyData ?
+                    $this->_publicKeyData->string() : null;
+                return RFC8410\Curve448\X448PrivateKey::fromOctetString(
+                    OctetString::fromDER($this->_privateKeyData, $pubkey));
         }
         throw new \RuntimeException(
             'Private key ' . $algo->name() . ' not supported.');
@@ -230,6 +268,11 @@ class OneAsymmetricKey
      */
     public function publicKeyInfo(): PublicKeyInfo
     {
+        // if public key is explicitly defined
+        if ($this->hasPublicKeyData()) {
+            return new PublicKeyInfo($this->_algo, $this->_publicKeyData->string());
+        }
+        // else derive from private key
         return $this->privateKey()->publicKey()->publicKeyInfo();
     }
 

@@ -41,6 +41,19 @@ abstract class PrivateKey
     abstract public function toPEM(): PEM;
 
     /**
+     * Get the private key data in type specific encoding.
+     *
+     * @return string
+     */
+    public function privateKeyData(): string
+    {
+        // By default encode in DER. This is the case with RSA and EC keys.
+        // Other keys may have more specific encoding schemes, so this
+        // method must be overridden by derived classes.
+        return $this->toDER();
+    }
+
+    /**
      * Get the private key as a PrivateKeyInfo type.
      *
      * @return PrivateKeyInfo
