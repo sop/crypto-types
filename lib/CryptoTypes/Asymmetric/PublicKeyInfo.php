@@ -27,16 +27,14 @@ class PublicKeyInfo
     protected $_algo;
 
     /**
-     * Public key data.
+     * Public key.
      *
-     * @var string
+     * @var BitString
      */
-    protected $_publicKeyData;
+    protected $_publicKey;
 
     /**
      * Constructor.
-     *
-     * @todo pass key data as a bitstring
      *
      * @param AlgorithmIdentifierType $algo Algorithm
      * @param string                  $key  Public key data
@@ -44,7 +42,7 @@ class PublicKeyInfo
     public function __construct(AlgorithmIdentifierType $algo, string $key)
     {
         $this->_algo = $algo;
-        $this->_publicKeyData = $key;
+        $this->_publicKey = new BitString($key);
     }
 
     /**
@@ -53,8 +51,19 @@ class PublicKeyInfo
     public static function fromASN1(Sequence $seq): self
     {
         $algo = AlgorithmIdentifier::fromASN1($seq->at(0)->asSequence());
-        $key = $seq->at(1)->asBitString()->string();
-        return new self($algo, $key);
+        $key = $seq->at(1)->asBitString();
+        return new self($algo, $key->string());
+    }
+
+    /**
+     * Initialize from public key data as a bit string.
+     */
+    public static function fromBitString(
+        AlgorithmIdentifierType $algo, BitString $key): self
+    {
+        $obj = new self($algo, '');
+        $obj->_publicKey = $key;
+        return $obj;
     }
 
     /**
@@ -103,7 +112,7 @@ class PublicKeyInfo
      */
     public function publicKeyData(): string
     {
-        return $this->_publicKeyData;
+        return $this->_publicKey->string();
     }
 
     /**
@@ -117,31 +126,31 @@ class PublicKeyInfo
         switch ($algo->oid()) {
             // RSA
             case AlgorithmIdentifier::OID_RSA_ENCRYPTION:
-                return RSA\RSAPublicKey::fromDER($this->_publicKeyData);
+                return RSA\RSAPublicKey::fromDER($this->publicKeyData());
             // Elliptic Curve
             case AlgorithmIdentifier::OID_EC_PUBLIC_KEY:
                 if (!$algo instanceof ECPublicKeyAlgorithmIdentifier) {
                     throw new \UnexpectedValueException('Not an EC algorithm.');
                 }
                 // ECPoint is directly mapped into public key data
-                return new EC\ECPublicKey($this->_publicKeyData,
+                return new EC\ECPublicKey($this->publicKeyData(),
                     $algo->namedCurve());
             // Ed25519
             case AlgorithmIdentifier::OID_ED25519:
                 return new RFC8410\Curve25519\Ed25519PublicKey(
-                    $this->_publicKeyData);
+                    $this->publicKeyData());
             // X25519
             case AlgorithmIdentifier::OID_X25519:
                 return new RFC8410\Curve25519\X25519PublicKey(
-                    $this->_publicKeyData);
+                    $this->publicKeyData());
             // Ed448
             case AlgorithmIdentifier::OID_ED448:
                 return new RFC8410\Curve448\Ed448PublicKey(
-                    $this->_publicKeyData);
+                    $this->publicKeyData());
             // X448
             case AlgorithmIdentifier::OID_X448:
                 return new RFC8410\Curve448\X448PublicKey(
-                    $this->_publicKeyData);
+                    $this->publicKeyData());
         }
         throw new \RuntimeException(
             'Public key ' . $algo->name() . ' not supported.');
@@ -156,7 +165,7 @@ class PublicKeyInfo
      */
     public function keyIdentifier(): string
     {
-        return sha1($this->_publicKeyData, true);
+        return sha1($this->publicKeyData(), true);
     }
 
     /**
@@ -179,8 +188,7 @@ class PublicKeyInfo
      */
     public function toASN1(): Sequence
     {
-        return new Sequence($this->_algo->toASN1(),
-            new BitString($this->_publicKeyData));
+        return new Sequence($this->_algo->toASN1(), $this->_publicKey);
     }
 
     /**
