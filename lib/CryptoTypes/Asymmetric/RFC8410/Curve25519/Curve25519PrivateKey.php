@@ -25,7 +25,7 @@ abstract class Curve25519PrivateKey extends RFC8410PrivateKey
             throw new \UnexpectedValueException(
                 'Curve25519 private key must be exactly 32 bytes.');
         }
-        if ($public_key && 32 !== strlen($public_key)) {
+        if (isset($public_key) && 32 !== strlen($public_key)) {
             throw new \UnexpectedValueException(
                 'Curve25519 public key must be exactly 32 bytes.');
         }

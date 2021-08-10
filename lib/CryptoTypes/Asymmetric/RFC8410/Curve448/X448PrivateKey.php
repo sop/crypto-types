@@ -28,7 +28,7 @@ class X448PrivateKey extends RFC8410PrivateKey
             throw new \UnexpectedValueException(
                 'X448 private key must be exactly 56 bytes.');
         }
-        if ($public_key && 56 !== strlen($public_key)) {
+        if (isset($public_key) && 56 !== strlen($public_key)) {
             throw new \UnexpectedValueException(
                 'X448 public key must be exactly 56 bytes.');
         }

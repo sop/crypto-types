@@ -35,6 +35,8 @@ class PublicKeyInfo
 
     /**
      * Constructor.
+     * 
+     * @todo pass key data as a bitstring
      *
      * @param AlgorithmIdentifierType $algo Algorithm
      * @param string                  $key  Public key data

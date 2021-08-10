@@ -30,14 +30,14 @@ class OneAsymmetricKey
      *
      * @var int
      */
-    const VERSION_1 = 0;
+    public const VERSION_1 = 0;
 
     /**
      * Version number for OneAsymmetricKey.
      *
      * @var int
      */
-    const VERSION_2 = 1;
+    public const VERSION_2 = 1;
 
     /**
      * Version number.
@@ -86,7 +86,7 @@ class OneAsymmetricKey
         ?OneAsymmetricKeyAttributes $attributes = null,
         ?BitString $public_key = null)
     {
-        $this->_version = self::VERSION_1;
+        $this->_version = self::VERSION_2;
         $this->_algo = $algo;
         $this->_privateKeyData = $key;
         $this->_attributes = $attributes;
@@ -96,11 +96,7 @@ class OneAsymmetricKey
     /**
      * Initialize from ASN.1.
      *
-     * @param Sequence $seq
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromASN1(Sequence $seq): self
     {
@@ -128,10 +124,6 @@ class OneAsymmetricKey
 
     /**
      * Initialize from DER data.
-     *
-     * @param string $data
-     *
-     * @return self
      */
     public static function fromDER(string $data): self
     {
@@ -145,10 +137,6 @@ class OneAsymmetricKey
      * bidirectional with all key types, since `OneAsymmetricKey` may include
      * attributes as well the public key that are not conveyed in a specific
      * `PrivateKey` object.
-     *
-     * @param PrivateKey $private_key
-     *
-     * @return self
      */
     public static function fromPrivateKey(PrivateKey $private_key): self
     {
@@ -161,11 +149,7 @@ class OneAsymmetricKey
     /**
      * Initialize from PEM.
      *
-     * @param PEM $pem
-     *
      * @throws \UnexpectedValueException If PEM type is not supported
-     *
-     * @return self
      */
     public static function fromPEM(PEM $pem): self
     {
@@ -183,9 +167,25 @@ class OneAsymmetricKey
     }
 
     /**
+     * Get self with version set.
+     */
+    public function withVersion(int $version): self
+    {
+        $obj = clone $this;
+        $obj->_version = $version;
+        return $obj;
+    }
+
+    /**
+     * Get version number.
+     */
+    public function version(): int
+    {
+        return $this->_version;
+    }
+
+    /**
      * Get algorithm identifier.
-     *
-     * @return AlgorithmIdentifierType
      */
     public function algorithmIdentifier(): AlgorithmIdentifierType
     {
@@ -194,8 +194,6 @@ class OneAsymmetricKey
 
     /**
      * Get private key data.
-     *
-     * @return string
      */
     public function privateKeyData(): string
     {
@@ -206,8 +204,6 @@ class OneAsymmetricKey
      * Get private key.
      *
      * @throws \RuntimeException
-     *
-     * @return PrivateKey
      */
     public function privateKey(): PrivateKey
     {
@@ -238,25 +234,33 @@ class OneAsymmetricKey
                 // is encoded into private key data. So Ed25519 private key
                 // is doubly wrapped into octet string encodings.
                 return RFC8410\Curve25519\Ed25519PrivateKey::fromOctetString(
-                    OctetString::fromDER($this->_privateKeyData), $pubkey);
+                    OctetString::fromDER($this->_privateKeyData), $pubkey)
+                    ->withVersion($this->_version)
+                    ->withAttributes($this->_attributes);
             // X25519
             case AlgorithmIdentifier::OID_X25519:
                 $pubkey = $this->_publicKeyData ?
                     $this->_publicKeyData->string() : null;
                 return RFC8410\Curve25519\X25519PrivateKey::fromOctetString(
-                    OctetString::fromDER($this->_privateKeyData, $pubkey));
+                    OctetString::fromDER($this->_privateKeyData), $pubkey)
+                    ->withVersion($this->_version)
+                    ->withAttributes($this->_attributes);
             // Ed448
             case AlgorithmIdentifier::OID_ED448:
                 $pubkey = $this->_publicKeyData ?
                     $this->_publicKeyData->string() : null;
                 return RFC8410\Curve448\Ed448PrivateKey::fromOctetString(
-                    OctetString::fromDER($this->_privateKeyData), $pubkey);
+                    OctetString::fromDER($this->_privateKeyData), $pubkey)
+                    ->withVersion($this->_version)
+                    ->withAttributes($this->_attributes);
             // X448
             case AlgorithmIdentifier::OID_X448:
                 $pubkey = $this->_publicKeyData ?
                     $this->_publicKeyData->string() : null;
                 return RFC8410\Curve448\X448PrivateKey::fromOctetString(
-                    OctetString::fromDER($this->_privateKeyData, $pubkey));
+                    OctetString::fromDER($this->_privateKeyData), $pubkey)
+                    ->withVersion($this->_version)
+                    ->withAttributes($this->_attributes);
         }
         throw new \RuntimeException(
             'Private key ' . $algo->name() . ' not supported.');
@@ -264,8 +268,6 @@ class OneAsymmetricKey
 
     /**
      * Get public key info corresponding to the private key.
-     *
-     * @return PublicKeyInfo
      */
     public function publicKeyInfo(): PublicKeyInfo
     {
@@ -279,8 +281,6 @@ class OneAsymmetricKey
 
     /**
      * Whether attributes are present.
-     *
-     * @return bool
      */
     public function hasAttributes(): bool
     {
@@ -291,8 +291,6 @@ class OneAsymmetricKey
      * Get attributes.
      *
      * @throws \LogicException If attributes are not present
-     *
-     * @return OneAsymmetricKeyAttributes
      */
     public function attributes(): OneAsymmetricKeyAttributes
     {
@@ -304,8 +302,6 @@ class OneAsymmetricKey
 
     /**
      * Whether explicit public key data is present.
-     *
-     * @return bool
      */
     public function hasPublicKeyData(): bool
     {
@@ -316,7 +312,6 @@ class OneAsymmetricKey
      * Get the explicit public key data.
      *
      * @return \LogicException If public key is not present
-     * @return BitString
      */
     public function publicKeyData(): BitString
     {
@@ -328,8 +323,6 @@ class OneAsymmetricKey
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return Sequence
      */
     public function toASN1(): Sequence
     {
@@ -347,8 +340,6 @@ class OneAsymmetricKey
 
     /**
      * Generate DER encoding.
-     *
-     * @return string
      */
     public function toDER(): string
     {
@@ -357,8 +348,6 @@ class OneAsymmetricKey
 
     /**
      * Generate PEM.
-     *
-     * @return PEM
      */
     public function toPEM(): PEM
     {

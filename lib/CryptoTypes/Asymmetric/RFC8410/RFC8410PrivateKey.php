@@ -4,16 +4,19 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\RFC8410;
 
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\ASN1\Type\Primitive\OctetString;
 use Sop\CryptoEncoding\PEM;
+use Sop\CryptoTypes\Asymmetric\Attribute\OneAsymmetricKeyAttributes;
+use Sop\CryptoTypes\Asymmetric\OneAsymmetricKey;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
-use Sop\CryptoTypes\Asymmetric\PrivateKeyInfo;
 
 /**
  * Implements an intermediary object to store a private key using
  * Curve25519 or Curve448 as defined by RFC 8410.
  *
- * Private keys described in RFC 8410 may only be encoded as `OneAsymmetricKey`.
+ * Private keys described in RFC 8410 may only be encoded as `OneAsymmetricKey`
+ * and thus version and attributes are also stored in this type.
  *
  * @see https://tools.ietf.org/html/rfc8410
  */
@@ -34,6 +37,20 @@ abstract class RFC8410PrivateKey extends PrivateKey
     protected $_publicKeyData;
 
     /**
+     * Version for OneAsymmetricKey.
+     *
+     * @var int
+     */
+    protected $_version;
+
+    /**
+     * Attributes from OneAsymmetricKey.
+     *
+     * @var null|OneAsymmetricKeyAttributes
+     */
+    protected $_attributes;
+
+    /**
      * Constructor.
      *
      * @param string      $private_key Private key data
@@ -43,6 +60,8 @@ abstract class RFC8410PrivateKey extends PrivateKey
     {
         $this->_privateKeyData = $private_key;
         $this->_publicKeyData = $public_key;
+        $this->_version = OneAsymmetricKey::VERSION_2;
+        $this->_attributes = null;
     }
 
     /**
@@ -58,6 +77,26 @@ abstract class RFC8410PrivateKey extends PrivateKey
     }
 
     /**
+     * Get self with version number.
+     */
+    public function withVersion(int $version): self
+    {
+        $obj = clone $this;
+        $obj->_version = $version;
+        return $obj;
+    }
+
+    /**
+     * Get self with attributes.
+     */
+    public function withAttributes(?OneAsymmetricKeyAttributes $attribs): self
+    {
+        $obj = clone $this;
+        $obj->_attributes = $attribs;
+        return $obj;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function privateKeyData(): string
@@ -67,8 +106,6 @@ abstract class RFC8410PrivateKey extends PrivateKey
 
     /**
      * Whether public key is set.
-     *
-     * @return bool
      */
     public function hasPublicKey(): bool
     {
@@ -77,8 +114,6 @@ abstract class RFC8410PrivateKey extends PrivateKey
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return OctetString
      */
     public function toASN1(): OctetString
     {
@@ -98,8 +133,10 @@ abstract class RFC8410PrivateKey extends PrivateKey
      */
     public function toPEM(): PEM
     {
-        $pki = new PrivateKeyInfo($this->algorithmIdentifier(),
-            $this->toDER(), null, $this->_publicKeyData);
-        return $pki->toPEM();
+        $pub = $this->_publicKeyData ?
+            new BitString($this->_publicKeyData) : null;
+        $pki = new OneAsymmetricKey($this->algorithmIdentifier(),
+            $this->toDER(), $this->_attributes, $pub);
+        return $pki->withVersion($this->_version)->toPEM();
     }
 }
