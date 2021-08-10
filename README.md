@@ -13,6 +13,7 @@ A PHP library of various ASN.1 types for cryptographic applications.
 - gmp
 - [sop/asn1](https://github.com/sop/asn1)
 - [sop/crypto-encoding](https://github.com/sop/crypto-encoding)
+- [sop/x501](https://github.com/sop/x501)
 
 ## Features
 
