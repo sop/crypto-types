@@ -54,7 +54,7 @@ class IntegerToOctetStringConversionTest extends TestCase
         $tmp = ECConversion::integerToOctetString($num, $mlen);
         $this->assertEquals($os, $tmp);
         $result = ECConversion::octetStringToInteger($tmp);
-        $this->assertEquals($num, $result);
+        $this->assertEquals($num->number(), $result->number());
     }
 
     /**

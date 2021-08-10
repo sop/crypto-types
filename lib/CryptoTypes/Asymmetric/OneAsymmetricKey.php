@@ -15,7 +15,7 @@ use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifier;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
-use Sop\CryptoTypes\Asymmetric\Attribute\Attributes;
+use Sop\CryptoTypes\Asymmetric\Attribute\OneAsymmetricKeyAttributes;
 
 /**
  * Implements PKCS #8 PrivateKeyInfo / OneAsymmetricKey ASN.1 type.
@@ -63,7 +63,7 @@ class OneAsymmetricKey
     /**
      * Optional attributes.
      *
-     * @var null|Attributes
+     * @var null|OneAsymmetricKeyAttributes
      */
     protected $_attributes;
 
@@ -77,13 +77,14 @@ class OneAsymmetricKey
     /**
      * Constructor.
      *
-     * @param AlgorithmIdentifierType $algo       Algorithm
-     * @param string                  $key        Private key data
-     * @param null|Attributes         $attributes Optional attributes
-     * @param null|BitString          $public_key Optional public key
+     * @param AlgorithmIdentifierType         $algo       Algorithm
+     * @param string                          $key        Private key data
+     * @param null|OneAsymmetricKeyAttributes $attributes Optional attributes
+     * @param null|BitString                  $public_key Optional public key
      */
     public function __construct(AlgorithmIdentifierType $algo, string $key,
-        ?Attributes $attributes = null, ?BitString $public_key = null)
+        ?OneAsymmetricKeyAttributes $attributes = null,
+        ?BitString $public_key = null)
     {
         $this->_version = self::VERSION_1;
         $this->_algo = $algo;
@@ -112,7 +113,7 @@ class OneAsymmetricKey
         $key = $seq->at(2)->asOctetString()->string();
         $attribs = null;
         if ($seq->hasTagged(0)) {
-            $attribs = Attributes::fromASN1($seq->getTagged(0)
+            $attribs = OneAsymmetricKeyAttributes::fromASN1($seq->getTagged(0)
                 ->asImplicit(Element::TYPE_SET)->asSet());
         }
         $pubkey = null;
@@ -142,7 +143,7 @@ class OneAsymmetricKey
      *
      * Note that `OneAsymmetricKey` <-> `PrivateKey` conversions may not be
      * bidirectional with all key types, since `OneAsymmetricKey` may include
-     * attributes as well the public key that are not conveyed in specific
+     * attributes as well the public key that are not conveyed in a specific
      * `PrivateKey` object.
      *
      * @param PrivateKey $private_key
@@ -291,9 +292,9 @@ class OneAsymmetricKey
      *
      * @throws \LogicException If attributes are not present
      *
-     * @return Attributes
+     * @return OneAsymmetricKeyAttributes
      */
-    public function attributes(): Attributes
+    public function attributes(): OneAsymmetricKeyAttributes
     {
         if (!$this->hasAttributes()) {
             throw new \LogicException('Attributes not set.');

@@ -26,7 +26,7 @@
         "ext-gmp": "*",
         "sop/asn1": "^4.0.0",
         "sop/crypto-encoding": "^0.3.0",
-        "sop/x501": "^0.6.0"
+        "sop/x501": "0.6.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.1"
