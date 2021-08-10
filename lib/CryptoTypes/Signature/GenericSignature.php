@@ -40,8 +40,6 @@ class GenericSignature extends Signature
 
     /**
      * Get the signature algorithm.
-     *
-     * @return AlgorithmIdentifierType
      */
     public function signatureAlgorithm(): AlgorithmIdentifierType
     {

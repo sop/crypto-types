@@ -37,8 +37,6 @@ class RSAPublicKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param RSAPublicKey $pk
      */
     public function testToPEM(RSAPublicKey $pk)
     {
@@ -49,8 +47,6 @@ class RSAPublicKeyTest extends TestCase
 
     /**
      * @depends testToPEM
-     *
-     * @param PEM $pem
      */
     public function testRecodedPEM(PEM $pem)
     {
@@ -81,8 +77,6 @@ class RSAPublicKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPublicKey $pk
      */
     public function testModulus(RSAPublicKey $pk)
     {
@@ -91,8 +85,6 @@ class RSAPublicKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPublicKey $pk
      */
     public function testPublicExponent(RSAPublicKey $pk)
     {

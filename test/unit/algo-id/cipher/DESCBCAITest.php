@@ -15,7 +15,7 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Cipher\DESCBCAlgorithmIdentifier;
  */
 class DESCBCAITest extends TestCase
 {
-    const IV = '12345678';
+    private const IV = '12345678';
 
     /**
      * @return Sequence
@@ -30,8 +30,6 @@ class DESCBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecode(Sequence $seq)
     {
@@ -42,8 +40,6 @@ class DESCBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param DESCBCAlgorithmIdentifier $ai
      */
     public function testIV(DESCBCAlgorithmIdentifier $ai)
     {
@@ -52,8 +48,6 @@ class DESCBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param DESCBCAlgorithmIdentifier $ai
      */
     public function testWithIV(DESCBCAlgorithmIdentifier $ai)
     {
@@ -63,8 +57,6 @@ class DESCBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
@@ -82,8 +74,6 @@ class DESCBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param DESCBCAlgorithmIdentifier $ai
      */
     public function testBlockSize(DESCBCAlgorithmIdentifier $ai)
     {
@@ -92,8 +82,6 @@ class DESCBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param DESCBCAlgorithmIdentifier $ai
      */
     public function testKeySize(DESCBCAlgorithmIdentifier $ai)
     {
@@ -108,8 +96,6 @@ class DESCBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AlgorithmIdentifier $algo
      */
     public function testName(AlgorithmIdentifier $algo)
     {

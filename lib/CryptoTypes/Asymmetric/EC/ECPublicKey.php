@@ -86,8 +86,6 @@ class ECPublicKey extends PublicKey
     /**
      * @see PublicKey::fromPEM()
      *
-     * @param PEM $pem
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -99,8 +97,8 @@ class ECPublicKey extends PublicKey
         }
         $pki = PublicKeyInfo::fromDER($pem->data());
         $algo = $pki->algorithmIdentifier();
-        if (AlgorithmIdentifier::OID_EC_PUBLIC_KEY !== $algo->oid() ||
-            !($algo instanceof ECPublicKeyAlgorithmIdentifier)) {
+        if (AlgorithmIdentifier::OID_EC_PUBLIC_KEY !== $algo->oid()
+            || !($algo instanceof ECPublicKeyAlgorithmIdentifier)) {
             throw new \UnexpectedValueException('Not an elliptic curve key.');
         }
         // ECPoint is directly mapped into public key data
@@ -109,8 +107,6 @@ class ECPublicKey extends PublicKey
 
     /**
      * Get ECPoint value.
-     *
-     * @return string
      */
     public function ECPoint(): string
     {
@@ -147,8 +143,6 @@ class ECPublicKey extends PublicKey
 
     /**
      * Whether ECPoint is in compressed form.
-     *
-     * @return bool
      */
     public function isCompressed(): bool
     {
@@ -158,8 +152,6 @@ class ECPublicKey extends PublicKey
 
     /**
      * Whether named curve is present.
-     *
-     * @return bool
      */
     public function hasNamedCurve(): bool
     {
@@ -170,8 +162,6 @@ class ECPublicKey extends PublicKey
      * Get named curve OID.
      *
      * @throws \LogicException
-     *
-     * @return string
      */
     public function namedCurve(): string
     {
@@ -191,8 +181,6 @@ class ECPublicKey extends PublicKey
 
     /**
      * Generate ASN.1 element.
-     *
-     * @return OctetString
      */
     public function toASN1(): OctetString
     {
@@ -222,8 +210,6 @@ class ECPublicKey extends PublicKey
      * Get the curve size *p* in bits.
      *
      * @param string $oid Curve OID
-     *
-     * @return null|int
      */
     private static function _curveSize(string $oid): ?int
     {

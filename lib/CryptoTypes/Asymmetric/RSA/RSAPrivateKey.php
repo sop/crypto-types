@@ -103,8 +103,6 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Initialize from ASN.1.
      *
-     * @param Sequence $seq
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -133,8 +131,6 @@ class RSAPrivateKey extends PrivateKey
     /**
      * Initialize from DER data.
      *
-     * @param string $data
-     *
      * @return self
      */
     public static function fromDER(string $data): RSAPrivateKey
@@ -144,8 +140,6 @@ class RSAPrivateKey extends PrivateKey
 
     /**
      * @see PrivateKey::fromPEM()
-     *
-     * @param PEM $pem
      *
      * @throws \UnexpectedValueException
      *
@@ -260,8 +254,6 @@ class RSAPrivateKey extends PrivateKey
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return Sequence
      */
     public function toASN1(): Sequence
     {

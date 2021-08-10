@@ -14,36 +14,26 @@ abstract class PrivateKey
 {
     /**
      * Get the private key algorithm identifier.
-     *
-     * @return AlgorithmIdentifierType
      */
     abstract public function algorithmIdentifier(): AlgorithmIdentifierType;
 
     /**
      * Get public key component of the asymmetric key pair.
-     *
-     * @return PublicKey
      */
     abstract public function publicKey(): PublicKey;
 
     /**
      * Get DER encoding of the private key.
-     *
-     * @return string
      */
     abstract public function toDER(): string;
 
     /**
      * Get the private key as a PEM.
-     *
-     * @return PEM
      */
     abstract public function toPEM(): PEM;
 
     /**
      * Get the private key data in type specific encoding.
-     *
-     * @return string
      */
     public function privateKeyData(): string
     {
@@ -55,8 +45,6 @@ abstract class PrivateKey
 
     /**
      * Get the private key as a PrivateKeyInfo type.
-     *
-     * @return PrivateKeyInfo
      */
     public function privateKeyInfo(): PrivateKeyInfo
     {
@@ -65,8 +53,6 @@ abstract class PrivateKey
 
     /**
      * Initialize private key from PEM.
-     *
-     * @param PEM $pem
      *
      * @throws \UnexpectedValueException
      *

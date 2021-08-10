@@ -29,8 +29,6 @@ class ECPublicKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param ECPublicKey $pk
      */
     public function testECPoint(ECPublicKey $pk)
     {
@@ -39,8 +37,6 @@ class ECPublicKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param ECPublicKey $pk
      */
     public function testPublicKeyInfo(ECPublicKey $pk)
     {
@@ -77,8 +73,6 @@ class ECPublicKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param ECPublicKey $pk
      */
     public function testToDER(ECPublicKey $pk)
     {
@@ -87,8 +81,6 @@ class ECPublicKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param ECPublicKey $pk
      */
     public function testCurvePoint(ECPublicKey $pk)
     {
@@ -99,8 +91,6 @@ class ECPublicKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param ECPublicKey $pk
      */
     public function testHasNamedCurve(ECPublicKey $pk)
     {
@@ -109,8 +99,6 @@ class ECPublicKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param ECPublicKey $pk
      */
     public function testNamedCurve(ECPublicKey $pk)
     {
@@ -147,9 +135,6 @@ class ECPublicKeyTest extends TestCase
     /**
      * @depends testFromPEM
      * @depends testFromCoordinates
-     *
-     * @param ECPublicKey $ref
-     * @param ECPublicKey $new
      */
     public function testFromCoordsEqualsPEM(ECPublicKey $ref, ECPublicKey $new)
     {

@@ -26,8 +26,6 @@ class GenericAlgorithmIdentifierTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param GenericAlgorithmIdentifier $ai
      */
     public function testName(GenericAlgorithmIdentifier $ai)
     {
@@ -36,8 +34,6 @@ class GenericAlgorithmIdentifierTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param GenericAlgorithmIdentifier $ai
      */
     public function testParameters(GenericAlgorithmIdentifier $ai)
     {
@@ -46,8 +42,6 @@ class GenericAlgorithmIdentifierTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param GenericAlgorithmIdentifier $ai
      */
     public function testEncode(GenericAlgorithmIdentifier $ai)
     {

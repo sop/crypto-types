@@ -44,8 +44,6 @@ class PrivateKeyTest extends TestCase
 
     /**
      * @depends testFromECPEM
-     *
-     * @param ECPrivateKey $pk
      */
     public function testECPEMHasNamedCurve(ECPrivateKey $pk)
     {
@@ -66,8 +64,6 @@ class PrivateKeyTest extends TestCase
 
     /**
      * @depends testFromECPKIPEM
-     *
-     * @param ECPrivateKey $pk
      */
     public function testECPKIPEMHasNamedCurve(ECPrivateKey $pk)
     {

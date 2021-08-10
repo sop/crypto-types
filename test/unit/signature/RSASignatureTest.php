@@ -25,8 +25,6 @@ class RSASignatureTest extends TestCase
 
     /**
      * @depends testFromSignatureString
-     *
-     * @param RSASignature $sig
      */
     public function testBitString(RSASignature $sig)
     {

@@ -28,8 +28,6 @@ class GenericSignatureTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param GenericSignature $sig
      */
     public function testBitString(GenericSignature $sig)
     {
@@ -38,8 +36,6 @@ class GenericSignatureTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param GenericSignature $sig
      */
     public function testSignatureAlgorithm(GenericSignature $sig)
     {

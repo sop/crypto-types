@@ -15,7 +15,7 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Cipher\DESEDE3CBCAlgorithmIdentifier;
  */
 class DESEDE3CBCAITest extends TestCase
 {
-    const IV = '12345678';
+    private const IV = '12345678';
 
     /**
      * @return Sequence
@@ -30,8 +30,6 @@ class DESEDE3CBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecode(Sequence $seq)
     {
@@ -42,8 +40,6 @@ class DESEDE3CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param DESEDE3CBCAlgorithmIdentifier $ai
      */
     public function testIV(DESEDE3CBCAlgorithmIdentifier $ai)
     {
@@ -52,8 +48,6 @@ class DESEDE3CBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
@@ -71,8 +65,6 @@ class DESEDE3CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param DESEDE3CBCAlgorithmIdentifier $ai
      */
     public function testBlockSize(DESEDE3CBCAlgorithmIdentifier $ai)
     {
@@ -81,8 +73,6 @@ class DESEDE3CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param DESEDE3CBCAlgorithmIdentifier $ai
      */
     public function testKeySize(DESEDE3CBCAlgorithmIdentifier $ai)
     {
@@ -97,8 +87,6 @@ class DESEDE3CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AlgorithmIdentifier $algo
      */
     public function testName(AlgorithmIdentifier $algo)
     {

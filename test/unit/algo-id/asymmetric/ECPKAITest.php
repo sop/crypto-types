@@ -15,7 +15,7 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Asymmetric\ECPublicKeyAlgorithmIdentifie
  */
 class ECPKAITest extends TestCase
 {
-    const OID = '1.2.840.10045.3.1.7';
+    private const OID = '1.2.840.10045.3.1.7';
 
     /**
      * @return Sequence
@@ -30,8 +30,6 @@ class ECPKAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecode(Sequence $seq)
     {
@@ -42,8 +40,6 @@ class ECPKAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
@@ -54,8 +50,6 @@ class ECPKAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param ECPublicKeyAlgorithmIdentifier $ai
      */
     public function testNamedCurve(ECPublicKeyAlgorithmIdentifier $ai)
     {
@@ -64,8 +58,6 @@ class ECPKAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AlgorithmIdentifier $algo
      */
     public function testName(AlgorithmIdentifier $algo)
     {

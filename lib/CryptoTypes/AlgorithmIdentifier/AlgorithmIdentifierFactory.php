@@ -22,7 +22,7 @@ class AlgorithmIdentifierFactory
      *
      * @var array
      */
-    const MAP_OID_TO_CLASS = [
+    public const MAP_OID_TO_CLASS = [
         AlgorithmIdentifier::OID_RSA_ENCRYPTION => Asymmetric\RSAEncryptionAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_EC_PUBLIC_KEY => Asymmetric\ECPublicKeyAlgorithmIdentifier::class,
         AlgorithmIdentifier::OID_X25519 => Asymmetric\X25519AlgorithmIdentifier::class,
@@ -103,10 +103,6 @@ class AlgorithmIdentifierFactory
 
     /**
      * Parse AlgorithmIdentifier from an ASN.1 sequence.
-     *
-     * @param Sequence $seq
-     *
-     * @return AlgorithmIdentifier
      */
     public function parse(Sequence $seq): AlgorithmIdentifier
     {

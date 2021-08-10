@@ -15,7 +15,7 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Cipher\AES128CBCAlgorithmIdentifier;
  */
 class AES128CBCAITest extends TestCase
 {
-    const IV = '0123456789abcdef';
+    private const IV = '0123456789abcdef';
 
     /**
      * @return Sequence
@@ -30,8 +30,6 @@ class AES128CBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecode(Sequence $seq)
     {
@@ -42,8 +40,6 @@ class AES128CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AES128CBCAlgorithmIdentifier $ai
      */
     public function testIV(AES128CBCAlgorithmIdentifier $ai)
     {
@@ -52,8 +48,6 @@ class AES128CBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
@@ -71,8 +65,6 @@ class AES128CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AES128CBCAlgorithmIdentifier $ai
      */
     public function testBlockSize(AES128CBCAlgorithmIdentifier $ai)
     {
@@ -81,8 +73,6 @@ class AES128CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AES128CBCAlgorithmIdentifier $ai
      */
     public function testKeySize(AES128CBCAlgorithmIdentifier $ai)
     {
@@ -97,8 +87,6 @@ class AES128CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AlgorithmIdentifier $algo
      */
     public function testName(AlgorithmIdentifier $algo)
     {

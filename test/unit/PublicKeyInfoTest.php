@@ -34,8 +34,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testDecodeRSA
-     *
-     * @param PublicKeyInfo $pki
      */
     public function testAlgoObj(PublicKeyInfo $pki)
     {
@@ -47,8 +45,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testAlgoObj
-     *
-     * @param AlgorithmIdentifier $algo
      */
     public function testAlgoOID(AlgorithmIdentifier $algo)
     {
@@ -58,8 +54,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testDecodeRSA
-     *
-     * @param PublicKeyInfo $pki
      */
     public function testGetRSAPublicKey(PublicKeyInfo $pki)
     {
@@ -80,8 +74,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testDecodeEC
-     *
-     * @param PublicKeyInfo $pki
      */
     public function testGetECPublicKey(PublicKeyInfo $pki)
     {
@@ -102,8 +94,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testFromRSAPEM
-     *
-     * @param PublicKeyInfo $pki
      */
     public function testToPEM(PublicKeyInfo $pki)
     {
@@ -114,8 +104,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testToPEM
-     *
-     * @param PEM $pem
      */
     public function testRecodedPEM(PEM $pem)
     {
@@ -132,8 +120,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testDecodeRSA
-     *
-     * @param PublicKeyInfo $pki
      */
     public function testKeyIdentifier(PublicKeyInfo $pki)
     {
@@ -143,8 +129,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testDecodeRSA
-     *
-     * @param PublicKeyInfo $pki
      */
     public function testKeyIdentifier64(PublicKeyInfo $pki)
     {
@@ -161,8 +145,6 @@ class PublicKeyInfoTest extends TestCase
 
     /**
      * @depends testDecodeRSA
-     *
-     * @param PublicKeyInfo $pki
      */
     public function testInvalidAI(PublicKeyInfo $pki)
     {

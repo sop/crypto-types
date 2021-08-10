@@ -43,8 +43,6 @@ class ECPrivateKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param ECPrivateKey $pk
      */
     public function testToPEM(ECPrivateKey $pk)
     {
@@ -55,8 +53,6 @@ class ECPrivateKeyTest extends TestCase
 
     /**
      * @depends testToPEM
-     *
-     * @param PEM $pem
      */
     public function testRecodedPEM(PEM $pem)
     {
@@ -77,8 +73,6 @@ class ECPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param ECPrivateKey $pk
      */
     public function testPrivateKeyOctets(ECPrivateKey $pk)
     {
@@ -88,8 +82,6 @@ class ECPrivateKeyTest extends TestCase
 
     /**
      * @depends testFromPKIPEM
-     *
-     * @param ECPrivateKey $pk
      */
     public function testHasNamedCurveFromPKI(ECPrivateKey $pk)
     {
@@ -99,8 +91,6 @@ class ECPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param ECPrivateKey $pk
      */
     public function testGetPublicKey(ECPrivateKey $pk)
     {
@@ -112,8 +102,6 @@ class ECPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param ECPrivateKey $pk
      */
     public function testGetPrivateKeyInfo(ECPrivateKey $pk)
     {
@@ -146,8 +134,6 @@ class ECPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param ECPrivateKey $pk
      */
     public function testNamedCurveNotSet(ECPrivateKey $pk)
     {

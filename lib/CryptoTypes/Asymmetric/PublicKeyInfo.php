@@ -35,7 +35,7 @@ class PublicKeyInfo
 
     /**
      * Constructor.
-     * 
+     *
      * @todo pass key data as a bitstring
      *
      * @param AlgorithmIdentifierType $algo Algorithm
@@ -49,10 +49,6 @@ class PublicKeyInfo
 
     /**
      * Initialize from ASN.1.
-     *
-     * @param Sequence $seq
-     *
-     * @return self
      */
     public static function fromASN1(Sequence $seq): self
     {
@@ -63,10 +59,6 @@ class PublicKeyInfo
 
     /**
      * Inititalize from a PublicKey.
-     *
-     * @param PublicKey $public_key
-     *
-     * @return self
      */
     public static function fromPublicKey(PublicKey $public_key): self
     {
@@ -77,11 +69,7 @@ class PublicKeyInfo
     /**
      * Initialize from PEM.
      *
-     * @param PEM $pem
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromPEM(PEM $pem): self
     {
@@ -96,10 +84,6 @@ class PublicKeyInfo
 
     /**
      * Initialize from DER data.
-     *
-     * @param string $data
-     *
-     * @return self
      */
     public static function fromDER(string $data): self
     {
@@ -108,8 +92,6 @@ class PublicKeyInfo
 
     /**
      * Get algorithm identifier.
-     *
-     * @return AlgorithmIdentifierType
      */
     public function algorithmIdentifier(): AlgorithmIdentifierType
     {
@@ -118,8 +100,6 @@ class PublicKeyInfo
 
     /**
      * Get public key data.
-     *
-     * @return string
      */
     public function publicKeyData(): string
     {
@@ -130,8 +110,6 @@ class PublicKeyInfo
      * Get public key.
      *
      * @throws \RuntimeException
-     *
-     * @return PublicKey
      */
     public function publicKey(): PublicKey
     {
@@ -198,8 +176,6 @@ class PublicKeyInfo
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return Sequence
      */
     public function toASN1(): Sequence
     {
@@ -209,8 +185,6 @@ class PublicKeyInfo
 
     /**
      * Generate DER encoding.
-     *
-     * @return string
      */
     public function toDER(): string
     {
@@ -219,8 +193,6 @@ class PublicKeyInfo
 
     /**
      * Generate PEM.
-     *
-     * @return PEM
      */
     public function toPEM(): PEM
     {

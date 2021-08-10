@@ -41,8 +41,6 @@ class GenericAlgorithmIdentifier extends AlgorithmIdentifier
 
     /**
      * Get parameters.
-     *
-     * @return null|UnspecifiedType
      */
     public function parameters(): ?UnspecifiedType
     {

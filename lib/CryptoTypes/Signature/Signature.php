@@ -18,8 +18,6 @@ abstract class Signature
 {
     /**
      * Get the signature as a BitString.
-     *
-     * @return BitString
      */
     abstract public function bitString(): BitString;
 

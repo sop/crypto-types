@@ -14,22 +14,16 @@ abstract class PublicKey
 {
     /**
      * Get the public key algorithm identifier.
-     *
-     * @return AlgorithmIdentifierType
      */
     abstract public function algorithmIdentifier(): AlgorithmIdentifierType;
 
     /**
      * Get DER encoding of the public key.
-     *
-     * @return string
      */
     abstract public function toDER(): string;
 
     /**
      * Get the public key data for subjectPublicKey in PublicKeyInfo.
-     *
-     * @return string
      */
     public function subjectPublicKeyData(): string
     {
@@ -38,8 +32,6 @@ abstract class PublicKey
 
     /**
      * Get the public key as a PublicKeyInfo type.
-     *
-     * @return PublicKeyInfo
      */
     public function publicKeyInfo(): PublicKeyInfo
     {
@@ -48,8 +40,6 @@ abstract class PublicKey
 
     /**
      * Initialize public key from PEM.
-     *
-     * @param PEM $pem
      *
      * @throws \UnexpectedValueException
      *

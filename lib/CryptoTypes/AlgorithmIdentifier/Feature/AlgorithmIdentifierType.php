@@ -20,15 +20,11 @@ interface AlgorithmIdentifierType
 
     /**
      * Get a human readable name of the algorithm.
-     *
-     * @return string
      */
     public function name(): string;
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return Sequence
      */
     public function toASN1(): Sequence;
 }

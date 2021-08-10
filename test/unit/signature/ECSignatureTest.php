@@ -26,8 +26,6 @@ class ECSignatureTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ECSignature $sig
      */
     public function testEncode(ECSignature $sig)
     {
@@ -37,8 +35,6 @@ class ECSignatureTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ECSignature $sig
      */
     public function testToDER(ECSignature $sig)
     {
@@ -62,9 +58,6 @@ class ECSignatureTest extends TestCase
     /**
      * @depends testCreate
      * @depends testDecode
-     *
-     * @param ECSignature $ref
-     * @param ECSignature $sig
      */
     public function testRecoded(ECSignature $ref, ECSignature $sig)
     {
@@ -73,8 +66,6 @@ class ECSignatureTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ECSignature $sig
      */
     public function testRValue(ECSignature $sig)
     {
@@ -83,8 +74,6 @@ class ECSignatureTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ECSignature $sig
      */
     public function testSValue(ECSignature $sig)
     {
@@ -93,8 +82,6 @@ class ECSignatureTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ECSignature $sig
      */
     public function testBitString(ECSignature $sig)
     {

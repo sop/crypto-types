@@ -63,8 +63,6 @@ class ECPrivateKey extends PrivateKey
     /**
      * Initialize from ASN.1.
      *
-     * @param Sequence $seq
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -91,8 +89,6 @@ class ECPrivateKey extends PrivateKey
     /**
      * Initialize from DER data.
      *
-     * @param string $data
-     *
      * @return self
      */
     public static function fromDER(string $data): ECPrivateKey
@@ -102,8 +98,6 @@ class ECPrivateKey extends PrivateKey
 
     /**
      * @see PrivateKey::fromPEM()
-     *
-     * @param PEM $pem
      *
      * @throws \UnexpectedValueException
      *
@@ -130,8 +124,6 @@ class ECPrivateKey extends PrivateKey
 
     /**
      * Whether named curve is present.
-     *
-     * @return bool
      */
     public function hasNamedCurve(): bool
     {
@@ -142,8 +134,6 @@ class ECPrivateKey extends PrivateKey
      * Get named curve OID.
      *
      * @throws \LogicException
-     *
-     * @return string
      */
     public function namedCurve(): string
     {
@@ -177,8 +167,6 @@ class ECPrivateKey extends PrivateKey
 
     /**
      * Whether public key is present.
-     *
-     * @return bool
      */
     public function hasPublicKey(): bool
     {
@@ -200,8 +188,6 @@ class ECPrivateKey extends PrivateKey
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return Sequence
      */
     public function toASN1(): Sequence
     {

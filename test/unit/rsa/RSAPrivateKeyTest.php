@@ -42,8 +42,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testToPEM(RSAPrivateKey $pk)
     {
@@ -54,8 +52,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testToPEM
-     *
-     * @param PEM $pem
      */
     public function testRecodedPEM(PEM $pem)
     {
@@ -72,8 +68,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testGetPublicKey(RSAPrivateKey $pk)
     {
@@ -108,8 +102,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testModulus(RSAPrivateKey $pk)
     {
@@ -118,8 +110,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testPublicExponent(RSAPrivateKey $pk)
     {
@@ -128,8 +118,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testPrivateExponent(RSAPrivateKey $pk)
     {
@@ -138,8 +126,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testPrime1(RSAPrivateKey $pk)
     {
@@ -148,8 +134,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testPrime2(RSAPrivateKey $pk)
     {
@@ -158,8 +142,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testExponent1(RSAPrivateKey $pk)
     {
@@ -168,8 +150,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testExponent2(RSAPrivateKey $pk)
     {
@@ -178,8 +158,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testCoefficient(RSAPrivateKey $pk)
     {
@@ -188,8 +166,6 @@ class RSAPrivateKeyTest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RSAPrivateKey $pk
      */
     public function testPrivateKeyInfo(RSAPrivateKey $pk)
     {

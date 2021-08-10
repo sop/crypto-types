@@ -50,8 +50,6 @@ class RSAPublicKey extends PublicKey
     /**
      * Initialize from ASN.1.
      *
-     * @param Sequence $seq
-     *
      * @return self
      */
     public static function fromASN1(Sequence $seq): RSAPublicKey
@@ -64,8 +62,6 @@ class RSAPublicKey extends PublicKey
     /**
      * Initialize from DER data.
      *
-     * @param string $data
-     *
      * @return self
      */
     public static function fromDER(string $data): RSAPublicKey
@@ -75,8 +71,6 @@ class RSAPublicKey extends PublicKey
 
     /**
      * @see PublicKey::fromPEM()
-     *
-     * @param PEM $pem
      *
      * @throws \UnexpectedValueException
      *
@@ -128,8 +122,6 @@ class RSAPublicKey extends PublicKey
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return Sequence
      */
     public function toASN1(): Sequence
     {
@@ -147,8 +139,6 @@ class RSAPublicKey extends PublicKey
 
     /**
      * Generate PEM.
-     *
-     * @return PEM
      */
     public function toPEM(): PEM
     {

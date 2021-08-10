@@ -17,8 +17,6 @@ interface AlgorithmIdentifierProvider
      * Check whether this provider supports algorithm identifier of given OID.
      *
      * @param string $oid Object identifier in dotted format
-     *
-     * @return bool
      */
     public function supportsOID(string $oid): bool;
 

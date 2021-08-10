@@ -43,8 +43,6 @@ class AlgorithmIdentifierTest extends TestCase
 
     /**
      * @depends testFromUnknownASN1
-     *
-     * @param GenericAlgorithmIdentifier $ai
      */
     public function testEncodeUnknown(GenericAlgorithmIdentifier $ai)
     {
@@ -60,8 +58,6 @@ class AlgorithmIdentifierTest extends TestCase
 
     /**
      * @depends testFromUnknownASN1
-     *
-     * @param AlgorithmIdentifier $algo
      */
     public function testName(AlgorithmIdentifier $algo)
     {

@@ -22,7 +22,7 @@ abstract class SignatureAlgorithmIdentifierFactory
      *
      * @var array
      */
-    const MAP_RSA_OID = [
+    public const MAP_RSA_OID = [
         AlgorithmIdentifier::OID_MD5 => AlgorithmIdentifier::OID_MD5_WITH_RSA_ENCRYPTION,
         AlgorithmIdentifier::OID_SHA1 => AlgorithmIdentifier::OID_SHA1_WITH_RSA_ENCRYPTION,
         AlgorithmIdentifier::OID_SHA224 => AlgorithmIdentifier::OID_SHA224_WITH_RSA_ENCRYPTION,
@@ -38,7 +38,7 @@ abstract class SignatureAlgorithmIdentifierFactory
      *
      * @var array
      */
-    const MAP_EC_OID = [
+    public const MAP_EC_OID = [
         AlgorithmIdentifier::OID_SHA1 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA1,
         AlgorithmIdentifier::OID_SHA224 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA224,
         AlgorithmIdentifier::OID_SHA256 => AlgorithmIdentifier::OID_ECDSA_WITH_SHA256,
@@ -54,8 +54,6 @@ abstract class SignatureAlgorithmIdentifierFactory
      * @param HashAlgorithmIdentifier             $hash_algo   Hash algorithm identifier
      *
      * @throws \UnexpectedValueException
-     *
-     * @return SignatureAlgorithmIdentifier
      */
     public static function algoForAsymmetricCrypto(
         AsymmetricCryptoAlgorithmIdentifier $crypto_algo,
@@ -80,11 +78,7 @@ abstract class SignatureAlgorithmIdentifierFactory
     /**
      * Get RSA signature algorithm OID for the given hash algorithm identifier.
      *
-     * @param HashAlgorithmIdentifier $hash_algo
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return string
      */
     private static function _oidForRSA(HashAlgorithmIdentifier $hash_algo): string
     {
@@ -98,11 +92,7 @@ abstract class SignatureAlgorithmIdentifierFactory
     /**
      * Get EC signature algorithm OID for the given hash algorithm identifier.
      *
-     * @param HashAlgorithmIdentifier $hash_algo
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return string
      */
     private static function _oidForEC(HashAlgorithmIdentifier $hash_algo): string
     {

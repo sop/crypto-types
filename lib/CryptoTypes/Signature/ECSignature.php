@@ -46,10 +46,6 @@ class ECSignature extends Signature
 
     /**
      * Initialize from ASN.1.
-     *
-     * @param Sequence $seq
-     *
-     * @return self
      */
     public static function fromASN1(Sequence $seq): self
     {
@@ -60,10 +56,6 @@ class ECSignature extends Signature
 
     /**
      * Initialize from DER.
-     *
-     * @param string $data
-     *
-     * @return self
      */
     public static function fromDER(string $data): self
     {
@@ -92,8 +84,6 @@ class ECSignature extends Signature
 
     /**
      * Generate ASN.1 structure.
-     *
-     * @return Sequence
      */
     public function toASN1(): Sequence
     {
@@ -102,8 +92,6 @@ class ECSignature extends Signature
 
     /**
      * Get DER encoding of the signature.
-     *
-     * @return string
      */
     public function toDER(): string
     {

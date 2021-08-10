@@ -17,7 +17,7 @@ use Sop\CryptoTypes\AlgorithmIdentifier\Cipher\RC2CBCAlgorithmIdentifier;
  */
 class RC2CBCAITest extends TestCase
 {
-    const IV = '12345678';
+    private const IV = '12345678';
 
     /**
      * @return Sequence
@@ -32,8 +32,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecode(Sequence $seq)
     {
@@ -53,8 +51,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RC2CBCAlgorithmIdentifier $ai
      */
     public function testEffectiveKeyBits(RC2CBCAlgorithmIdentifier $ai)
     {
@@ -63,8 +59,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RC2CBCAlgorithmIdentifier $ai
      */
     public function testIV(RC2CBCAlgorithmIdentifier $ai)
     {
@@ -73,8 +67,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testEncode
-     *
-     * @param Sequence $seq
      */
     public function testDecodeNoParamsFail(Sequence $seq)
     {
@@ -92,8 +84,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RC2CBCAlgorithmIdentifier $ai
      */
     public function testBlockSize(RC2CBCAlgorithmIdentifier $ai)
     {
@@ -102,8 +92,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param RC2CBCAlgorithmIdentifier $ai
      */
     public function testKeySize(RC2CBCAlgorithmIdentifier $ai)
     {
@@ -120,8 +108,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testEncodeLargeKey
-     *
-     * @param Sequence $seq
      */
     public function testDecodeLargeKey(Sequence $seq)
     {
@@ -137,8 +123,6 @@ class RC2CBCAITest extends TestCase
 
     /**
      * @depends testDecode
-     *
-     * @param AlgorithmIdentifier $algo
      */
     public function testName(AlgorithmIdentifier $algo)
     {
