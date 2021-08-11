@@ -273,8 +273,7 @@ class OneAsymmetricKey
     {
         // if public key is explicitly defined
         if ($this->hasPublicKeyData()) {
-            return PublicKeyInfo::fromBitString(
-                $this->_algo, $this->_publicKeyData);
+            return new PublicKeyInfo($this->_algo, $this->_publicKeyData);
         }
         // else derive from private key
         return $this->privateKey()->publicKey()->publicKeyInfo();

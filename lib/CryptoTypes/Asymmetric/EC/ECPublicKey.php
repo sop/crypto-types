@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\EC;
 
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\ASN1\Type\Primitive\Integer;
 use Sop\ASN1\Type\Primitive\OctetString;
 use Sop\CryptoEncoding\PEM;
@@ -200,10 +201,10 @@ class ECPublicKey extends PublicKey
      *
      * @see https://tools.ietf.org/html/rfc5480#section-2.2
      */
-    public function subjectPublicKeyData(): string
+    public function subjectPublicKey(): BitString
     {
         // ECPoint is directly mapped to subjectPublicKey
-        return $this->_ecPoint;
+        return new BitString($this->_ecPoint);
     }
 
     /**

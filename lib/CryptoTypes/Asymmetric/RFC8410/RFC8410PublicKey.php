@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric\RFC8410;
 
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
 
 /**
@@ -44,8 +45,8 @@ abstract class RFC8410PublicKey extends PublicKey
     /**
      * {@inheritdoc}
      */
-    public function subjectPublicKeyData(): string
+    public function subjectPublicKey(): BitString
     {
-        return $this->_publicKey;
+        return new BitString($this->_publicKey);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use PHPUnit\Framework\TestCase;
 use Sop\ASN1\Element;
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\ASN1\Type\Primitive\ObjectIdentifier;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\AlgorithmIdentifier;
@@ -158,7 +159,8 @@ class PublicKeyInfoTest extends TestCase
 
     public function testInvalidECAlgoFail()
     {
-        $pki = new PublicKeyInfo(new PubliceKeyInfoTest_InvalidECAlgo(), '');
+        $pki = new PublicKeyInfo(
+            new PubliceKeyInfoTest_InvalidECAlgo(), new BitString(''));
         $this->expectException(\UnexpectedValueException::class);
         $pki->publicKey();
     }

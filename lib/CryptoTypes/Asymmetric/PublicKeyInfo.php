@@ -37,12 +37,12 @@ class PublicKeyInfo
      * Constructor.
      *
      * @param AlgorithmIdentifierType $algo Algorithm
-     * @param string                  $key  Public key data
+     * @param BitString               $key  Public key data
      */
-    public function __construct(AlgorithmIdentifierType $algo, string $key)
+    public function __construct(AlgorithmIdentifierType $algo, BitString $key)
     {
         $this->_algo = $algo;
-        $this->_publicKey = new BitString($key);
+        $this->_publicKey = $key;
     }
 
     /**
@@ -52,27 +52,15 @@ class PublicKeyInfo
     {
         $algo = AlgorithmIdentifier::fromASN1($seq->at(0)->asSequence());
         $key = $seq->at(1)->asBitString();
-        return new self($algo, $key->string());
-    }
-
-    /**
-     * Initialize from public key data as a bit string.
-     */
-    public static function fromBitString(
-        AlgorithmIdentifierType $algo, BitString $key): self
-    {
-        $obj = new self($algo, '');
-        $obj->_publicKey = $key;
-        return $obj;
+        return new self($algo, $key);
     }
 
     /**
      * Inititalize from a PublicKey.
      */
-    public static function fromPublicKey(PublicKey $public_key): self
+    public static function fromPublicKey(PublicKey $key): self
     {
-        return new self($public_key->algorithmIdentifier(),
-            $public_key->subjectPublicKeyData());
+        return new self($key->algorithmIdentifier(), $key->subjectPublicKey());
     }
 
     /**

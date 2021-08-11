@@ -173,7 +173,7 @@ DATA;
      */
     public function testEd25519PubKeyData(Ed25519PublicKey $pub)
     {
-        $this->assertIsString($pub->subjectPublicKeyData());
+        $this->assertInstanceOf(BitString::class, $pub->subjectPublicKey());
     }
 
     public function testDecodeX25519(): X25519PrivateKey

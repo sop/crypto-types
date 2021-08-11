@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\CryptoTypes\Asymmetric;
 
+use Sop\ASN1\Type\Primitive\BitString;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 
@@ -25,9 +26,9 @@ abstract class PublicKey
     /**
      * Get the public key data for subjectPublicKey in PublicKeyInfo.
      */
-    public function subjectPublicKeyData(): string
+    public function subjectPublicKey(): BitString
     {
-        return $this->toDER();
+        return new BitString($this->toDER());
     }
 
     /**
