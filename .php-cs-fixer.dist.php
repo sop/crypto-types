@@ -37,5 +37,4 @@ return $config->setRules([
     'php_unit_test_class_requires_covers' => false,
     'phpdoc_to_comment' => false,
     'phpdoc_var_without_name' => false,
-])
-    ->setFinder($finder);
+])->setFinder($finder);

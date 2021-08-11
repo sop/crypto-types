@@ -87,7 +87,7 @@ class RSAPublicKey extends PublicKey
                     $pki->algorithmIdentifier()->oid()) {
                     throw new \UnexpectedValueException('Not an RSA public key.');
                 }
-                return self::fromDER($pki->publicKeyData());
+                return self::fromDER($pki->publicKeyData()->string());
         }
         throw new \UnexpectedValueException('Invalid PEM type ' . $pem->type());
     }

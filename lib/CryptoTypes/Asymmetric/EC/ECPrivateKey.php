@@ -52,7 +52,8 @@ class ECPrivateKey extends PrivateKey
      * @param null|string $named_curve OID of the named curve
      * @param null|string $public_key  ECPoint value
      */
-    public function __construct(string $private_key, ?string $named_curve = null,
+    public function __construct(string $private_key,
+        ?string $named_curve = null,
         ?string $public_key = null)
     {
         $this->_privateKey = $private_key;
@@ -81,7 +82,8 @@ class ECPrivateKey extends PrivateKey
         }
         $public_key = null;
         if ($seq->hasTagged(1)) {
-            $public_key = $seq->getTagged(1)->asExplicit()->asBitString()->string();
+            $public_key = $seq->getTagged(1)->asExplicit()
+                ->asBitString()->string();
         }
         return new self($private_key, $named_curve, $public_key);
     }

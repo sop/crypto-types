@@ -103,7 +103,7 @@ class ECPublicKey extends PublicKey
             throw new \UnexpectedValueException('Not an elliptic curve key.');
         }
         // ECPoint is directly mapped into public key data
-        return new self($pki->publicKeyData(), $algo->namedCurve());
+        return new self($pki->publicKeyData()->string(), $algo->namedCurve());
     }
 
     /**

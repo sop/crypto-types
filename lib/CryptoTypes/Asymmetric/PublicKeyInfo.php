@@ -56,7 +56,7 @@ class PublicKeyInfo
     }
 
     /**
-     * Inititalize from a PublicKey.
+     * Initialize from a PublicKey.
      */
     public static function fromPublicKey(PublicKey $key): self
     {
@@ -98,9 +98,9 @@ class PublicKeyInfo
     /**
      * Get public key data.
      */
-    public function publicKeyData(): string
+    public function publicKeyData(): BitString
     {
-        return $this->_publicKey->string();
+        return $this->_publicKey;
     }
 
     /**
@@ -114,31 +114,31 @@ class PublicKeyInfo
         switch ($algo->oid()) {
             // RSA
             case AlgorithmIdentifier::OID_RSA_ENCRYPTION:
-                return RSA\RSAPublicKey::fromDER($this->publicKeyData());
+                return RSA\RSAPublicKey::fromDER($this->_publicKey->string());
             // Elliptic Curve
             case AlgorithmIdentifier::OID_EC_PUBLIC_KEY:
                 if (!$algo instanceof ECPublicKeyAlgorithmIdentifier) {
                     throw new \UnexpectedValueException('Not an EC algorithm.');
                 }
                 // ECPoint is directly mapped into public key data
-                return new EC\ECPublicKey($this->publicKeyData(),
+                return new EC\ECPublicKey($this->_publicKey->string(),
                     $algo->namedCurve());
             // Ed25519
             case AlgorithmIdentifier::OID_ED25519:
                 return new RFC8410\Curve25519\Ed25519PublicKey(
-                    $this->publicKeyData());
+                    $this->_publicKey->string());
             // X25519
             case AlgorithmIdentifier::OID_X25519:
                 return new RFC8410\Curve25519\X25519PublicKey(
-                    $this->publicKeyData());
+                    $this->_publicKey->string());
             // Ed448
             case AlgorithmIdentifier::OID_ED448:
                 return new RFC8410\Curve448\Ed448PublicKey(
-                    $this->publicKeyData());
+                    $this->_publicKey->string());
             // X448
             case AlgorithmIdentifier::OID_X448:
                 return new RFC8410\Curve448\X448PublicKey(
-                    $this->publicKeyData());
+                    $this->_publicKey->string());
         }
         throw new \RuntimeException(
             'Public key ' . $algo->name() . ' not supported.');
@@ -153,7 +153,7 @@ class PublicKeyInfo
      */
     public function keyIdentifier(): string
     {
-        return sha1($this->publicKeyData(), true);
+        return sha1($this->_publicKey->string(), true);
     }
 
     /**
